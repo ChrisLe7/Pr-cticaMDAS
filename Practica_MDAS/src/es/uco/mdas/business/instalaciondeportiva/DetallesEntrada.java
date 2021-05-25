@@ -20,7 +20,6 @@ public class DetallesEntrada implements Serializable {
 	 * @param precio Precio de la entrada
 	 */
 	public DetallesEntrada(String localizacion, Date fecha, String asiento, float precio) {
-		super();
 		this.localizacion = localizacion;
 		this.fecha = fecha;
 		this.asiento = asiento;
