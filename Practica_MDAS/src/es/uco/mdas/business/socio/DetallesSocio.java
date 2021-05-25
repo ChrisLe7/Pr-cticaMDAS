@@ -28,10 +28,11 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	 * */
 	
 	public DetallesSocio(String idSocio, String nombreSocio, String apellidosSocio, String direccion,
-			String telefonoContacto, Date edad, Date antiguedad) {
+			String telefonoContacto, Date edad, Date antiguedad, Categoria categoria) {
 		super(nombreSocio, apellidosSocio,direccion,telefonoContacto,edad);
 		this.idSocio = idSocio;
 		this.antiguedad = antiguedad;
+		this.categoria = categoria;
 	}
 	
 	/**
@@ -39,7 +40,7 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	 * @param idSocio 
 	 * */
 	public DetallesSocio(String idSocio) {
-		this(idSocio,"", "", "", "", null, null);
+		this(idSocio,"", "", "", "", null, null, Categoria.Adulto);
 	}
 
 
