@@ -1,7 +1,7 @@
 package es.uco.mdas.system.abono;
 
 import es.uco.mdas.business.socio.DetallesAbono;
-import es.uco.mdas.business.socio.DetallesLocalidad;
+import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 
 public interface Abono {
 
