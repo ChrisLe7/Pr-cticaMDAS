@@ -1,4 +1,4 @@
-package es.uco.mdas.system.socio;
+package es.uco.mdas.business.socio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
