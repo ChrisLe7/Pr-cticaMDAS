@@ -13,14 +13,14 @@ import java.util.Properties;
 
 import es.uco.mdas.business.socio.DetallesAbono;
 
-public class AbonoDAOImpFicheros {
+public class AbonoDAOImpFicheros implements AbonoDAO{
 
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
 	private static final String NOMBREFICHERO = "ficheroAbono";
 	
 	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
 	
-	public HashMap <String, DetallesAbono> querySocios() {
+	public HashMap <String, DetallesAbono> queryAbonos() {
 		
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -85,8 +85,73 @@ public class AbonoDAOImpFicheros {
 		return listadoAbonos;
 	}
 	
+	public DetallesAbono queryAbono(String idSocio) {
+		Properties properties = new Properties();
+		String nombreFichero = null;
+		FileReader filePropiedades;
+		try {
+			filePropiedades = new FileReader(FICHEROPROPIEDADES);
+			properties.load(filePropiedades);
+			nombreFichero = properties.getProperty(NOMBREFICHERO);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (nombreFichero == null) {
+			return null;
+		}
+		DetallesAbono abonoSocio = null;
+		
+		FileInputStream fichero = null;
+		ObjectInputStream contenidoFichero = null;
+		try {
+			fichero = new FileInputStream (nombreFichero);
+			contenidoFichero= new ObjectInputStream (fichero);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (contenidoFichero != null) {
+			DetallesAbono abono = null;
+			try {
+				while ((abono = (DetallesAbono) contenidoFichero.readObject()) != null) {
+					if (abono.getIdSocio().equals(idSocio)) {
+						abonoSocio = abono;
+						break;
+					}
+				}
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				contenidoFichero.close();
+				fichero.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return abonoSocio;
+	}
 	
-	public boolean updateSocio(DetallesAbono abonoModificado) {
+	public boolean updateAbono(DetallesAbono abonoModificado) {
 		
 		Boolean estado = false;
 		Properties properties = new Properties();
@@ -173,7 +238,7 @@ public class AbonoDAOImpFicheros {
 		return estado;
 	}
 	
-	public boolean insertSocio(DetallesAbono abono) {
+	public boolean insertAbono(DetallesAbono abono) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -236,7 +301,7 @@ public class AbonoDAOImpFicheros {
 	}
 	
 	
-	public boolean deleteSocio(String idAbono) {
+	public boolean deleteAbono(String idAbono) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -321,4 +386,7 @@ public class AbonoDAOImpFicheros {
 		
 		return estado;
 	}
+
+
+	
 }

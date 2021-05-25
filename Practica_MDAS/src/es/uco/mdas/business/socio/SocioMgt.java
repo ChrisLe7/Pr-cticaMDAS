@@ -2,14 +2,42 @@ package es.uco.mdas.business.socio;
 
 import java.util.HashMap;
 
+import es.uco.mdas.datos.AbonoDAO;
+import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.SocioDAO;
 import es.uco.mdas.datos.SocioDAOImpFicheros;
 
 public class SocioMgt {
 
+	
+	public DetallesAbono obtenerInformacionAbono(String idSocio) {
+		DetallesAbono abonoSocio = null;
+		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
+		return abonoDAO.queryAbono(idSocio);
+	}
+	
+	
+	public boolean registrarAbono (DetallesAbono abono) {
 
+		
+		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
+		return abonoDAO.insertAbono(abono);
+		
+	}
 	
 	
+	public boolean renovarAbono (String idAbono ) {
+		return true;
+	}
+	
+	
+	public boolean cancelarAbono(String idAbono) {
+		return true;
+	}
+	
+	public boolean actualizarAbono (DetallesAbono nuevoAbono) {
+		return true;
+	}
 	public boolean registrarDatosCliente (DetallesCliente cliente) {
 		String idSocio = "";
 		DetallesSocio socio = new DetallesSocio(idSocio, cliente);
