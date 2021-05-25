@@ -42,6 +42,28 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	public DetallesSocio(String idSocio) {
 		this(idSocio,"", "", "", "", null, null, Categoria.Adulto);
 	}
+	
+	public DetallesSocio (String idSocio, DetallesCliente cliente) {
+		 this(idSocio,cliente.getNombreSocio(), cliente.getApellidosSocio(), cliente.getDireccion(),cliente.getTelefonoContacto() , 
+	        		cliente.getFechaNacimiento(), new Date(), Categoria.Adulto);
+		int aniosSocioOro = 65; // edad minima requerida para ser socio de oro
+        int aniosSocioPlata = 25; // anios consecutivos asociado para ser socio de plata
+        int aniosSocioAdulto = 18; // edad minima requerida para ser socio adulto
+        Categoria categoria;        
+        if (cliente.getEdad() >= aniosSocioOro) {
+        	categoria = Categoria.Oro;
+        } else { 
+	        if (cliente.getEdad() >= aniosSocioAdulto) {
+	        	categoria = Categoria.Adulto;
+	        }
+	        
+	        else {
+	            categoria =  Categoria.Infantil;
+	        }
+        }
+        this.categoria = categoria;
+       
+	}
 
 
 	/**
