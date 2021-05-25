@@ -13,6 +13,7 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	
 	private String idSocio;
 	private Date antiguedad;
+	private Categoria categoria;
 	
 	/**
 	 * Constructor completo de un Socio
@@ -23,7 +24,7 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	 * @param telefonoContacto
 	 * @param edad
 	 * @param antiguedad
-	 *  
+	 * @param categoria
 	 * */
 	
 	public DetallesSocio(String idSocio, String nombreSocio, String apellidosSocio, String direccion,
@@ -85,6 +86,23 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	public int getAntiguedad() {
 		Period tiempo = Period.between(LocalDate.ofEpochDay(this.antiguedad.getTime()), LocalDate.now());
 		return tiempo.getYears();
+	}
+	/**
+	 * Devuelve la categoria del socio
+	 * @return Categoria del cliente, la cual podrá ser de los tipos indicados en el Enum Categoria
+	 * */
+	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	
+	/**
+	 * Asigna como categoria del cliente la categoria pasada.
+	 * @param categoria Nueva categoría asignada al cliente
+	 * */
+	
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 }
