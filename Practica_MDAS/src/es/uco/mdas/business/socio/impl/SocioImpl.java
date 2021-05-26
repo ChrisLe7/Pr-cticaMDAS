@@ -1,7 +1,6 @@
 package es.uco.mdas.business.socio.impl;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 import es.uco.mdas.business.socio.Categoria;
