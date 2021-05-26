@@ -1,7 +1,7 @@
 package es.uco.mdas.business.instalaciondeportiva;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 public class DetallesContrato implements Serializable {
 
@@ -10,7 +10,7 @@ public class DetallesContrato implements Serializable {
 	private String idEmpresa;
 	private String cuentaBancaria;
 	private String idEspacio;
-	private Date fechaRestriccion;
+	private Calendar fechaRestriccion;
 	
 	/**
 	 * Constructor completo de contrato
@@ -21,7 +21,7 @@ public class DetallesContrato implements Serializable {
 	 * @param idEspacio Id del espacio comercial
 	 * @param fechaRestriccion Fecha de finalizacion del contrato
 	 */
-	public DetallesContrato(String idContrato, String idEmpresa, String cuentaBancaria, String idEspacio, Date fechaRestriccion) {
+	public DetallesContrato(String idContrato, String idEmpresa, String cuentaBancaria, String idEspacio, Calendar fechaRestriccion) {
 		this.idContrato = idContrato;
 		this.idEmpresa = idEmpresa;
 		this.cuentaBancaria = cuentaBancaria;
@@ -106,7 +106,7 @@ public class DetallesContrato implements Serializable {
 	 * 
 	 * @return Fecha de finalizacion del contrato
 	 */
-	public Date getFechaRestriccion() {
+	public Calendar getFechaRestriccion() {
 		return fechaRestriccion;
 	}
 
@@ -115,7 +115,7 @@ public class DetallesContrato implements Serializable {
 	 * 
 	 * @param fechaRestriccion Fecha de finalizacion a asignar
 	 */
-	public void setFechaRestriccion(Date fechaRestriccion) {
+	public void setFechaRestriccion(Calendar fechaRestriccion) {
 		this.fechaRestriccion = fechaRestriccion;
 	}
 	
