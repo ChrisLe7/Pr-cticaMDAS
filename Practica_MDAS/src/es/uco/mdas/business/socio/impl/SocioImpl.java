@@ -26,15 +26,37 @@ public class SocioImpl implements SocioMgt {
 	}
 	
 	public boolean renovarAbono(String idAbono ) {
-		return true;
+		boolean estado = false;
+		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
+		
+		DetallesAbono abonoSocio = abonoDAO.queryAbono(idAbono);
+
+		if (abonoSocio != null ) {
+			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
+			estado = !estado;
+		}
+		
+		return estado;
 	}
 	
 	public boolean cancelarAbono(String idAbono) {
-		return true;
+		boolean estado = false;
+		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
+		
+		DetallesAbono abonoSocio = abonoDAO.queryAbono(idAbono);
+
+		if (abonoSocio != null ) {
+			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
+			estado = !estado;
+		}
+		
+		return estado;
 	}
 	
 	public boolean actualizarAbono(DetallesAbono nuevoAbono) {
-		return true;
+
+		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
+		return abonoDAO.update(nuevoAbono);;
 	}
 	
 	public boolean registrarDatosCliente (DetallesCliente cliente) {
