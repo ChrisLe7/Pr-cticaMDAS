@@ -11,16 +11,16 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.socio.DetallesSocio;
+import es.uco.mdas.business.socio.DetallesAbono;
 
-public class SocioDAOImpFicheros implements SocioDAO{
-	
+public class AbonoDAOImpFicheros implements AbonoDAO{
+
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombre";
+	private static final String NOMBREFICHERO = "ficheroAbono";
 	
 	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
 	
-	public HashMap <String, DetallesSocio> querySocios() {
+	public HashMap <String, DetallesAbono> queryAbonos() {
 		
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -41,7 +41,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesSocio> listadoSocios = new HashMap<String, DetallesSocio> ();
+		HashMap <String, DetallesAbono> listadoAbonos = new HashMap<String, DetallesAbono> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -57,11 +57,11 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesSocio socio = null;
+			DetallesAbono abono = null;
 			try {
-				while ((socio = (DetallesSocio) contenidoFichero.readObject()) != null) {
-					String clave = socio.getIdSocio();
-					listadoSocios.put(clave, socio);
+				while ((abono = (DetallesAbono) contenidoFichero.readObject()) != null) {
+					String clave = abono.getIdAbono();
+					listadoAbonos.put(clave, abono);
 				}
 				
 			} catch (ClassNotFoundException e) {
@@ -82,11 +82,76 @@ public class SocioDAOImpFicheros implements SocioDAO{
 			
 		}
 		
-		return listadoSocios;
+		return listadoAbonos;
 	}
 	
+	public DetallesAbono queryAbono(String idSocio) {
+		Properties properties = new Properties();
+		String nombreFichero = null;
+		FileReader filePropiedades;
+		try {
+			filePropiedades = new FileReader(FICHEROPROPIEDADES);
+			properties.load(filePropiedades);
+			nombreFichero = properties.getProperty(NOMBREFICHERO);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (nombreFichero == null) {
+			return null;
+		}
+		DetallesAbono abonoSocio = null;
+		
+		FileInputStream fichero = null;
+		ObjectInputStream contenidoFichero = null;
+		try {
+			fichero = new FileInputStream (nombreFichero);
+			contenidoFichero= new ObjectInputStream (fichero);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (contenidoFichero != null) {
+			DetallesAbono abono = null;
+			try {
+				while ((abono = (DetallesAbono) contenidoFichero.readObject()) != null) {
+					if (abono.getIdSocio().equals(idSocio)) {
+						abonoSocio = abono;
+						break;
+					}
+				}
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				contenidoFichero.close();
+				fichero.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return abonoSocio;
+	}
 	
-	public boolean updateSocio(DetallesSocio socioModificado) {
+	public boolean updateAbono(DetallesAbono abonoModificado) {
 		
 		Boolean estado = false;
 		Properties properties = new Properties();
@@ -133,12 +198,12 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesSocio registroFichero = null;
+			DetallesAbono registroFichero = null;
 			
 			try {
-				while ((registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject() )!= null) {
-					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
-						registroFichero = socioModificado;
+				while ((registroFichero = (DetallesAbono) contenidoFicheroOrigen.readObject() )!= null) {
+					if (registroFichero.getIdAbono().equals(abonoModificado.getIdAbono())) {
+						registroFichero = abonoModificado;
 						estado = !estado;
 					}
 					contenidoFicheroDestino.writeObject(registroFichero);
@@ -173,7 +238,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		return estado;
 	}
 	
-	public boolean insertSocio(DetallesSocio socio) {
+	public boolean insertAbono(DetallesAbono abono) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -213,7 +278,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		if (contenidoFichero != null) {
 			
 			try {
-				contenidoFichero.writeObject(socio);
+				contenidoFichero.writeObject(abono);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				estado = !estado;
@@ -236,7 +301,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 	}
 	
 	
-	public boolean deleteSocio(String idSocio) {
+	public boolean deleteAbono(String idAbono) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -282,11 +347,11 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesSocio registroFichero = null;
+			DetallesAbono registroFichero = null;
 			
 			try {
-				while ((registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject() )!= null) {
-					if (registroFichero.getIdSocio().equals(idSocio)) {
+				while ((registroFichero = (DetallesAbono) contenidoFicheroOrigen.readObject() )!= null) {
+					if (registroFichero.getIdAbono().equals(idAbono)) {
 						estado = !estado;
 					}
 					else {
@@ -321,5 +386,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		
 		return estado;
 	}
+
+
 	
 }
