@@ -10,6 +10,6 @@ public interface GestionarAbono {
 	public void asignarLocalidad(DetallesLocalidad localidad, String idSocio);
 	public void liberarLocalidad(DetallesLocalidad localidad);
 	public boolean liberarAbono(String idAbono);
-	public void registrarAbono(DetallesAbono abono);
+	public boolean registrarAbono(DetallesAbono abono);
 	
 }
