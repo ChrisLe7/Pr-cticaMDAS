@@ -1,5 +1,5 @@
 package es.uco.mdas.business.instalaciondeportiva;
 
-public class InstalacionDeportivaMGT {
+public enum TipoEspacio {
 
 }
