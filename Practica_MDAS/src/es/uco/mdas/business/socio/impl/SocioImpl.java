@@ -1,5 +1,7 @@
 package es.uco.mdas.business.socio.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import es.uco.mdas.business.socio.Categoria;
@@ -33,6 +35,10 @@ public class SocioImpl implements SocioMgt {
 
 		if (abonoSocio != null ) {
 			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
+			Calendar fechaNuevaCancelacion = abonoSocio.getFechaCancelacion();
+			fechaNuevaCancelacion.set(Calendar.YEAR, (fechaNuevaCancelacion.get(Calendar.YEAR) + 1) );
+			abonoSocio.setFechaCancelacion(fechaNuevaCancelacion);
+			abonoDAO.update(abonoSocio);
 			estado = !estado;
 		}
 		
@@ -46,8 +52,11 @@ public class SocioImpl implements SocioMgt {
 		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
 		if (abonoSocio != null ) {
-			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
+			Calendar fechaCancelacion = Calendar.getInstance();
+			abonoSocio.setFechaCancelacion(fechaCancelacion);
+			abonoDAO.update(abonoSocio);
 			estado = !estado;
+			
 		}
 		
 		return estado;
