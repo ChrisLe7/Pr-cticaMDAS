@@ -20,7 +20,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 	
 	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
 	
-	public HashMap <String, DetallesAbono> queryAbonos() {
+	public HashMap <String, DetallesAbono> queryAll() {
 		
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -85,7 +85,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		return listadoAbonos;
 	}
 	
-	public DetallesAbono queryAbono(String idSocio) {
+	public DetallesAbono queryById(String idSocio) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -151,7 +151,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		return abonoSocio;
 	}
 	
-	public boolean updateAbono(DetallesAbono abonoModificado) {
+	public boolean update(DetallesAbono abonoModificado) {
 		
 		Boolean estado = false;
 		Properties properties = new Properties();
@@ -238,7 +238,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		return estado;
 	}
 	
-	public boolean insertAbono(DetallesAbono abono) {
+	public boolean insert(DetallesAbono abono) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -301,7 +301,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 	}
 	
 	
-	public boolean deleteAbono(String idAbono) {
+	public boolean delete(String idAbono) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
