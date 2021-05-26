@@ -13,14 +13,14 @@ import java.util.Properties;
 
 import es.uco.mdas.business.socio.DetallesSocio;
 
-public class SocioDAOImpFicheros implements SocioDAO{
+public class SocioDAOImpFicheros implements SocioDAO {
 	
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
 	private static final String NOMBREFICHERO = "ficheroNombre";
 	
 	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
 	
-	public HashMap <String, DetallesSocio> querySocios() {
+	public HashMap <String, DetallesSocio> queryAll() {
 		
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -85,8 +85,73 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		return listadoSocios;
 	}
 	
+	public DetallesSocio queryById(String idSocio) {
+		Properties properties = new Properties();
+		String nombreFichero = null;
+		FileReader filePropiedades;
+		try {
+			filePropiedades = new FileReader(FICHEROPROPIEDADES);
+			properties.load(filePropiedades);
+			nombreFichero = properties.getProperty(NOMBREFICHERO);
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (nombreFichero == null) {
+			return null;
+		}
+		DetallesSocio detallesSocio = null;
+		
+		FileInputStream fichero = null;
+		ObjectInputStream contenidoFichero = null;
+		try {
+			fichero = new FileInputStream (nombreFichero);
+			contenidoFichero= new ObjectInputStream (fichero);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if (contenidoFichero != null) {
+			DetallesSocio socio = null;
+			try {
+				while ((socio = (DetallesSocio) contenidoFichero.readObject()) != null) {
+					if (socio.getIdSocio().equals(idSocio)) {
+						detallesSocio = socio;
+						break;
+					}
+				}
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			try {
+				contenidoFichero.close();
+				fichero.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return detallesSocio;
+	}
 	
-	public boolean updateSocio(DetallesSocio socioModificado) {
+	public boolean update(DetallesSocio socioModificado) {
 		
 		Boolean estado = false;
 		Properties properties = new Properties();
@@ -173,7 +238,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 		return estado;
 	}
 	
-	public boolean insertSocio(DetallesSocio socio) {
+	public boolean insert(DetallesSocio socio) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -236,7 +301,7 @@ public class SocioDAOImpFicheros implements SocioDAO{
 	}
 	
 	
-	public boolean deleteSocio(String idSocio) {
+	public boolean delete(String idSocio) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;

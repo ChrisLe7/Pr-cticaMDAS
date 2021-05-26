@@ -16,20 +16,20 @@ public class SocioImpl implements SocioMgt {
 
 	public DetallesAbono obtenerInformacionAbono(String idSocio) {
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
-		DetallesAbono abonoSocio = abonoDAO.queryAbono(idSocio);
+		DetallesAbono abonoSocio = abonoDAO.queryById(idSocio);
 		return abonoSocio;
 	}
 	
 	public boolean registrarAbono (DetallesAbono abono) {		
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
-		return abonoDAO.insertAbono(abono);
+		return abonoDAO.insert(abono);
 	}
 	
 	public boolean renovarAbono(String idAbono ) {
 		boolean estado = false;
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
-		DetallesAbono abonoSocio = abonoDAO.queryAbono(idAbono);
+		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
 		if (abonoSocio != null ) {
 			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
@@ -43,7 +43,7 @@ public class SocioImpl implements SocioMgt {
 		boolean estado = false;
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
-		DetallesAbono abonoSocio = abonoDAO.queryAbono(idAbono);
+		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
 		if (abonoSocio != null ) {
 			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
@@ -56,7 +56,7 @@ public class SocioImpl implements SocioMgt {
 	public boolean actualizarAbono(DetallesAbono nuevoAbono) {
 
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
-		return abonoDAO.update(nuevoAbono);;
+		return abonoDAO.update(nuevoAbono);
 	}
 	
 	public boolean registrarDatosCliente (DetallesCliente cliente) {
@@ -64,12 +64,12 @@ public class SocioImpl implements SocioMgt {
 		DetallesSocio socio = new DetallesSocio(idSocio, cliente);
 		
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
-		return socioDAO.insertSocio(socio);
+		return socioDAO.insert(socio);
 	}
 	
 	public boolean eliminarDatosCliente (String idSocio ) {
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
-		return socioDAO.deleteSocio(idSocio);
+		return socioDAO.delete(idSocio);
 	}
 	
 	public boolean asignarCategoria (DetallesSocio socio, Categoria categoria) {
@@ -86,7 +86,7 @@ public class SocioImpl implements SocioMgt {
 		
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		
-		HashMap<String, DetallesSocio> listadoSocios = socioDAO.querySocios();
+		HashMap<String, DetallesSocio> listadoSocios = socioDAO.queryAll();
 		
 		return listadoSocios;
 	}
@@ -94,7 +94,7 @@ public class SocioImpl implements SocioMgt {
 	public boolean updateSocio (DetallesSocio socio) {
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		
-		return socioDAO.updateSocio(socio);
+		return socioDAO.update(socio);
 			
 	}
 	
