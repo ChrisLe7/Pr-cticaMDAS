@@ -1,8 +1,7 @@
 package es.uco.mdas.business.socio;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DetallesSocio  extends DetallesCliente implements Serializable{
@@ -19,8 +18,8 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	 * @param ApellidosSocio Apellidos del socio
 	 * @param direccion Direccion del socio
 	 * @param telefonoContacto Telefono del socio
-	 * @param edad Edad del socio
-	 * @param antiguedad Antiguedad del socio
+	 * @param edad Fecha de nacimiento del socio
+	 * @param antiguedad Fecha de asociacion del socio
 	 * @param categoria Categoria del socio
 	 */
 	public DetallesSocio(String idSocio, String nombreSocio, String apellidosSocio, String direccion,
@@ -106,8 +105,12 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	 * @return Tiempo siendo socio
 	 */
 	public int getAntiguedad() {
-		Period tiempo = Period.between(LocalDate.ofEpochDay(this.antiguedad.getTime()), LocalDate.now());
-		return tiempo.getYears();
+		Calendar asociacion = Calendar.getInstance();
+		asociacion.setTime(this.antiguedad);
+		Calendar hoy = Calendar.getInstance();
+		hoy.setTime(new Date());
+		int antiguedad = hoy.get(Calendar.YEAR) - asociacion.get(Calendar.YEAR);
+		return antiguedad;
 	}
 	
 	/**
@@ -124,6 +127,46 @@ public class DetallesSocio  extends DetallesCliente implements Serializable{
 	 */
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del socio
+	 * 
+	 * @return Cadena con los datos del socio
+	 */
+	public String toString() {
+		return "DetallesSocio [idSocio=" + idSocio + ", nombreSocio=" + nombreSocio + ", apellidosSocio=" + apellidosSocio
+				+ ", direccion=" + direccion + ", telefonoContacto=" + telefonoContacto + ", edad=" + edad
+				+ ", antiguedad=" + antiguedad + ", categoria=" + categoria + "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos socios son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesSocio other = (DetallesSocio) obj;
+		if (antiguedad == null) {
+			if (other.antiguedad != null)
+				return false;
+		} else if (!antiguedad.equals(other.antiguedad))
+			return false;
+		if (categoria != other.categoria)
+			return false;
+		if (idSocio == null) {
+			if (other.idSocio != null)
+				return false;
+		} else if (!idSocio.equals(other.idSocio))
+			return false;
+		return true;
 	}
 
 }

@@ -1,5 +1,6 @@
 package es.uco.mdas.datos;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +19,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
 	private static final String NOMBREFICHERO = "ficheroNombre";
 	
-	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
+	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 	
 	public HashMap <String, DetallesSocio> queryAll() {
 		
@@ -183,11 +184,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			ficheroOrigen = new FileInputStream (nombreFichero);
 			contenidoFicheroOrigen= new ObjectInputStream (ficheroOrigen);
 			
-			ficheroDestino = new FileOutputStream (NOMBREFICHEROAUXILIAR);
+			ficheroDestino = new FileOutputStream (new File(NOMBREFICHEROAUXILIAR));
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
-		
-				
-			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -201,7 +199,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			DetallesSocio registroFichero = null;
 			
 			try {
-				while ((registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject() )!= null) {
+				for (;;) {
+					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
+					
 					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
 						registroFichero = socioModificado;
 						estado = !estado;
@@ -209,6 +209,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 					contenidoFicheroDestino.writeObject(registroFichero);
 						
 				}
+			} catch (EOFException e) {
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -228,6 +230,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			}
 			File oldfile = new File(nombreFichero);
 	        File newfile = new File(NOMBREFICHEROAUXILIAR);
+	        	        
+	        System.out.println(oldfile.getName());
+	        System.out.println(newfile.getName());
+	        
 	        if (!newfile.renameTo(oldfile)) {
 	        	System.out.println("Error al renombrar el archivo");
 	        }
@@ -263,7 +269,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		FileOutputStream fichero = null;
 		ObjectOutputStream contenidoFichero = null;
 		try {
-			fichero = new FileOutputStream (nombreFichero);
+			fichero = new FileOutputStream (new File(nombreFichero));
 			contenidoFichero= new ObjectOutputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
