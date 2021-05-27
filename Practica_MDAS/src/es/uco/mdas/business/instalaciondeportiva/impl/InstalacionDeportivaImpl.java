@@ -13,6 +13,7 @@ import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.instalaciondeportiva.DetallesPresupuesto;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
 import es.uco.mdas.business.instalaciondeportiva.GestionarDespacho;
+import es.uco.mdas.business.instalaciondeportiva.GestionarEspacioComercial;
 import es.uco.mdas.business.instalaciondeportiva.RealizacionContrato;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.datos.AbonoDAO;
@@ -21,7 +22,7 @@ import es.uco.mdas.datos.DespachoDAO;
 import es.uco.mdas.datos.EspacioComercialDAO;
 import es.uco.mdas.datos.LocalidadDAO;
 
-public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho {
+public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho, GestionarEspacioComercial{
 
 	@Override
 	public ArrayList<DetallesLocalidad> getLocalidadesDisponibles() {
@@ -193,6 +194,26 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		if (!despachoDAO.update(despacho)) {
 			despachoDAO.insert(despacho);
 		} 
+	}
+
+	@Override
+	public ArrayList<DetallesEspacioComercial> obtenerListadoEspacios() {
+		
+		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
+		HashMap<String, DetallesEspacioComercial> listadoespacioComerciales = espacioComercialDAO.queryAll();
+		Collection<DetallesEspacioComercial> espaciosComerciales = listadoespacioComerciales.values();
+		
+		ArrayList<DetallesEspacioComercial> listadoEspaciosComerciales = new ArrayList<> (espaciosComerciales);
+		
+		return listadoEspaciosComerciales;
+	}
+
+	@Override
+	public DetallesEspacioComercial getEspacioComercial(String idEspacioComercial) {
+		// TODO Auto-generated method stub
+		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
+		DetallesEspacioComercial infoEspacioComercialDeseado = espacioComercialDAO.queryById(idEspacioComercial);
+		return infoEspacioComercialDeseado;
 	}
 
 }
