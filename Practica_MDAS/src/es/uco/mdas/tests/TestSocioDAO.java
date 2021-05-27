@@ -20,14 +20,13 @@ public class TestSocioDAO {
 		System.out.println("TestSocioDAO");
 		
 		assert socioDAO.insert(socio) : "Error al escribir el socio en el fichero";
-		
+				
 		DetallesSocio queryRes = socioDAO.queryById(socio.getIdSocio());
 		
 		assert queryRes != null : "Error en la lectura del socio del fichero";
 		
 		assert queryRes.equals(socio) : "Error comparando el socio";
 		
-		socio.setIdSocio("2");
 		socio.setNombreSocio("nombreModificado");
 		socio.setDireccion("direccionModificada");
 		socio.setTelefonoContacto("telefonoModificado");

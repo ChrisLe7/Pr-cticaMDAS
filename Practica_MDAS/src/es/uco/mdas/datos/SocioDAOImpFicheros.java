@@ -18,7 +18,6 @@ public class SocioDAOImpFicheros implements SocioDAO {
 	
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
 	private static final String NOMBREFICHERO = "ficheroNombre";
-	
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 	
 	public HashMap <String, DetallesSocio> queryAll() {
@@ -60,11 +59,14 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (contenidoFichero != null) {
 			DetallesSocio socio = null;
 			try {
-				while ((socio = (DetallesSocio) contenidoFichero.readObject()) != null) {
+				for (;;) {
+					socio = (DetallesSocio) contenidoFichero.readObject();
 					String clave = socio.getIdSocio();
 					listadoSocios.put(clave, socio);
 				}
 				
+			} catch (EOFException e) {
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,6 +92,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
+		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -111,7 +115,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -124,13 +129,17 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (contenidoFichero != null) {
 			DetallesSocio socio = null;
 			try {
-				while ((socio = (DetallesSocio) contenidoFichero.readObject()) != null) {
+				for (;;) {
+					socio = (DetallesSocio) contenidoFichero.readObject();
+					
 					if (socio.getIdSocio().equals(idSocio)) {
 						detallesSocio = socio;
 						break;
 					}
 				}
 				
+			} catch (EOFException e ) {
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -158,6 +167,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File oldFile = null;
+		File newFile = null;
+		
 		try {
 			
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
@@ -181,10 +193,12 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		ObjectOutputStream contenidoFicheroDestino = null;
 		
 		try {
-			ficheroOrigen = new FileInputStream (nombreFichero);
+			oldFile = new File(nombreFichero);
+			ficheroOrigen = new FileInputStream (oldFile);
 			contenidoFicheroOrigen= new ObjectInputStream (ficheroOrigen);
 			
-			ficheroDestino = new FileOutputStream (new File(NOMBREFICHEROAUXILIAR));
+			newFile = new File(NOMBREFICHEROAUXILIAR);
+			ficheroDestino = new FileOutputStream (newFile);
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
@@ -201,7 +215,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			try {
 				for (;;) {
 					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
-					
+
 					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
 						registroFichero = socioModificado;
 						estado = !estado;
@@ -222,24 +236,21 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			try {
 				contenidoFicheroOrigen.close();
 				ficheroOrigen.close();
-				contenidoFicheroOrigen.close();
-				ficheroOrigen.close();
+				contenidoFicheroDestino.close();
+				ficheroDestino.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			File oldfile = new File(nombreFichero);
-	        File newfile = new File(NOMBREFICHEROAUXILIAR);
-	        	        
-	        System.out.println(oldfile.getName());
-	        System.out.println(newfile.getName());
-	        
-	        if (!newfile.renameTo(oldfile)) {
+
+			if (!oldFile.delete()) {
+				System.out.println("Error borrando el fichero antiguo");
+			}
+			
+	        if (!newFile.renameTo(oldFile)) {
 	        	System.out.println("Error al renombrar el archivo");
 	        }
-			
 		}
-		
 		
 		return estado;
 	}
@@ -249,6 +260,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		String nombreFichero = null;
 		FileReader filePropiedades;
 		Boolean estado = true;
+		File fich = null;
+		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -269,7 +282,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		FileOutputStream fichero = null;
 		ObjectOutputStream contenidoFichero = null;
 		try {
-			fichero = new FileOutputStream (new File(nombreFichero));
+			fich = new File(nombreFichero);
+			fichero = new FileOutputStream (fich, true);
 			contenidoFichero= new ObjectOutputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -312,6 +326,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File oldFile = null;
+		File newFile = null;
+		
 		try {
 			
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
@@ -335,14 +352,13 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		ObjectOutputStream contenidoFicheroDestino = null;
 		
 		try {
-			ficheroOrigen = new FileInputStream (nombreFichero);
+			oldFile = new File(nombreFichero);
+			ficheroOrigen = new FileInputStream (oldFile);
 			contenidoFicheroOrigen= new ObjectInputStream (ficheroOrigen);
 			
-			ficheroDestino = new FileOutputStream (NOMBREFICHEROAUXILIAR);
+			newFile = new File(NOMBREFICHEROAUXILIAR);
+			ficheroDestino = new FileOutputStream (newFile);
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
-		
-				
-			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -356,7 +372,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			DetallesSocio registroFichero = null;
 			
 			try {
-				while ((registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject() )!= null) {
+				for (;;) {
+					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
+					
 					if (registroFichero.getIdSocio().equals(idSocio)) {
 						estado = !estado;
 					}
@@ -364,6 +382,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 						contenidoFicheroDestino.writeObject(registroFichero);
 					}
 				}
+			} catch (EOFException e) {
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -375,20 +395,22 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			try {
 				contenidoFicheroOrigen.close();
 				ficheroOrigen.close();
-				contenidoFicheroOrigen.close();
-				ficheroOrigen.close();
+				contenidoFicheroDestino.close();
+				ficheroDestino.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			File oldfile = new File(nombreFichero);
-	        File newfile = new File(NOMBREFICHEROAUXILIAR);
-	        if (!newfile.renameTo(oldfile)) {
+
+			if (!oldFile.delete()) {
+				System.out.println("Error borrando el fichero antiguo");
+			}
+			
+	        if (!newFile.renameTo(oldFile)) {
 	        	System.out.println("Error al renombrar el archivo");
 	        }
-			
-		}
 		
+		}
 		
 		return estado;
 	}
