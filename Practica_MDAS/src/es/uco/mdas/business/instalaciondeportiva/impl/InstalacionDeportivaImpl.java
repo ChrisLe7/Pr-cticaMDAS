@@ -6,17 +6,22 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesContrato;
+import es.uco.mdas.business.instalaciondeportiva.DetallesDespacho;
 import es.uco.mdas.business.instalaciondeportiva.DetallesEspacioComercial;
+import es.uco.mdas.business.instalaciondeportiva.DetallesEstadio;
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.instalaciondeportiva.DetallesPresupuesto;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
+import es.uco.mdas.business.instalaciondeportiva.GestionarDespacho;
 import es.uco.mdas.business.instalaciondeportiva.RealizacionContrato;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.datos.AbonoDAO;
 import es.uco.mdas.datos.ContratoDAO;
+import es.uco.mdas.datos.DespachoDAO;
+import es.uco.mdas.datos.EspacioComercialDAO;
 import es.uco.mdas.datos.LocalidadDAO;
 
-public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato {
+public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho {
 
 	@Override
 	public ArrayList<DetallesLocalidad> getLocalidadesDisponibles() {
@@ -154,6 +159,40 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		espacioComercialLiberar.setArrendado("");
 		espacioComercialDAO.update(espacioComercialLiberar);
 		
+	}
+
+	@Override
+	public ArrayList<DetallesDespacho> getDespachosLibresEstadio() {
+		// TODO Auto-generated method stub
+		DespachoDAO despachoDAO = new DespachoDAOImpFicheros();
+		
+		HashMap<String, DetallesDespacho> listadoCompletoDespachos = despachoDAO.queryAll();
+		
+		ArrayList<DetallesDespacho> despachosDisponibles = new ArrayList<> ();
+		
+		for (String idDespacho : listadoCompletoDespachos.keySet()) {
+			DetallesDespacho informacionDespacho = listadoCompletoDespachos.get(idDespacho);
+			if ( informacionDespacho.getIdMiembro() != null || !informacionDespacho.getIdMiembro().equals(""))  {
+				despachosDisponibles.add(informacionDespacho);
+			}
+		}
+			
+		
+		return despachosDisponibles;
+		
+	}
+
+	@Override //No se que debe de hacer esta funcion
+	public void asignarDespachoEstadio(DetallesEstadio estadio, DetallesDespacho despacho, String idMiembro) {
+		// TODO Auto-generated method stub
+		despacho.setIdMiembro(idMiembro);
+		despacho.setLocalizacion(estadio.getIdEstadio());
+		
+		DespachoDAO despachoDAO = new DespachoDAOImpFicheros();
+		
+		if (!despachoDAO.update(despacho)) {
+			despachoDAO.insert(despacho);
+		} 
 	}
 
 }

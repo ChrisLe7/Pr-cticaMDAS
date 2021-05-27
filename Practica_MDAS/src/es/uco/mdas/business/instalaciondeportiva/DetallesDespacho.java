@@ -8,7 +8,7 @@ public class DetallesDespacho implements Serializable {
 	private String idDespacho;
 	private String localizacion;
 	private TipoDespacho tipo;
-	
+	private String idMiembro;
 	/**
 	 * Constructor completo de despacho
 	 * 
@@ -74,6 +74,14 @@ public class DetallesDespacho implements Serializable {
 	 */
 	public void setTipo(TipoDespacho tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getIdMiembro() {
+		return idMiembro;
+	}
+
+	public void setIdMiembro(String idMiembro) {
+		this.idMiembro = idMiembro;
 	}
 	
 }
