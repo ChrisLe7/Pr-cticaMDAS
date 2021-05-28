@@ -1,33 +1,26 @@
 package es.uco.mdas.business.socio;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DetallesCliente implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private String nombreSocio;
-	private String apellidosSocio;
-	private String direccion;
-	private String telefonoContacto;
-	private Date edad;
-	
+	protected String nombreSocio;
+	protected String apellidosSocio;
+	protected String direccion;
+	protected String telefonoContacto;
+	protected Date edad;
 	
 	/**
-	 * Constructor completo de un Cliente
-	 * @param nombreSocio
-	 * @param ApellidosSocio
-	 * @param direccion
-	 * @param telefonoContacto
-	 * @param edad
-	 *  
-	 * */
-	
+	 * Constructor completo de un cliente
+	 * @param nombreSocio Nombre del cliente
+	 * @param ApellidosSocio Apellidos del cliente
+	 * @param direccion Direccion del cliente
+	 * @param telefonoContacto Telefono del cliente
+	 * @param edad Fecha de nacimiento del cliente
+	 */
 	public DetallesCliente(String nombreSocio, String apellidosSocio, String direccion, String telefonoContacto,
 			Date edad) {
 		super();
@@ -38,23 +31,18 @@ public class DetallesCliente implements Serializable{
 		this.edad = edad;
 	}
 	
-	
 	/**
 	 * Devuelve el Nombre del Socio
 	 * @return Nombre del Socio
-	 * 
-	 * */
-		
+	 */	
 	public String getNombreSocio() {
 		return nombreSocio;
 	}
 	
 	/**
 	 * Asigna un Nombre al socio
-	 * 
 	 * @param nombreSocio Nombre a asignar al socio
-	 * */
-	
+	 */
 	public void setNombreSocio(String nombreSocio) {
 		this.nombreSocio = nombreSocio;
 	}
@@ -63,8 +51,7 @@ public class DetallesCliente implements Serializable{
 	 * Devuelve los Apellidos del Socio
 	 * @return Apellidos del Socio
 	 * 
-	 * */	
-	
+	 */
 	public String getApellidosSocio() {
 		return apellidosSocio;
 	}
@@ -73,8 +60,7 @@ public class DetallesCliente implements Serializable{
 	 * Asigna los Apellidos al socio
 	 * 
 	 * @paramr apellidosSocio Apellidos a asignar al socio.
-	 * */
-	
+	 */
 	public void setApellidosSocio(String apellidosSocio) {
 		this.apellidosSocio = apellidosSocio;
 	}
@@ -83,7 +69,7 @@ public class DetallesCliente implements Serializable{
 	/**
 	 * Devuelve la Direccion de Contacto del Socio
 	 * @return Direccion del cliente
-	 * */
+	 */
 	public String getDireccion() {
 		return direccion;
 	}
@@ -91,7 +77,7 @@ public class DetallesCliente implements Serializable{
 	/**
 	 * Asigna la direccion de contacto al socio.
 	 * @param direccion Direccion de contacto del socio a asignar.
-	 * */
+	 */
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
@@ -99,12 +85,10 @@ public class DetallesCliente implements Serializable{
 	/**
 	 * Devuelve el Telefono de Contacto del Socio
 	 * @return Telefono contacto del cliente
-	 * */
-	
+	 */
 	public String getTelefonoContacto() {
 		return telefonoContacto;
 	}
-	
 	
 	/**
 	 * Asigna el telefono de contacto al socio.
@@ -117,8 +101,7 @@ public class DetallesCliente implements Serializable{
 	/**
 	 * Devuelve la fecha de Nacimiento del Socio
 	 * @return Telefono contacto del cliente
-	 * */
-	
+	 */
 	public Date getFechaNacimiento() {
 		return edad;
 	}
@@ -126,20 +109,73 @@ public class DetallesCliente implements Serializable{
 	/**
 	 * Asigna el telefono de contacto al socio.
 	 * @param telefonoContacto Telefono de contacto del socio a asignar.
-	 * */
-	
+	 */
 	public void setFechaNacimiento(Date edad) {
 		this.edad = edad;
 	}
 	
-	
 	/**
 	 * Devuelve la edad que tiene el Socio
 	 * @return Edad del Socio
-	 * */
+	 */
 	public int getEdad() {
-		Period edad = Period.between(LocalDate.ofEpochDay(this.edad.getTime()), LocalDate.now());
-		return edad.getYears();
+		Calendar nacimiento = Calendar.getInstance();
+		nacimiento.setTime(this.edad);
+		Calendar hoy = Calendar.getInstance();
+		hoy.setTime(new Date());
+		int edad = hoy.get(Calendar.YEAR) - nacimiento.get(Calendar.YEAR);
+		return edad;
+	}
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del cliente
+	 * @return Cadena con los datos del cliente
+	 */
+	public String toString() {
+		return "DetallesCliente [nombreSocio=" + nombreSocio + ", apellidosSocio=" + apellidosSocio + ", direccion="
+				+ direccion + ", telefonoContacto=" + telefonoContacto + ", edad=" + edad + "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos clientes son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesCliente other = (DetallesCliente) obj;
+		if (apellidosSocio == null) {
+			if (other.apellidosSocio != null)
+				return false;
+		} else if (!apellidosSocio.equals(other.apellidosSocio))
+			return false;
+		if (direccion == null) {
+			if (other.direccion != null)
+				return false;
+		} else if (!direccion.equals(other.direccion))
+			return false;
+		if (edad == null) {
+			if (other.edad != null)
+				return false;
+		} else if (!edad.equals(other.edad))
+			return false;
+		if (nombreSocio == null) {
+			if (other.nombreSocio != null)
+				return false;
+		} else if (!nombreSocio.equals(other.nombreSocio))
+			return false;
+		if (telefonoContacto == null) {
+			if (other.telefonoContacto != null)
+				return false;
+		} else if (!telefonoContacto.equals(other.telefonoContacto))
+			return false;
+		return true;
 	}
 
 }
