@@ -19,7 +19,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
 	private static final String NOMBREFICHERO = "ficheroNombreAbono";
 	
-	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
+	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 	
 	public HashMap <String, DetallesAbono> queryAll() {
 		
