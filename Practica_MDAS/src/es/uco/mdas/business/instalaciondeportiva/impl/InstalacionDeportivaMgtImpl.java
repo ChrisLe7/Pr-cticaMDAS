@@ -6,7 +6,7 @@ import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
 import es.uco.mdas.business.socio.DetallesAbono;
 
-public class InstalacionDeportivaImpl implements GestionarAbono {
+public class InstalacionDeportivaMgtImpl implements GestionarAbono {
 
 	@Override
 	public ArrayList<DetallesLocalidad> getLocalidadesDisponibles() {

@@ -13,7 +13,7 @@ import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.SocioDAO;
 import es.uco.mdas.datos.SocioDAOImpFicheros;
 
-public class SocioImpl implements SocioMgt {
+public class SocioMgtImpl implements SocioMgt {
 
 	public DetallesAbono obtenerInformacionAbono(String idSocio) {
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
