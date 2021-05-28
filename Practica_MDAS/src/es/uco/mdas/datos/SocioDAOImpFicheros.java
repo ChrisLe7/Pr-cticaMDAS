@@ -267,54 +267,31 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			properties.load(filePropiedades);
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if (nombreFichero == null) {
-			return false;
-		}
-		
-		FileOutputStream fichero = null;
-		ObjectOutputStream contenidoFichero = null;
-		try {
+			if (nombreFichero == null) {
+				return false;
+			}
+			
 			fich = new File(nombreFichero);
-			fichero = new FileOutputStream (fich, true);
-			contenidoFichero= new ObjectOutputStream (fichero);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			estado = !estado;
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			estado = !estado;
-			e.printStackTrace();
-		}
-		
-		if (contenidoFichero != null) {
+			ObjectOutputStream contenidoFichero = null;
 			
-			try {
+			if (fich.length() == 0) {
+				contenidoFichero = new ObjectOutputStream (new FileOutputStream (fich));
+			}
+			else {
+				contenidoFichero = new MyObjectOutputStream (new FileOutputStream (fich, true));
+			}
+			
+			if (contenidoFichero != null) {
 				contenidoFichero.writeObject(socio);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				estado = !estado;
-				e.printStackTrace();
-			}
-			
-			try {
 				contenidoFichero.close();
-				fichero.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				estado = !estado;
-				e.printStackTrace();
 			}
 			
-			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			estado = !estado;
+		} catch (IOException e) {
+			e.printStackTrace();
+			estado = !estado;
 		}
 		
 		return estado;
