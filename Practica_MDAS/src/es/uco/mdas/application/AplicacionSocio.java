@@ -3,9 +3,11 @@ package es.uco.mdas.application;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.system.socio.Socio;
@@ -18,7 +20,7 @@ public class AplicacionSocio {
 		 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
 		 	System.out.println("\t -> Introduzca 1 Si desea Registra un nuevo Cliente");
 	        System.out.println("\t -> Introduzca 2 Si desea Eliminar un Cliente");
-	        System.out.println("\t -> Introduzca 3 Si desea Actualizar la Categoria de un Cliente");
+// Debería de ser automatica	        System.out.println("\t -> Introduzca 3 Si desea Actualizar la Categoria de un Cliente");
 		
 	}
 	
@@ -30,6 +32,7 @@ public class AplicacionSocio {
 		
 		Scanner opcionElegida ;
 		int opcionDeseada = 1;
+		Socio sistemaSocio = new SocioImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
 		while (opcionDeseada != 0) {
 			
 			PrintMenuSocios();
@@ -50,18 +53,42 @@ public class AplicacionSocio {
 		    	break;
 		    	case 1:
 		    		DetallesCliente clienteNuevo = CrearCliente();
-		    		Socio sistemaSocio = new SocioImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		    		
 		    		DetallesSocio nuevoSocio = sistemaSocio.registrarDatosCliente(clienteNuevo);
 		    		break;
 		    	case 2:
+		    	
+		    		HashMap<String, DetallesSocio> listadoSocios ; 
+		    		//=  sistemaSocio.listarSocios();
+		    		
+		    		MostrarSocios(listadoSocios);
+		    		DetallesSocio socioElegido  = ElegirSocio();
+		    		sistemaSocio.eliminarDatosCliente(socioElegido.getIdSocio());
+		    		
 		    		break;
 		    	case 3:
+		    		
+		    		//Modificar Categoria de forma automatica 
+		    		
 		    		break;
 		    	default:
 		    		System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");
 	    			System.out.println("Vuelva a contactar con los desarrolladores.");
 		    }
 		}
+	}
+
+	private void MostrarSocios(HashMap<String, DetallesSocio> listadoSocios) {
+		// TODO Auto-generated method stub
+		System.out.println("---------------------------");
+		System.out.println("Listado de Socios Actualmente");
+		
+		for (String idSocio : listadoSocios.keySet()) {
+			DetallesSocio socioAMostrar = listadoSocios.get(idSocio);
+			System.out.println(socioAMostrar.toString());
+		}
+		System.out.println("---------------------------");
+		
 	}
 
 	private DetallesCliente CrearCliente() {
@@ -117,4 +144,15 @@ public class AplicacionSocio {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	private String ElegirSocio() {
+		System.out.println("Introduzca el ID del Socio");
+		String idSocio = null;
+		Scanner scannerEliminar = new Scanner(System.in);
+		idSocio = scannerEliminar.nextLine();
+		
+		scannerEliminar.close();
+		return idSocio;
+	}
+	
 }
