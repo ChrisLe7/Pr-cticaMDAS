@@ -35,8 +35,9 @@ public interface Abono {
 	 * Modifica la localidad asignada a un abono
 	 * 
 	 * @param idAbono ID del abono
+	 * @return True si se modifica y false en caso contrario
 	 */	
-	public void modificarLocalidadAbono(String idAbono);
+	public boolean modificarLocalidadAbono(String idAbono);
 	
 	
 	/**
@@ -44,14 +45,16 @@ public interface Abono {
 	 * 
 	 * @param idAbono ID del abono
 	 * @param nuevoPrecio Precio actualizado del abono
+	 * @return True si se actualiza y false en caso contrario
 	 */	
-	public void actualizarCuotaAbono(String idAbono, float nuevoPrecio);
+	public boolean actualizarCuotaAbono(String idAbono, float nuevoPrecio);
 	
 	
 	/**
 	 * Registra un abono
 	 * 
 	 * @param abono Detalles necesarios para el registro del abono
+	 * @return True si se registra y false en caso contrario
 	 */	
-	public void registrarAbono(DetallesAbono abono);
+	public boolean registrarAbono(DetallesAbono abono);
 }
