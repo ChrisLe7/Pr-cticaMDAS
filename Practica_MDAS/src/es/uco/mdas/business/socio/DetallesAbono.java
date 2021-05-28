@@ -136,6 +136,41 @@ public class DetallesAbono implements Serializable {
 		this.fechaCancelacion = fechaCancelacion;
 	}
 	
-	
+
+	@Override
+	/**
+	 * Compara si dos socios son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesAbono other = (DetallesAbono) obj;
+		if (fechaCancelacion == null) {
+			if (other.fechaCancelacion != null)
+				return false;
+		} else if (!fechaCancelacion.equals(other.fechaCancelacion))
+			return false;
+		if (idSocio == null) {
+			if (other.idSocio != null)
+				return false;
+		} else if (!idSocio.equals(other.idSocio))
+			return false;
+		if (idAbono == null) {
+			if (other.idAbono != null)
+				return false;
+		} else if (!idAbono.equals(other.idAbono))
+			return false;
+		if (idLocalidad == null) {
+			if (other.idLocalidad != null)
+				return false;
+		} else if (!idLocalidad.equals(other.idLocalidad))
+			return false;
+		return true;
+	}
 	
 }
