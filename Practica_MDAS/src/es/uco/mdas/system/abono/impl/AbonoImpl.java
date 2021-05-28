@@ -49,28 +49,40 @@ public class AbonoImpl implements Abono {
 	}
 	
 	@Override
-	public void modificarLocalidadAbono(String idAbono) {
+	public boolean modificarLocalidadAbono(String idAbono) {
+		
+		boolean estado = false;
 		
 		DetallesAbono abono = obtenerInformacionAbono(idAbono);
 		///Liberar localidad antigua y reasignar la nueva al abonodo
 		abono.setIdLocalidad(idAbono);
 		
-		socioMgt.actualizarAbono(abono);
+		estado = socioMgt.actualizarAbono(abono);
+		
+		return estado;
 	}
 	
 	@Override
-	public void actualizarCuotaAbono(String idAbono, float nuevoPrecio) {
+	public boolean actualizarCuotaAbono(String idAbono, float nuevoPrecio) {
+		
+		boolean estado = false;
 		
 		DetallesAbono abono = obtenerInformacionAbono(idAbono);		
 		
 		abono.setPrecio(nuevoPrecio);
 		
-		socioMgt.actualizarAbono(abono);
+		estado = socioMgt.actualizarAbono(abono);
+		
+		return estado;
 	}
 	
 	@Override
-	public void registrarAbono(DetallesAbono abono) {
+	public boolean registrarAbono(DetallesAbono abono) {
 		
-		socioMgt.registrarAbono(abono);		
+		boolean estado = false;
+		
+		estado = socioMgt.registrarAbono(abono);		
+		
+		return estado;
 	}
 }
