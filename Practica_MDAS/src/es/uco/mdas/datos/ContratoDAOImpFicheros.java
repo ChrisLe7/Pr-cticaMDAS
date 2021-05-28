@@ -12,17 +12,16 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.instalaciondeportiva.DetallesEspacioComercial;
+import es.uco.mdas.business.instalaciondeportiva.DetallesContrato;
 
-public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
-	
+public class ContratoDAOImpFicheros implements ContratoDAO {
+
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombreEspacios";
+	private static final String NOMBREFICHERO = "ficheroNombreContratos";
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
-		
+
 	@Override
-	public HashMap<String, DetallesEspacioComercial> queryAll() {
-		
+	public HashMap<String, DetallesContrato> queryAll() {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -42,7 +41,7 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesEspacioComercial> listadoEspacios = new HashMap<String, DetallesEspacioComercial> ();
+		HashMap <String, DetallesContrato> listadoContratos = new HashMap<String, DetallesContrato> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -58,14 +57,14 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesEspacioComercial espacioComercial = null;
+			DetallesContrato contrato = null;
 			try {
 
 				while(true) {
 
-					espacioComercial = (DetallesEspacioComercial) contenidoFichero.readObject();
-					String clave = espacioComercial.getIdEspacio();
-					listadoEspacios.put(clave, espacioComercial);
+					contrato = (DetallesContrato) contenidoFichero.readObject();
+					String clave = contrato.getIdContrato();
+					listadoContratos.put(clave, contrato);
 				}
 				
 			} catch (EOFException e) {
@@ -88,11 +87,11 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 			
 		}
 		
-		return listadoEspacios;
+		return listadoContratos;
 	}
 
 	@Override
-	public DetallesEspacioComercial queryById(String idItem) {
+	public DetallesContrato queryById(String idItem) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -114,7 +113,7 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesEspacioComercial detallesEspacio = null;
+		DetallesContrato detallesContrato = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -131,15 +130,15 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesEspacioComercial espacioComercial = null;
+			DetallesContrato contrato = null;
 			try {
 
 				while(true) {
 
-					espacioComercial = (DetallesEspacioComercial) contenidoFichero.readObject();
+					contrato = (DetallesContrato) contenidoFichero.readObject();
 					
-					if (espacioComercial.getIdEspacio().equals(idItem)) {
-						detallesEspacio = espacioComercial;
+					if (contrato.getIdContrato().equals(idItem)) {
+						detallesContrato = contrato;
 						break;
 					}
 				}
@@ -164,12 +163,11 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 			
 		}
 		
-		return detallesEspacio;
-		
+		return detallesContrato;
 	}
 
 	@Override
-	public boolean update(DetallesEspacioComercial item) {
+	public boolean update(DetallesContrato item) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -217,15 +215,15 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesEspacioComercial registroFichero = null;
+			DetallesContrato registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesEspacioComercial) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesContrato) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getIdEspacio().equals(item.getIdEspacio())) {
+					if (registroFichero.getIdContrato().equals(item.getIdContrato())) {
 						registroFichero = item;
 						estado = !estado;
 					}
@@ -270,7 +268,7 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 	}
 
 	@Override
-	public boolean insert(DetallesEspacioComercial item) {
+	public boolean insert(DetallesContrato item) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -364,15 +362,15 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesEspacioComercial registroFichero = null;
+			DetallesContrato registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesEspacioComercial) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesContrato) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getIdEspacio().equals(idItem)) {
+					if (registroFichero.getIdContrato().equals(idItem)) {
 						estado = !estado;
 					}
 					else {
@@ -411,6 +409,5 @@ public class EspacioComercialDAOImpFicheros implements EspacioComercialDAO {
 		
 		return estado;
 	}
-	
 
 }
