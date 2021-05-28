@@ -1,6 +1,7 @@
 package es.uco.mdas.business.socio;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class DetallesAbono implements Serializable {
 	
@@ -19,6 +20,7 @@ public class DetallesAbono implements Serializable {
 	
 	private float precio;
 
+	private Calendar fechaCancelacion; 
 	
 	/**
 	 * Constructor completo de un Abonado
@@ -31,7 +33,7 @@ public class DetallesAbono implements Serializable {
 	 * */
 	
 	public DetallesAbono(String idSocio, String idAbono, String idLocalidad, String tipoAbono, String deporteAsignado,
-			float precio) {
+			float precio, Calendar fechaCancelacion) {
 		super();
 		this.idSocio = idSocio;
 		this.idAbono = idAbono;
@@ -39,6 +41,7 @@ public class DetallesAbono implements Serializable {
 		this.tipoAbono = tipoAbono;
 		this.deporteAsignado = deporteAsignado;
 		this.precio = precio;
+		this.fechaCancelacion = fechaCancelacion;
 	}
 	
 	/**
@@ -48,7 +51,7 @@ public class DetallesAbono implements Serializable {
 	 * */
 
 	public DetallesAbono(String idSocio, String idAbono) {
-		this(idSocio, idAbono, "", "", "", 0);
+		this(idSocio, idAbono, "", "", "", 0, null);
 	}
 
 
@@ -124,6 +127,15 @@ public class DetallesAbono implements Serializable {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
+
+	public Calendar getFechaCancelacion() {
+		return fechaCancelacion;
+	}
+
+	public void setFechaCancelacion(Calendar fechaCancelacion) {
+		this.fechaCancelacion = fechaCancelacion;
+	}
+	
 	
 	
 }
