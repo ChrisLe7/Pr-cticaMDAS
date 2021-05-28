@@ -59,7 +59,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (contenidoFichero != null) {
 			DetallesSocio socio = null;
 			try {
+
 				while(true) {
+
 					socio = (DetallesSocio) contenidoFichero.readObject();
 					String clave = socio.getIdSocio();
 					listadoSocios.put(clave, socio);
@@ -129,7 +131,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (contenidoFichero != null) {
 			DetallesSocio socio = null;
 			try {
+
 				while(true) {
+
 					socio = (DetallesSocio) contenidoFichero.readObject();
 					
 					if (socio.getIdSocio().equals(idSocio)) {
@@ -213,7 +217,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			DetallesSocio registroFichero = null;
 			
 			try {
+
 				while(true) {
+
 					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
 
 					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
@@ -245,6 +251,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 
 			if (!oldFile.delete()) {
 				System.out.println("Error borrando el fichero antiguo");
+
 				estado = false;
 			}
 			else {
@@ -253,6 +260,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		        	estado = false;
 		        }
 		    }
+
 		}
 		
 		return estado;
@@ -270,9 +278,11 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			properties.load(filePropiedades);
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
+
 			if (nombreFichero == null) {
 				return false;
 			}
+
 			
 			fich = new File(nombreFichero);
 			ObjectOutputStream contenidoFichero = null;
@@ -353,7 +363,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			DetallesSocio registroFichero = null;
 			
 			try {
+
 				while(true) {
+
 					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
 					
 					if (registroFichero.getIdSocio().equals(idSocio)) {
