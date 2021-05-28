@@ -1,20 +1,20 @@
 package es.uco.mdas.system.socio.impl;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 
 import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.business.socio.SocioMgt;
+import es.uco.mdas.business.socio.impl.SocioMgtImpl;
 import es.uco.mdas.system.socio.Socio;
 
 public class SocioImpl implements Socio {
 	
 	private SocioMgt socioMgt;
 	
-	public SocioImpl(SocioMgt socioMgt) {
-		this.socioMgt = socioMgt;
+	public SocioImpl() {
+		this.socioMgt = new SocioMgtImpl();
 	}
 
 	@Override
@@ -37,9 +37,10 @@ public class SocioImpl implements Socio {
 
 	@Override
 	public void comprobarTiempoVinculacion() {
-		ArrayList<DetallesSocio> socios = socioMgt.getSocios();
+		HashMap<String, DetallesSocio> socios = socioMgt.getSocios();
 		
-		for (DetallesSocio socio : socios) {
+		for (String idSocio : socios.keySet()) {
+			DetallesSocio socio = socios.get(idSocio);
 			Categoria nuevaCategoria = comprobarTiempoVinculacion(socio);
 			
 			if (nuevaCategoria != socio.getCategoria()) {
