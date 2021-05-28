@@ -52,7 +52,7 @@ public class AbonoImpl implements Abono {
 	public void modificarLocalidadAbono(String idAbono) {
 		
 		DetallesAbono abono = obtenerInformacionAbono(idAbono);
-		
+		///Liberar localidad antigua y reasignar la nueva al abonodo
 		abono.setIdLocalidad(idAbono);
 		
 		socioMgt.actualizarAbono(abono);
