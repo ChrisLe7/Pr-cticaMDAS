@@ -59,7 +59,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (contenidoFichero != null) {
 			DetallesSocio socio = null;
 			try {
-				for (;;) {
+				while(true) {
 					socio = (DetallesSocio) contenidoFichero.readObject();
 					String clave = socio.getIdSocio();
 					listadoSocios.put(clave, socio);
@@ -129,7 +129,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (contenidoFichero != null) {
 			DetallesSocio socio = null;
 			try {
-				for (;;) {
+				while(true) {
 					socio = (DetallesSocio) contenidoFichero.readObject();
 					
 					if (socio.getIdSocio().equals(idSocio)) {
@@ -213,7 +213,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			DetallesSocio registroFichero = null;
 			
 			try {
-				for (;;) {
+				while(true) {
 					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
 
 					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
@@ -245,11 +245,14 @@ public class SocioDAOImpFicheros implements SocioDAO {
 
 			if (!oldFile.delete()) {
 				System.out.println("Error borrando el fichero antiguo");
+				estado = false;
 			}
-			
-	        if (!newFile.renameTo(oldFile)) {
-	        	System.out.println("Error al renombrar el archivo");
-	        }
+			else {
+		        if (!newFile.renameTo(oldFile)) {
+		        	System.out.println("Error al renombrar el archivo");
+		        	estado = false;
+		        }
+		    }
 		}
 		
 		return estado;
@@ -284,6 +287,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			if (contenidoFichero != null) {
 				contenidoFichero.writeObject(socio);
 				contenidoFichero.close();
+				filePropiedades.close();
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -349,7 +353,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			DetallesSocio registroFichero = null;
 			
 			try {
-				for (;;) {
+				while(true) {
 					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
 					
 					if (registroFichero.getIdSocio().equals(idSocio)) {
