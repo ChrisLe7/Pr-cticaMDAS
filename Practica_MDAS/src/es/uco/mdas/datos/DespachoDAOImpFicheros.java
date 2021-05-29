@@ -25,6 +25,8 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
+		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -46,7 +48,8 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
