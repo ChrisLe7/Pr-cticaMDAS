@@ -12,17 +12,16 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.socio.DetallesAbono;
+import es.uco.mdas.business.instalaciondeportiva.DetallesEntrada;
 
-public class AbonoDAOImpFicheros implements AbonoDAO{
+public class EntradaDAOImpFicheros implements EntradaDAO {
 
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroAbono";
-	
-	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
-	
-	public HashMap <String, DetallesAbono> queryAll() {
-		
+	private static final String NOMBREFICHERO = "ficheroNombreEntradas";
+	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
+
+	@Override
+	public HashMap<String, DetallesEntrada> queryAll() {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -42,7 +41,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesAbono> listadoAbonos = new HashMap<String, DetallesAbono> ();
+		HashMap <String, DetallesEntrada> listadoEntradas = new HashMap<String, DetallesEntrada> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -58,17 +57,19 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesAbono abono = null;
+			DetallesEntrada entrada = null;
 			try {
+
 				while(true) {
-					abono = (DetallesAbono) contenidoFichero.readObject();
-					String clave = abono.getIdAbono();
-					listadoAbonos.put(clave, abono);
+
+					entrada = (DetallesEntrada) contenidoFichero.readObject();
+					String clave = entrada.getAsiento();
+					listadoEntradas.put(clave, entrada);
 				}
 				
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
-			}  catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -86,13 +87,16 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			
 		}
 		
-		return listadoAbonos;
+		return listadoEntradas;
 	}
-	
-	public DetallesAbono queryById(String idSocio) {
+
+	@Override
+	public DetallesEntrada queryById(String idItem) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
+		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -109,12 +113,13 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesAbono abonoSocio = null;
+		DetallesEntrada detallesEntrada = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -125,12 +130,15 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesAbono abono = null;
+			DetallesEntrada entrada = null;
 			try {
-				while (true) {
-					abono = (DetallesAbono) contenidoFichero.readObject();
-					if (abono.getIdSocio().equals(idSocio)) {
-						abonoSocio = abono;
+
+				while(true) {
+
+					entrada = (DetallesEntrada) contenidoFichero.readObject();
+					
+					if (entrada.getAsiento().equals(idItem)) {
+						detallesEntrada = entrada;
 						break;
 					}
 				}
@@ -155,17 +163,18 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			
 		}
 		
-		return abonoSocio;
+		return detallesEntrada;
 	}
-	
-	public boolean update(DetallesAbono abonoModificado) {
-		
+
+	@Override
+	public boolean update(DetallesEntrada item) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
 		File oldFile = null;
 		File newFile = null;
+		
 		try {
 			
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
@@ -189,7 +198,6 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		ObjectOutputStream contenidoFicheroDestino = null;
 		
 		try {
-			
 			oldFile = new File(nombreFichero);
 			ficheroOrigen = new FileInputStream (oldFile);
 			contenidoFicheroOrigen= new ObjectInputStream (ficheroOrigen);
@@ -197,8 +205,6 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			newFile = new File(NOMBREFICHEROAUXILIAR);
 			ficheroDestino = new FileOutputStream (newFile);
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
-				
-			
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -209,13 +215,16 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesAbono registroFichero = null;
+			DetallesEntrada registroFichero = null;
 			
 			try {
-				while (true) {
-					registroFichero = (DetallesAbono) contenidoFicheroOrigen.readObject() ;
-					if (registroFichero.getIdAbono().equals(abonoModificado.getIdAbono())) {
-						registroFichero = abonoModificado;
+
+				while(true) {
+
+					registroFichero = (DetallesEntrada) contenidoFicheroOrigen.readObject();
+
+					if (registroFichero.getAsiento().equals(item.getAsiento())) {
+						registroFichero = item;
 						estado = !estado;
 					}
 					contenidoFicheroDestino.writeObject(registroFichero);
@@ -234,15 +243,16 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			try {
 				contenidoFicheroOrigen.close();
 				ficheroOrigen.close();
-				contenidoFicheroOrigen.close();
-				ficheroOrigen.close();
+				contenidoFicheroDestino.close();
+				ficheroDestino.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			if (!oldFile.delete()) {
 				System.out.println("Error borrando el fichero antiguo");
+
 				estado = false;
 			}
 			else {
@@ -251,14 +261,14 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		        	estado = false;
 		        }
 		    }
-			
+
 		}
-		
 		
 		return estado;
 	}
-	
-	public boolean insert(DetallesAbono abono) {
+
+	@Override
+	public boolean insert(DetallesEntrada item) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -270,9 +280,11 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			properties.load(filePropiedades);
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
+
 			if (nombreFichero == null) {
 				return false;
 			}
+
 			
 			fich = new File(nombreFichero);
 			ObjectOutputStream contenidoFichero = null;
@@ -285,7 +297,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			}
 			
 			if (contenidoFichero != null) {
-				contenidoFichero.writeObject(abono);
+				contenidoFichero.writeObject(item);
 				contenidoFichero.close();
 				filePropiedades.close();
 			}
@@ -300,15 +312,16 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		
 		return estado;
 	}
-	
-	
-	public boolean delete(String idAbono) {
+
+	@Override
+	public boolean delete(String idItem) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
 		File oldFile = null;
 		File newFile = null;
+		
 		try {
 			
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
@@ -349,12 +362,15 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesAbono registroFichero = null;
+			DetallesEntrada registroFichero = null;
 			
 			try {
-				while (true) {
-					registroFichero = (DetallesAbono) contenidoFicheroOrigen.readObject();
-					if (registroFichero.getIdAbono().equals(idAbono)) {
+
+				while(true) {
+
+					registroFichero = (DetallesEntrada) contenidoFicheroOrigen.readObject();
+					
+					if (registroFichero.getAsiento().equals(idItem)) {
 						estado = !estado;
 					}
 					else {
@@ -374,12 +390,13 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			try {
 				contenidoFicheroOrigen.close();
 				ficheroOrigen.close();
-				contenidoFicheroOrigen.close();
-				ficheroOrigen.close();
+				contenidoFicheroDestino.close();
+				ficheroDestino.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 			if (!oldFile.delete()) {
 				System.out.println("Error borrando el fichero antiguo");
 			}
@@ -387,12 +404,10 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 	        if (!newFile.renameTo(oldFile)) {
 	        	System.out.println("Error al renombrar el archivo");
 	        }
-		}
 		
+		}
 		
 		return estado;
 	}
 
-
-	
 }

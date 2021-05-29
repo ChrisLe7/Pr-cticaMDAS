@@ -3,17 +3,24 @@ package es.uco.mdas.system.abono.impl;
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
+import es.uco.mdas.business.socio.impl.SocioMgtImpl;
 import es.uco.mdas.business.socio.SocioMgt;
+import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
+import es.uco.mdas.business.instalaciondeportiva.impl.InstalacionDeportivaImpl;
+
 
 public class AbonoImpl implements Abono {
 	
 	private SocioMgt socioMgt;
+	private GestionarAbono abono;
 	
-	public AbonoImpl(SocioMgt socioMgt) {
+	public AbonoImpl() {
 		
-		this.socioMgt = socioMgt;
+		this.socioMgt = new SocioMgtImpl();
+		this.abono = new InstalacionDeportivaImpl();
 	}
 	
+		
 	@Override
 	public DetallesAbono obtenerInformacionAbono(String idSocio) {
 		
@@ -54,7 +61,7 @@ public class AbonoImpl implements Abono {
 		boolean estado = false;
 		
 		DetallesAbono abono = obtenerInformacionAbono(idAbono);
-		
+		///Liberar localidad antigua y reasignar la nueva al abonodo
 		abono.setIdLocalidad(idAbono);
 		
 		estado = socioMgt.actualizarAbono(abono);
