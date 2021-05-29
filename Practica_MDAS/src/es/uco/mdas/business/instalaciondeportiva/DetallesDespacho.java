@@ -83,5 +83,49 @@ public class DetallesDespacho implements Serializable {
 	public void setIdMiembro(String idMiembro) {
 		this.idMiembro = idMiembro;
 	}
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del Despacho
+	 * 
+	 * @return Cadena con los datos del Despacho
+	 */
+	public String toString() {
+		return "DetallesDespacho [idDespacho=" + idDespacho + ", localizacion=" + localizacion + ", tipo=" + tipo
+				+ ", idMiembro=" + idMiembro + "]";
+	}
+	
+	@Override
+	/**
+	 * Compara si dos abonos son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesDespacho other = (DetallesDespacho) obj;
+		if (this.idDespacho == null) {
+			if (other.idDespacho != null)
+				return false;
+		} else if (!this.idDespacho.equals(other.idDespacho))
+			return false;
+		if (this.localizacion == null) {
+			if (other.localizacion != null)
+				return false;
+		} else if (!this.localizacion.equals(other.localizacion))
+			return false;
+		if (this.tipo != other.tipo)
+			return false;
+		if (this.idMiembro == null) {
+			if (other.idMiembro != null)
+				return false;
+		} else if (!this.idMiembro.equals(other.idMiembro))
+			return false;
+		return true;
+	}
 	
 }

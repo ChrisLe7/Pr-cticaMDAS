@@ -1,13 +1,10 @@
 package es.uco.mdas.business.socio;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 public class DetallesAbono implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String idSocio;
 	private String idAbono;
@@ -20,7 +17,7 @@ public class DetallesAbono implements Serializable {
 	
 	private float precio;
 
-	private Calendar fechaCancelacion; 
+	private Date fechaCancelacion; 
 	
 	/**
 	 * Constructor completo de un Abonado
@@ -31,9 +28,8 @@ public class DetallesAbono implements Serializable {
 	 * @param deporteAsignado
 	 * @param precio
 	 * */
-	
 	public DetallesAbono(String idSocio, String idAbono, String idLocalidad, String tipoAbono, String deporteAsignado,
-			float precio, Calendar fechaCancelacion) {
+			float precio, Date fechaCancelacion) {
 		super();
 		this.idSocio = idSocio;
 		this.idAbono = idAbono;
@@ -128,14 +124,72 @@ public class DetallesAbono implements Serializable {
 		this.precio = precio;
 	}
 
-	public Calendar getFechaCancelacion() {
+	public Date getFechaCancelacion() {
 		return fechaCancelacion;
 	}
 
-	public void setFechaCancelacion(Calendar fechaCancelacion) {
+	public void setFechaCancelacion(Date fechaCancelacion) {
 		this.fechaCancelacion = fechaCancelacion;
 	}
-	
-	
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del socio
+	 * 
+	 * @return Cadena con los datos del socio
+	 */
+	public String toString() {
+		return "DetallesAbono [idSocio=" + idSocio + ", idAbono=" + idAbono + ", idLocalidad=" + idLocalidad
+				+ ", tipoAbono=" + tipoAbono + ", deporteAsignado=" + deporteAsignado + ", precio=" + precio
+				+ ", fechaCancelacion=" + fechaCancelacion + "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos abonos son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesAbono other = (DetallesAbono) obj;
+		if (deporteAsignado == null) {
+			if (other.deporteAsignado != null)
+				return false;
+		} else if (!deporteAsignado.equals(other.deporteAsignado))
+			return false;
+		if (fechaCancelacion == null) {
+			if (other.fechaCancelacion != null)
+				return false;
+		} else if (!fechaCancelacion.equals(other.fechaCancelacion))
+			return false;
+		if (idAbono == null) {
+			if (other.idAbono != null)
+				return false;
+		} else if (!idAbono.equals(other.idAbono))
+			return false;
+		if (idLocalidad == null) {
+			if (other.idLocalidad != null)
+				return false;
+		} else if (!idLocalidad.equals(other.idLocalidad))
+			return false;
+		if (idSocio == null) {
+			if (other.idSocio != null)
+				return false;
+		} else if (!idSocio.equals(other.idSocio))
+			return false;
+		if (Float.floatToIntBits(precio) != Float.floatToIntBits(other.precio))
+			return false;
+		if (tipoAbono == null) {
+			if (other.tipoAbono != null)
+				return false;
+		} else if (!tipoAbono.equals(other.tipoAbono))
+			return false;
+		return true;
+	}
 	
 }

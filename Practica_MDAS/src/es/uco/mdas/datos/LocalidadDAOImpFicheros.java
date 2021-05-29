@@ -25,6 +25,7 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -46,7 +47,8 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File (nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -95,7 +97,7 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
-		File fich = null;
+		
 		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
@@ -118,8 +120,7 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fich = new File(nombreFichero);
-			fichero = new FileInputStream (fich);
+			fichero = new FileInputStream (nombreFichero);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
