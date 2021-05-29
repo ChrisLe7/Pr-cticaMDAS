@@ -62,8 +62,8 @@ public class AplicacionSocio {
 		    		//=  sistemaSocio.listarSocios();
 		    		
 		    		MostrarSocios(listadoSocios);
-		    		DetallesSocio socioElegido  = ElegirSocio();
-		    		sistemaSocio.eliminarDatosCliente(socioElegido.getIdSocio());
+		    		String idsocioElegido  = ElegirSocio();
+		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);
 		    		
 		    		break;
 		    	case 3:
