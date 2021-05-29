@@ -20,7 +20,7 @@ public class AplicacionSocio {
 		 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
 		 	System.out.println("\t -> Introduzca 1 Si desea Registra un nuevo Cliente");
 	        System.out.println("\t -> Introduzca 2 Si desea Eliminar un Cliente");
-// Debería de ser automatica	        System.out.println("\t -> Introduzca 3 Si desea Actualizar la Categoria de un Cliente");
+// DeberÃ­a de ser automatica	        System.out.println("\t -> Introduzca 3 Si desea Actualizar la Categoria de un Cliente");
 		
 	}
 	
@@ -63,8 +63,7 @@ public class AplicacionSocio {
 		    		
 		    		MostrarSocios(listadoSocios);
 		    		String idsocioElegido  = ElegirSocio();
-		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);
-		    		
+		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);		    		
 		    		break;
 		    	case 3:
 		    		
@@ -72,7 +71,7 @@ public class AplicacionSocio {
 		    		
 		    		break;
 		    	default:
-		    		System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");
+		    		System.out.println("Lo sentimos la opcion deseada no esta todavÃ­a desarrollada.");
 	    			System.out.println("Vuelva a contactar con los desarrolladores.");
 		    }
 		}

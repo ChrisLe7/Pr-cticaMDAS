@@ -139,4 +139,54 @@ public class DetallesLocalidad implements Serializable {
 		this.idSocio = idSocio;
 	}
 
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos de la Localidad
+	 * 
+	 * @return Cadena con los datos de la Localidad
+	 */
+	public String toString() {
+		return "DetallesLocalidad [idLocalidad=" + idLocalidad + ", fila=" + fila + ", sector=" + sector + ", zona="
+				+ zona + ", idInstalacionDeportiva=" + idInstalacionDeportiva + ", idSocio=" + idSocio + "]";
+	}
+	
+	@Override
+	/**
+	 * Compara si dos localidades son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null) 
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		DetallesLocalidad other = (DetallesLocalidad) obj;
+		if (this.idLocalidad == null) {
+			if (other.idLocalidad != null) {
+				return false;
+			}
+		} 	else if (!this.idLocalidad.equals(other.idLocalidad)) 
+				return false;
+		if (this.fila != other.fila) 
+			return false;
+		if (this.sector != other.sector)
+			return false;
+		if (this.zona != other.zona) 
+			return false;
+		if (this.idInstalacionDeportiva == null) {
+			if (other.idInstalacionDeportiva != null) 
+				return false;
+		} 	else if (!this.idInstalacionDeportiva.equals(other.idInstalacionDeportiva))
+				return false;
+		if (this.idSocio == null) {
+			if (other.idSocio != null) 
+				return false;
+		} 	else if (!this.idSocio.equals(other.idSocio))
+				return false;
+		
+		return true;
+	}
 }
