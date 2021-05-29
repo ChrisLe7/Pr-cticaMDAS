@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
+import es.uco.mdas.datos.SocioDAO;
 import es.uco.mdas.datos.SocioDAOImpFicheros;
 
 public class TestSocioDAO {
@@ -12,7 +13,7 @@ public class TestSocioDAO {
 		
 		SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
 		
-		SocioDAOImpFicheros socioDAO = new SocioDAOImpFicheros();
+		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		
 		DetallesCliente cliente = new DetallesCliente("nombre", "apellidos", "direccion", "telefono", formato.parse("27-10-2000"));
 		DetallesSocio socio = new DetallesSocio("1", cliente);

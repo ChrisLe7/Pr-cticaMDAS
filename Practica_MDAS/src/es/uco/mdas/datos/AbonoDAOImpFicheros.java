@@ -17,15 +17,17 @@ import es.uco.mdas.business.socio.DetallesAbono;
 public class AbonoDAOImpFicheros implements AbonoDAO{
 
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroAbono";
+	private static final String NOMBREFICHERO = "ficheroNombreAbono";
 	
-	private static final String NOMBREFICHEROAUXILIAR = "aux.bin";
+	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 	
 	public HashMap <String, DetallesAbono> queryAll() {
 		
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
+		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -47,7 +49,8 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -234,8 +237,8 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			try {
 				contenidoFicheroOrigen.close();
 				ficheroOrigen.close();
-				contenidoFicheroOrigen.close();
-				ficheroOrigen.close();
+				contenidoFicheroDestino.close();
+				ficheroDestino.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -374,8 +377,8 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			try {
 				contenidoFicheroOrigen.close();
 				ficheroOrigen.close();
-				contenidoFicheroOrigen.close();
-				ficheroOrigen.close();
+				contenidoFicheroDestino.close();
+				ficheroDestino.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
