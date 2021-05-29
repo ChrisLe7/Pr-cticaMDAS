@@ -25,6 +25,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -46,7 +47,8 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
