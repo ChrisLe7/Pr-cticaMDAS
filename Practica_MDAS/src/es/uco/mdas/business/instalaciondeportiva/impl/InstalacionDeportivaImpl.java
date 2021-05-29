@@ -3,6 +3,7 @@ package es.uco.mdas.business.instalaciondeportiva.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesContrato;
@@ -17,10 +18,15 @@ import es.uco.mdas.business.instalaciondeportiva.GestionarEspacioComercial;
 import es.uco.mdas.business.instalaciondeportiva.RealizacionContrato;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.datos.AbonoDAO;
+import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.ContratoDAO;
+import es.uco.mdas.datos.ContratoDAOImpFicheros;
 import es.uco.mdas.datos.DespachoDAO;
+import es.uco.mdas.datos.DespachoDAOImpFicheros;
 import es.uco.mdas.datos.EspacioComercialDAO;
+import es.uco.mdas.datos.EspacioComercialDAOImpFicheros;
 import es.uco.mdas.datos.LocalidadDAO;
+import es.uco.mdas.datos.LocalidadDAOImpFicheros;
 
 public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho, GestionarEspacioComercial{
 
@@ -62,7 +68,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		boolean estado = false;
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
-		DetallesAbono informacionAbono = abonoDAO.queryAbono(idAbono);
+		DetallesAbono informacionAbono = abonoDAO.queryById(idAbono);
 		
 		String idLocalidad = informacionAbono.getIdLocalidad();
 		
@@ -126,10 +132,12 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		
 		DetallesContrato contratoARenovar = contratoDAO.queryById(idContrato);
 		
-		Calendar fechaRenovacionContrato = contratoARenovar.getFechaRestriccion();
-		int nuevaFecha = fechaRenovacionContrato.get(Calendar.YEAR) + 1;
-		fechaRenovacionContrato.set(Calendar.YEAR, nuevaFecha);
-		contratoARenovar.setFechaRestriccion(fechaRenovacionContrato);
+		Date fechaRenovacionContrato = contratoARenovar.getFechaRestriccion();
+		
+		Calendar calendario = Calendar.getInstance();
+		calendario.setTime(fechaRenovacionContrato);
+		calendario.add(Calendar.YEAR, 1);
+		contratoARenovar.setFechaRestriccion(calendario.getTime());
 		
 		contratoDAO.update(contratoARenovar);
 		return contratoARenovar;
@@ -141,9 +149,8 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		
 		DetallesContrato contratoACancelar = contratoDAO.queryById(idContrato);
 		
-		if (contratoACancelar != null ) {
-			Calendar fechaCancelacion = Calendar.getInstance();
-			contratoACancelar.setFechaRestriccion(fechaCancelacion);
+		if (contratoACancelar != null) {
+			contratoACancelar.setFechaRestriccion(new Date());
 			
 			contratoDAO.update(contratoACancelar);
 
