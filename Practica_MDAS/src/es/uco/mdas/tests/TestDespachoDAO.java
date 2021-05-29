@@ -37,6 +37,9 @@ public class TestDespachoDAO {
 		queryRes = despachoDAO.queryById(despachoTest.getIdDespacho());
 		
 		assert queryRes == null : "Error se ha encontrado un Despacho borrado";
+		
+		System.out.println("Exito");
+		
 	}
 	
 }

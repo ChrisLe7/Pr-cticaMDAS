@@ -77,4 +77,45 @@ public class DetallesPresupuesto implements Serializable {
 		this.precio = precio;
 	}
 
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del presupuesto
+	 * 
+	 * @return Cadena con los datos del presupuesto
+	 */
+	public String toString() {
+		return "DetallesPresupuesto [idPresupuesto=" + idPresupuesto + ", idEspacio=" + idEspacio + ", precio=" + precio
+				+ "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos presupuestos son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesPresupuesto other = (DetallesPresupuesto) obj;
+		if (idEspacio == null) {
+			if (other.idEspacio != null)
+				return false;
+		} else if (!idEspacio.equals(other.idEspacio))
+			return false;
+		if (idPresupuesto == null) {
+			if (other.idPresupuesto != null)
+				return false;
+		} else if (!idPresupuesto.equals(other.idPresupuesto))
+			return false;
+		if (Float.floatToIntBits(precio) != Float.floatToIntBits(other.precio))
+			return false;
+		return true;
+	}
+	
+	
+
 }

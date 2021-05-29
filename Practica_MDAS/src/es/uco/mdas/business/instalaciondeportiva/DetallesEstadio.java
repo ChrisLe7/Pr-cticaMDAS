@@ -98,5 +98,49 @@ public class DetallesEstadio implements Serializable {
 	public void setDimensiones(float anchura, float longitud) {
 		this.dimensiones = anchura + "x" + longitud;
 	}
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del estadio
+	 * 
+	 * @return Cadena con los datos del estadio
+	 */
+	public String toString() {
+		return "DetallesEstadio [idEstadio=" + idEstadio + ", localizacion=" + localizacion + ", aforo=" + aforo
+				+ ", dimensiones=" + dimensiones + "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos estadios son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesEstadio other = (DetallesEstadio) obj;
+		if (aforo != other.aforo)
+			return false;
+		if (dimensiones == null) {
+			if (other.dimensiones != null)
+				return false;
+		} else if (!dimensiones.equals(other.dimensiones))
+			return false;
+		if (idEstadio == null) {
+			if (other.idEstadio != null)
+				return false;
+		} else if (!idEstadio.equals(other.idEstadio))
+			return false;
+		if (localizacion == null) {
+			if (other.localizacion != null)
+				return false;
+		} else if (!localizacion.equals(other.localizacion))
+			return false;
+		return true;
+	}
 	
 }
