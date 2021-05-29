@@ -117,5 +117,51 @@ public class DetallesEspacioComercial implements Serializable {
 	public void setArrendado(String arrendado) {
 		this.arrendado = arrendado;
 	}
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del espacio comercial
+	 * 
+	 * @return Cadena con los datos del espacio comercial
+	 */
+	public String toString() {
+		return "DetallesEspacioComercial [idEspacio=" + idEspacio + ", tipoEspacio=" + tipoEspacio + ", localizacion="
+				+ localizacion + ", precio=" + precio + ", arrendado=" + arrendado + "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos espacios comerciales son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesEspacioComercial other = (DetallesEspacioComercial) obj;
+		if (arrendado == null) {
+			if (other.arrendado != null)
+				return false;
+		} else if (!arrendado.equals(other.arrendado))
+			return false;
+		if (idEspacio == null) {
+			if (other.idEspacio != null)
+				return false;
+		} else if (!idEspacio.equals(other.idEspacio))
+			return false;
+		if (localizacion == null) {
+			if (other.localizacion != null)
+				return false;
+		} else if (!localizacion.equals(other.localizacion))
+			return false;
+		if (Float.floatToIntBits(precio) != Float.floatToIntBits(other.precio))
+			return false;
+		if (tipoEspacio != other.tipoEspacio)
+			return false;
+		return true;
+	}
 	
 }

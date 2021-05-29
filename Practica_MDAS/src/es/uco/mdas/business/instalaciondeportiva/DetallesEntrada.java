@@ -97,5 +97,49 @@ public class DetallesEntrada implements Serializable {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos de la entrada
+	 * 
+	 * @return Cadena con los datos de la entrada
+	 */
+	public String toString() {
+		return "DetallesEntrada [localizacion=" + localizacion + ", fecha=" + fecha + ", asiento=" + asiento
+				+ ", precio=" + precio + "]";
+	}
+
+	@Override
+	/**
+	 * Compara si dos entradas son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesEntrada other = (DetallesEntrada) obj;
+		if (asiento == null) {
+			if (other.asiento != null)
+				return false;
+		} else if (!asiento.equals(other.asiento))
+			return false;
+		if (fecha == null) {
+			if (other.fecha != null)
+				return false;
+		} else if (!fecha.equals(other.fecha))
+			return false;
+		if (localizacion == null) {
+			if (other.localizacion != null)
+				return false;
+		} else if (!localizacion.equals(other.localizacion))
+			return false;
+		if (Float.floatToIntBits(precio) != Float.floatToIntBits(other.precio))
+			return false;
+		return true;
+	}
 	
 }
