@@ -1,7 +1,7 @@
 package es.uco.mdas.business.instalaciondeportiva;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 public class DetallesContrato implements Serializable {
 
@@ -10,7 +10,7 @@ public class DetallesContrato implements Serializable {
 	private String idEmpresa;
 	private String cuentaBancaria;
 	private String idEspacio;
-	private Calendar fechaRestriccion;
+	private Date fechaRestriccion;
 	
 	/**
 	 * Constructor completo de contrato
@@ -21,7 +21,7 @@ public class DetallesContrato implements Serializable {
 	 * @param idEspacio Id del espacio comercial
 	 * @param fechaRestriccion Fecha de finalizacion del contrato
 	 */
-	public DetallesContrato(String idContrato, String idEmpresa, String cuentaBancaria, String idEspacio, Calendar fechaRestriccion) {
+	public DetallesContrato(String idContrato, String idEmpresa, String cuentaBancaria, String idEspacio, Date fechaRestriccion) {
 		this.idContrato = idContrato;
 		this.idEmpresa = idEmpresa;
 		this.cuentaBancaria = cuentaBancaria;
@@ -106,7 +106,7 @@ public class DetallesContrato implements Serializable {
 	 * 
 	 * @return Fecha de finalizacion del contrato
 	 */
-	public Calendar getFechaRestriccion() {
+	public Date getFechaRestriccion() {
 		return fechaRestriccion;
 	}
 
@@ -115,8 +115,60 @@ public class DetallesContrato implements Serializable {
 	 * 
 	 * @param fechaRestriccion Fecha de finalizacion a asignar
 	 */
-	public void setFechaRestriccion(Calendar fechaRestriccion) {
+	public void setFechaRestriccion(Date fechaRestriccion) {
 		this.fechaRestriccion = fechaRestriccion;
 	}
+
+	@Override
+	/**
+	 * Devuelve una cadena con todos los datos del contrato
+	 * 
+	 * @return Cadena con los datos del contrato
+	 */
+	public String toString() {
+		return "DetallesContrato [idContrato=" + idContrato + ", idEmpresa=" + idEmpresa + ", cuentaBancaria="
+				+ cuentaBancaria + ", idEspacio=" + idEspacio + ", fechaRestriccion=" + fechaRestriccion + "]";
+	}
 	
+	@Override
+	/**
+	 * Compara si dos contratos son iguales
+	 * @return True si son iguales y false en caso contrario
+	 */
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DetallesContrato other = (DetallesContrato) obj;
+		
+		if (this.idContrato == null) {
+			if (other.idContrato != null) 
+				return false;
+		} else if (!this.idContrato.equals(other.idContrato)) 
+				return false;
+		if (this.idEmpresa == null) {
+			if (other.idEmpresa != null) 
+				return false;
+		} else if (!this.idEmpresa.equals(other.idEmpresa)) 
+				return false;
+		if (this.cuentaBancaria == null) {
+			if (other.cuentaBancaria != null) 
+				return false;
+		} else if (!this.cuentaBancaria.equals(other.cuentaBancaria)) 
+				return false;
+		if (this.idEspacio == null) {
+			if (other.idEspacio != null) 
+				return false;
+		} else if (!this.idEspacio.equals(other.idEspacio)) 
+				return false;
+		if (this.fechaRestriccion == null) {
+			if (other.fechaRestriccion != null) 
+				return false;
+		} else if (!this.fechaRestriccion.equals(other.fechaRestriccion)) 
+				return false;
+		return true;
+	}
 }
