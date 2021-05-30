@@ -3,7 +3,6 @@ package es.uco.mdas.tests;
 import java.text.ParseException;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesEspacioComercial;
-import es.uco.mdas.business.instalaciondeportiva.DetallesEstadio;
 import es.uco.mdas.business.instalaciondeportiva.TipoEspacio;
 import es.uco.mdas.datos.EspacioComercialDAO;
 import es.uco.mdas.datos.EspacioComercialDAOImpFicheros;
