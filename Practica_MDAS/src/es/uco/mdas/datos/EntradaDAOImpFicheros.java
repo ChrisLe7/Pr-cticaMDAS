@@ -65,7 +65,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 				while(true) {
 
 					entrada = (DetallesEntrada) contenidoFichero.readObject();
-					String clave = entrada.getAsiento();
+					String clave = entrada.getIdEntrada();
 					listadoEntradas.put(clave, entrada);
 				}
 				
@@ -139,7 +139,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 
 					entrada = (DetallesEntrada) contenidoFichero.readObject();
 					
-					if (entrada.getAsiento().equals(idItem)) {
+					if (entrada.getIdEntrada().equals(idItem)) {
 						detallesEntrada = entrada;
 						break;
 					}
@@ -225,7 +225,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 
 					registroFichero = (DetallesEntrada) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getAsiento().equals(item.getAsiento())) {
+					if (registroFichero.getIdEntrada().equals(item.getIdEntrada())) {
 						registroFichero = item;
 						estado = !estado;
 					}
@@ -372,7 +372,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 
 					registroFichero = (DetallesEntrada) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getAsiento().equals(idItem)) {
+					if (registroFichero.getIdEntrada().equals(idItem)) {
 						estado = !estado;
 					}
 					else {

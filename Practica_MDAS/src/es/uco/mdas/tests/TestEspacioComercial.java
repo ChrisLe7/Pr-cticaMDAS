@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesEspacioComercial;
 import es.uco.mdas.business.instalaciondeportiva.DetallesEstadio;
+import es.uco.mdas.business.instalaciondeportiva.TipoEspacio;
 import es.uco.mdas.datos.EspacioComercialDAO;
 import es.uco.mdas.datos.EspacioComercialDAOImpFicheros;
 
@@ -12,7 +13,7 @@ public class TestEspacioComercial {
 	public static void main(String[] args) throws ParseException {
 		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros ();
 		//Faltan poner los tipos del enum
-		DetallesEspacioComercial espacioComercialTest = new DetallesEspacioComercial("idEspacio", TipoEspacio, "idLocalizacion", (float) 40, "idEmpresaArrendada");
+		DetallesEspacioComercial espacioComercialTest = new DetallesEspacioComercial("idEspacio", TipoEspacio.Tienda, "idLocalizacion", (float) 40, "idEmpresaArrendada");
 		
 		System.out.println("TestEspacioComercialDAO");
 		

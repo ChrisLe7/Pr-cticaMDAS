@@ -6,6 +6,7 @@ import java.util.Date;
 public class DetallesEntrada implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private String idEntrada;
 	private String localizacion;
 	private Date fecha;
 	private String asiento;
@@ -19,12 +20,32 @@ public class DetallesEntrada implements Serializable {
 	 * @param asiento Id de la localidad asignada a la entrada
 	 * @param precio Precio de la entrada
 	 */
-	public DetallesEntrada(String localizacion, Date fecha, String asiento, float precio) {
+	public DetallesEntrada(String idEntrada, String localizacion, Date fecha, String asiento, float precio) {
+		this.idEntrada = idEntrada;
 		this.localizacion = localizacion;
 		this.fecha = fecha;
 		this.asiento = asiento;
 		this.precio = precio;
 	}
+
+	/**
+	 * Devuelve la id de la entrada
+	 * 
+	 * @return Id de la entrada
+	 */
+	public String getIdEntrada() {
+		return idEntrada;
+	}
+
+	/**
+	 * Asigna una id a la entrada
+	 * 
+	 * @param localizacion Id de la entrada a asignar
+	 */
+	public void setIdEntrada(String idEntrada) {
+		this.idEntrada = idEntrada;
+	}
+
 
 	/**
 	 * Devuelve la id de la instalacion deportiva para la que es valida la entrada
@@ -122,6 +143,11 @@ public class DetallesEntrada implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DetallesEntrada other = (DetallesEntrada) obj;
+		if (this.idEntrada == null) {
+			if (other.idEntrada != null)
+				return false;
+		} else if (!this.idEntrada.equals(other.idEntrada))
+			return false;
 		if (asiento == null) {
 			if (other.asiento != null)
 				return false;
