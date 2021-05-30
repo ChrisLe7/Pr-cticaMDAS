@@ -9,7 +9,6 @@ public class MainProgram {
 		System.out.println("Buenas esta iniciando el Gestor de Socios y Abonados");
 		int optionSistema = 1;
 		AplicacionSocio aplicacionSocio = new AplicacionSocio();
-		aplicacionSocio.IniciarTemporizador();
 		AplicacionAbono aplicacionAbono = new AplicacionAbono();
 		Scanner opcionElegida;
 		while (optionSistema != 0) {
@@ -30,6 +29,7 @@ public class MainProgram {
 		    	case 1:
 		    		// Sistema socios
 		    		aplicacionSocio.start();
+		    		aplicacionSocio.IniciarTemporizador();
 		    	break;
 		    	case 2:
 		    		// Sistema abonos

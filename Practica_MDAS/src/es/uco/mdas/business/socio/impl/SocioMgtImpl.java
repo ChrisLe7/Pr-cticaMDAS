@@ -71,12 +71,15 @@ public class SocioMgtImpl implements SocioMgt {
 		return abonoDAO.update(nuevoAbono);
 	}
 	
-	public boolean registrarDatosCliente (DetallesCliente cliente) {
+	public DetallesSocio registrarDatosCliente (DetallesCliente cliente) {
 		String idSocio = "";
 		DetallesSocio socio = new DetallesSocio(idSocio, cliente);
 		
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
-		return socioDAO.insert(socio);
+		if (socioDAO.insert(socio)) {
+			return socio;
+		}
+		return null;
 	}
 	
 	public boolean eliminarDatosCliente (String idSocio ) {

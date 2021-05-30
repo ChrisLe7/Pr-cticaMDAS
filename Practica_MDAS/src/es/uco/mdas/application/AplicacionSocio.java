@@ -59,6 +59,12 @@ public class AplicacionSocio {
 		    		DetallesCliente clienteNuevo = CrearCliente();
 		    		
 		    		DetallesSocio nuevoSocio = sistemaSocio.registrarDatosCliente(clienteNuevo);
+		    		
+		    		if (nuevoSocio != null) {
+			    		System.out.println("El socio se ha registrado con exito");
+			    		System.out.println("InfoSocio: " + nuevoSocio.toString());
+
+		    		}
 		    		break;
 		    	case 2:
 		    	
@@ -115,7 +121,6 @@ public class AplicacionSocio {
         } while (checkFecha == false);
 		
 		DetallesCliente nuevoCliente = new DetallesCliente (nombreCliente, apellidosCliente, direccionCliente, telefonoContacto, edad);
-		scannerCliente.close();
 		
 		
 		return nuevoCliente;
@@ -132,7 +137,6 @@ public class AplicacionSocio {
 		Scanner scannerEliminar = new Scanner(System.in);
 		idSocio = scannerEliminar.nextLine();
 		
-		scannerEliminar.close();
 		return idSocio;
 	}
 	

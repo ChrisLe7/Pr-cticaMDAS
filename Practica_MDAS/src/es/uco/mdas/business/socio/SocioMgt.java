@@ -14,7 +14,7 @@ public interface SocioMgt {
 	
 	public boolean actualizarAbono(DetallesAbono nuevoAbono);
 	
-	public boolean registrarDatosCliente(DetallesCliente cliente);
+	public DetallesSocio registrarDatosCliente(DetallesCliente cliente);
 	
 	public boolean eliminarDatosCliente(String idSocio);
 	

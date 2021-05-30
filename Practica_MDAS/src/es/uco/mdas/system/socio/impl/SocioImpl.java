@@ -19,8 +19,7 @@ public class SocioImpl implements Socio {
 
 	@Override
 	public DetallesSocio registrarDatosCliente(DetallesCliente cliente) {
-		DetallesSocio socio = new DetallesSocio("");
-		socioMgt.registrarDatosCliente(cliente);
+		DetallesSocio socio = socioMgt.registrarDatosCliente(cliente);
 		return socio;
 	}
 
