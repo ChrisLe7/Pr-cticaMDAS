@@ -11,5 +11,6 @@ public interface GestionarAbono {
 	public void liberarLocalidad(DetallesLocalidad localidad);
 	public boolean liberarAbono(String idAbono);
 	public boolean registrarAbono(DetallesAbono abono);
+	public DetallesLocalidad getDetallesLocalidad (String idLocalidad);
 	
 }

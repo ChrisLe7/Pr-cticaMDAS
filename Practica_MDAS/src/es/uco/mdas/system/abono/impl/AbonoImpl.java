@@ -28,10 +28,8 @@ public class AbonoImpl implements Abono {
 	@Override
 	public DetallesAbono obtenerInformacionAbono(String idSocio) {
 		
-		DetallesAbono abono = new DetallesAbono("", "");
-				
-		abono = socioMgt.obtenerInformacionAbono(idSocio);
-		
+		DetallesAbono abono = socioMgt.obtenerInformacionAbono(idSocio);
+
 		return abono;
 				
 	}
@@ -67,7 +65,7 @@ public class AbonoImpl implements Abono {
 	}
 	
 	@Override
-	public boolean modificarLocalidadAbono(String idAbono) {
+	public boolean modificarLocalidadAbono(String idAbono, String localidadNewId) {
 		
 		boolean estado = false;
 			
@@ -80,11 +78,6 @@ public class AbonoImpl implements Abono {
 		
 		ArrayList <String> libres = simulacionLocalidades(); //cargo los disponibles
 	
-		System.out.println("Introduzca el ID de la localidad deseada");
-		String localidadNewId = null;
-		Scanner scannerSeleccionar = new Scanner(System.in);
-		localidadNewId = scannerSeleccionar.nextLine();		
-		
 		if (libres.contains(localidadNewId)) {
 			
 			libres.remove(localidadNewId); //con esto indico que lo quitaria de los disponibles

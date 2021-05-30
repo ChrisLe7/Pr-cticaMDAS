@@ -102,6 +102,13 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		
 		return estado;
 	}
+	
+	@Override
+	public DetallesLocalidad getDetallesLocalidad(String idLocalidad) {
+		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
+		DetallesLocalidad infoLocalidad = localidadDAO.queryById(idLocalidad);
+		return infoLocalidad;
+	}
 
 	@Override
 	public DetallesPresupuesto generarPresupuesto(DetallesEspacioComercial espacioComercial) {
@@ -222,5 +229,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		DetallesEspacioComercial infoEspacioComercialDeseado = espacioComercialDAO.queryById(idEspacioComercial);
 		return infoEspacioComercialDeseado;
 	}
+
+
 
 }
