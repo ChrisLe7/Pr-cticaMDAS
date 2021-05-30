@@ -76,7 +76,12 @@ public class AplicacionAbono {
 		    		}
 		    	break;
 		    	case 5:
-		    		//No se puede implementar de forma completa
+		    		String idSocioABuscarAbono = ElegirSocio();
+		    		if (sistemaAbono.modificarLocalidadAbono(idAbono)) {
+		    			System.out.println("Se ha modificado la localidad del abono con exito");
+		    		}else {
+		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
+		    		}
 		    	break;
 		    		
 			}

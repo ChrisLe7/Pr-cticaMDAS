@@ -1,5 +1,10 @@
 package es.uco.mdas.system.abono.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Scanner;
+
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
@@ -8,16 +13,15 @@ import es.uco.mdas.business.socio.SocioMgt;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
 import es.uco.mdas.business.instalaciondeportiva.impl.InstalacionDeportivaImpl;
 
-
 public class AbonoImpl implements Abono {
 	
 	private SocioMgt socioMgt;
-	private GestionarAbono abono;
+	private GestionarAbono abonoMgt;
 	
 	public AbonoImpl() {
 		
 		this.socioMgt = new SocioMgtImpl();
-		this.abono = new InstalacionDeportivaImpl();
+		this.abonoMgt = new InstalacionDeportivaImpl();
 	}
 	
 		
@@ -43,15 +47,22 @@ public class AbonoImpl implements Abono {
 		
 		boolean estado = false;
 		
+		Date today = new Date();
+		
 		DetallesLocalidad localidad = new DetallesLocalidad("", 0, 0, 0, "", "");
 		
-		estado = socioMgt.cancelarAbono(idAbono);
+		DetallesAbono abono = obtenerInformacionAbono(idAbono);
 		
-		if(estado) {
+		if(abono.getFechaCancelacion().after(today)) {
 			
-			return localidad;
+			estado = socioMgt.cancelarAbono(idAbono);
+			
+			if(estado) {
+				
+				return localidad;
+			}
 		}
-		
+				
 		return null;
 	}
 	
@@ -59,13 +70,28 @@ public class AbonoImpl implements Abono {
 	public boolean modificarLocalidadAbono(String idAbono) {
 		
 		boolean estado = false;
-		
+			
 		DetallesAbono abono = obtenerInformacionAbono(idAbono);
-		///Liberar localidad antigua y reasignar la nueva al abonodo
-		abono.setIdLocalidad(idAbono);
+		///Liberar localidad antigua y reasignar la nueva al abonado
 		
-		estado = socioMgt.actualizarAbono(abono);
+		String localidadOldId = abono.getIdLocalidad();
+		DetallesLocalidad localidadOld= abonoMgt.getDetallesLocalidad(localidadOldId);
+		abonoMgt.liberarLocalidad(localidadOld);
 		
+		ArrayList <String> libres = simulacionLocalidades(); //cargo los disponibles
+	
+		System.out.println("Introduzca el ID de la localidad deseada");
+		String localidadNewId = null;
+		Scanner scannerSeleccionar = new Scanner(System.in);
+		localidadNewId = scannerSeleccionar.nextLine();		
+		
+		if (libres.contains(localidadNewId)) {
+			
+			libres.remove(localidadNewId); //con esto indico que lo quitaria de los disponibles
+			abono.setIdLocalidad(localidadNewId);
+			estado = socioMgt.actualizarAbono(abono);
+		}
+			
 		return estado;
 	}
 	
@@ -88,8 +114,30 @@ public class AbonoImpl implements Abono {
 		
 		boolean estado = false;
 		
+		ArrayList <String> libres = simulacionLocalidades(); //cargo los disponibles
+		
+		System.out.println("Introduzca el ID de la localidad deseada");
+		String localidadNewId = null;
+		Scanner scannerSeleccionar = new Scanner(System.in);
+		localidadNewId = scannerSeleccionar.nextLine();		
+		
+		if (libres.contains(localidadNewId)) {
+			
+			libres.remove(localidadNewId); //con esto indico que lo quitaria de los disponibles
+			abono.setIdLocalidad(localidadNewId);
+		}
+		
 		estado = socioMgt.registrarAbono(abono);		
 		
 		return estado;
+	}
+	
+	public ArrayList <String> simulacionLocalidades() { //simular localidades disponibles
+		
+		ArrayList <String> libres = new ArrayList <String>(Arrays.asList("2", "6", "7", "9", "15", "16"));
+			
+		System.out.println("Estan libres: " + libres);
+		
+		return libres;
 	}
 }
