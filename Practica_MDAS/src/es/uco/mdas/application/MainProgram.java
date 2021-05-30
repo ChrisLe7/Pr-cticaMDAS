@@ -8,7 +8,10 @@ public class MainProgram {
 	public static void main(String[] argv) {
 		System.out.println("Buenas esta iniciando el Gestor de Socios y Abonados");
 		int optionSistema = 1;
-		Scanner opcionElegida ;
+		AplicacionSocio aplicacionSocio = new AplicacionSocio();
+		aplicacionSocio.IniciarTemporizador();
+		AplicacionAbono aplicacionAbono = new AplicacionAbono();
+		Scanner opcionElegida;
 		while (optionSistema != 0) {
 			
 			PrintMenu();
@@ -24,11 +27,13 @@ public class MainProgram {
             }
 		    
 		    switch (optionSistema) {
-		    	case 1: 
-		    		//Sistema Socios
+		    	case 1:
+		    		// Sistema socios
+		    		aplicacionSocio.start();
 		    	break;
 		    	case 2:
-		    		//Sistema Abonos
+		    		// Sistema abonos
+		    		aplicacionAbono.start();
 		    	break;
 		    	case 0: 
 		    		System.out.println("Hasta la próximas");

@@ -2,11 +2,14 @@ package es.uco.mdas.application;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
@@ -16,11 +19,13 @@ import es.uco.mdas.system.socio.impl.SocioImpl;
 
 public class AplicacionSocio {
 	
+	Socio sistemaSocio = null;
+	
 	private void PrintMenuSocios() {
 		 System.out.println("Opciones Permitidas");
-		 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
-		 	System.out.println("\t -> Introduzca 1 Si desea Registra un nuevo Cliente");
-	        System.out.println("\t -> Introduzca 2 Si desea Eliminar un Cliente");
+		 System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
+		 System.out.println("\t -> Introduzca 1 Si desea Registra un nuevo Cliente");
+	     System.out.println("\t -> Introduzca 2 Si desea Eliminar un Cliente");
 	}
 	
 	public void start () {
@@ -31,7 +36,7 @@ public class AplicacionSocio {
 		
 		Scanner opcionElegida ;
 		int opcionDeseada = 1;
-		Socio sistemaSocio = new SocioImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		sistemaSocio = new SocioImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
 		while (opcionDeseada != 0) {
 			
 			PrintMenuSocios();
@@ -129,6 +134,25 @@ public class AplicacionSocio {
 		
 		scannerEliminar.close();
 		return idSocio;
+	}
+	
+	public void IniciarTemporizador() {
+		Calendar hoy = Calendar.getInstance();
+		// Se ejecuta a las 2 am
+		hoy.set(Calendar.HOUR_OF_DAY, 2);
+		hoy.set(Calendar.MINUTE, 0);
+		hoy.set(Calendar.SECOND, 0);
+
+		Timer temporizador = new Timer();
+		TimerTask tarea = new TimerTask() {
+			public void run() {
+				// Tarea para comprobar el tiempo de vinculacion de los socios
+				sistemaSocio.comprobarTiempoVinculacion();
+			}
+		};
+		
+		// Se ejecuta cada dia a las 2 am la tarea especificada
+		temporizador.schedule(tarea, hoy.getTime(), 86400000);
 	}
 	
 }
