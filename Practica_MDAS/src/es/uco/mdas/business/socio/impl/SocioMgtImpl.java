@@ -49,11 +49,13 @@ public class SocioMgtImpl implements SocioMgt {
 	
 	public boolean cancelarAbono(String idAbono) {
 		boolean estado = false;
+		Date today = new Date();
+		
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
 		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
-		if (abonoSocio != null ) {
+		if (abonoSocio != null && abonoSocio.getFechaCancelacion().after(today)) {
 			abonoSocio.setFechaCancelacion(new Date());
 			abonoDAO.update(abonoSocio);
 			estado = !estado;

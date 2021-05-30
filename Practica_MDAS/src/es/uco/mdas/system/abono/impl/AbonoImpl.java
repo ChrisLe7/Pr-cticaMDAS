@@ -31,7 +31,6 @@ public class AbonoImpl implements Abono {
 		DetallesAbono abono = socioMgt.obtenerInformacionAbono(idSocio);
 
 		return abono;
-				
 	}
 	
 	@Override
@@ -44,23 +43,16 @@ public class AbonoImpl implements Abono {
 	public DetallesLocalidad cancelarAbono(String idAbono) {
 		
 		boolean estado = false;
-		
-		Date today = new Date();
-		
+				
 		DetallesLocalidad localidad = new DetallesLocalidad("", 0, 0, 0, "", "");
-		
-		DetallesAbono abono = obtenerInformacionAbono(idAbono);
-		
-		if(abono.getFechaCancelacion().after(today)) {
 			
-			estado = socioMgt.cancelarAbono(idAbono);
+		estado = socioMgt.cancelarAbono(idAbono);
 			
-			if(estado) {
-				
-				return localidad;
-			}
+		if(estado) {
+			
+			return localidad;
 		}
-				
+						
 		return null;
 	}
 	
