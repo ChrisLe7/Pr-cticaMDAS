@@ -37,7 +37,7 @@ public interface Abono {
 	 * @param idAbono ID del abono
 	 * @return True si se modifica y false en caso contrario
 	 */	
-	public boolean modificarLocalidadAbono(String idAbono);
+	public boolean modificarLocalidadAbono(String idAbono, String localidadNewId);
 	
 	
 	/**

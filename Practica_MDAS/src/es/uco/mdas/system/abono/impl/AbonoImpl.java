@@ -2,9 +2,6 @@ package es.uco.mdas.system.abono.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.Scanner;
-
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
@@ -100,16 +97,9 @@ public class AbonoImpl implements Abono {
 		boolean estado = false;
 		
 		ArrayList <String> libres = simulacionLocalidades(); //cargo los disponibles
-		
-		System.out.println("Introduzca el ID de la localidad deseada");
-		String localidadNewId = null;
-		Scanner scannerSeleccionar = new Scanner(System.in);
-		localidadNewId = scannerSeleccionar.nextLine();		
-		
-		if (libres.contains(localidadNewId)) {
-			
-			libres.remove(localidadNewId); //con esto indico que lo quitaria de los disponibles
-			abono.setIdLocalidad(localidadNewId);
+						
+		if (libres.contains(abono.getIdLocalidad())) {
+			libres.remove(abono.getIdLocalidad()); //con esto indico que lo quitaria de los disponibles
 		}
 		
 		estado = socioMgt.registrarAbono(abono);		
@@ -120,9 +110,7 @@ public class AbonoImpl implements Abono {
 	public ArrayList <String> simulacionLocalidades() { //simular localidades disponibles
 		
 		ArrayList <String> libres = new ArrayList <String>(Arrays.asList("2", "6", "7", "9", "15", "16"));
-			
-		System.out.println("Estan libres: " + libres);
-		
+				
 		return libres;
 	}
 }
