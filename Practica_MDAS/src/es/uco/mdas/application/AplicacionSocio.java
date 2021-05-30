@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
@@ -116,8 +117,8 @@ public class AplicacionSocio {
 	}
 
 	private boolean checkTelefono(String telefonoContacto) {
-		// TODO Auto-generated method stub
-		return false;
+		Pattern pattern = Pattern.compile("[0-9]{9}");
+	    return pattern.matcher(telefonoContacto).matches();
 	}
 	
 	private String ElegirSocio() {
