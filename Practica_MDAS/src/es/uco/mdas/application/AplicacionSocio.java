@@ -20,8 +20,6 @@ public class AplicacionSocio {
 		 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
 		 	System.out.println("\t -> Introduzca 1 Si desea Registra un nuevo Cliente");
 	        System.out.println("\t -> Introduzca 2 Si desea Eliminar un Cliente");
-// Debería de ser automatica	        System.out.println("\t -> Introduzca 3 Si desea Actualizar la Categoria de un Cliente");
-		
 	}
 	
 	public void start () {
@@ -58,36 +56,14 @@ public class AplicacionSocio {
 		    		break;
 		    	case 2:
 		    	
-		    		HashMap<String, DetallesSocio> listadoSocios ; 
-		    		//=  sistemaSocio.listarSocios();
-		    		
-		    		MostrarSocios(listadoSocios);
 		    		String idsocioElegido  = ElegirSocio();
 		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);		    		
-		    		break;
-		    	case 3:
-		    		
-		    		//Modificar Categoria de forma automatica 
-		    		
 		    		break;
 		    	default:
 		    		System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");
 	    			System.out.println("Vuelva a contactar con los desarrolladores.");
 		    }
 		}
-	}
-
-	private void MostrarSocios(HashMap<String, DetallesSocio> listadoSocios) {
-		// TODO Auto-generated method stub
-		System.out.println("---------------------------");
-		System.out.println("Listado de Socios Actualmente");
-		
-		for (String idSocio : listadoSocios.keySet()) {
-			DetallesSocio socioAMostrar = listadoSocios.get(idSocio);
-			System.out.println(socioAMostrar.toString());
-		}
-		System.out.println("---------------------------");
-		
 	}
 
 	private DetallesCliente CrearCliente() {
