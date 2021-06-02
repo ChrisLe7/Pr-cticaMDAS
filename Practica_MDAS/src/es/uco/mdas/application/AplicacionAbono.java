@@ -3,9 +3,12 @@ package es.uco.mdas.application;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.system.abono.impl.AbonoImpl;
+
+
 
 public class AplicacionAbono {
 	
@@ -61,8 +64,8 @@ public class AplicacionAbono {
 		    		}
 		    	break;
 		    	case 3:
-		    		String idAbono = ElegirSocio();
-		    		if (sistemaAbono.renovarAbono(idAbono)) {
+		    		String idSocioAbonado = ElegirSocio();
+		    		if (sistemaAbono.renovarAbono(idSocioAbonado)) {
 		    			System.out.println("Se ha renovado el abono con exito");
 		    		}else {
 		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
@@ -71,8 +74,11 @@ public class AplicacionAbono {
 		    	case 4:
 		    		idSocioABuscarAbono = ElegirSocio();
 		    		///ESTO HABRIA QUE VER COMO HACERLO MEJOR
-		    		if (sistemaAbono.cancelarAbono(idSocioABuscarAbono) == null ) {
+		    		DetallesLocalidad localidadALiberar = sistemaAbono.cancelarAbono(idSocioABuscarAbono);
+		    		if (localidadALiberar != null) {
+		    			sistemaLocalidades.
 		    			System.out.println("Se ha cancelador el abono con exito");
+		    			
 		    		}else {
 		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
 		    		}
@@ -93,6 +99,25 @@ public class AplicacionAbono {
 	
 	
 	private DetallesAbono RegistrarAbono() {
+		String idSocio = null;
+		String idAbono = ""; //Hay que hacer alguna función para generar las IDS.
+		System.out.println("Introduzca el ID del Socio");
+		Scanner scannerRegistrar = new Scanner(System.in);
+		idSocio = scannerRegistrar.nextLine();
+		DetallesAbono abonoARegistrar = new DetallesAbono(idSocio, idAbono);
+		
+		String idLocalidad = ElegirLocalidad();
+
+		String tipoAbono = ElegirTipoAbono();
+		abonoARegistrar.setIdLocalidad(idLocalidad);
+		abonoARegistrar.setTipoAbono(tipoAbono);
+		
+		String deporteAsignado = scannerRegistrar.nextLine();
+		abonoARegistrar.setDeporteAsignado(deporteAsignado);
+		return abonoARegistrar;
+	}
+
+	private String ElegirTipoAbono() {
 		// TODO Auto-generated method stub
 		return null;
 	}
