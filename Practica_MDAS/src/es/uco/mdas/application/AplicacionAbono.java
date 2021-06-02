@@ -7,11 +7,15 @@ import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.system.abono.impl.AbonoImpl;
+import es.uco.mdas.system.localidad.Localidad;
+import es.uco.mdas.system.localidad.imp.LocalidadImp;
 
 
 
 public class AplicacionAbono {
 	
+	private Abono sistemaAbono = null;
+	private Localidad sistemaLocalidad = null;
 	private static void PrintMenuAbonos()  {
 	 	System.out.println("Opciones Permitidas");
 	 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
@@ -30,7 +34,8 @@ public class AplicacionAbono {
 		
 		Scanner opcionElegida ;
 		int opcionDeseada = 1;
-		Abono sistemaAbono = new AbonoImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		sistemaAbono = new AbonoImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		sistemaLocalidad = new LocalidadImp ();
 		String idSocioABuscarAbono = null;
 		while (opcionDeseada != 0) {
 			
@@ -73,11 +78,13 @@ public class AplicacionAbono {
 		    	break;
 		    	case 4:
 		    		idSocioABuscarAbono = ElegirSocio();
-		    		///ESTO HABRIA QUE VER COMO HACERLO MEJOR
 		    		DetallesLocalidad localidadALiberar = sistemaAbono.cancelarAbono(idSocioABuscarAbono);
 		    		if (localidadALiberar != null) {
-		    			sistemaLocalidades.
-		    			System.out.println("Se ha cancelador el abono con exito");
+		    			if (sistemaLocalidad.liberarLocalidad(localidadALiberar)) {
+			    			System.out.println("Se ha cancelador el abono con exito");		    				
+		    			}else {
+		    				System.out.println("Ha ocurrido un error al liberar la localidad");
+		    			}
 		    			
 		    		}else {
 		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
