@@ -3,6 +3,7 @@ package es.uco.mdas.business.socio.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 
 import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesAbono;
@@ -72,7 +73,8 @@ public class SocioMgtImpl implements SocioMgt {
 	}
 	
 	public DetallesSocio registrarDatosCliente (DetallesCliente cliente) {
-		String idSocio = "";
+		Random generador = new Random();
+		String idSocio = "" + generador.nextInt(10000);
 		DetallesSocio socio = new DetallesSocio(idSocio, cliente);
 		
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
