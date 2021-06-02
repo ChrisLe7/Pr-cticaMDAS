@@ -28,6 +28,7 @@ public class AplicacionAbono {
 		Scanner opcionElegida ;
 		int opcionDeseada = 1;
 		Abono sistemaAbono = new AbonoImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		String idSocioABuscarAbono = null;
 		while (opcionDeseada != 0) {
 			
 			PrintMenuAbonos();
@@ -47,7 +48,7 @@ public class AplicacionAbono {
 		    		System.out.println("Cerrando el Sistema de Socios");
 		    	break;
 		    	case 1:
-		    		String idSocioABuscarAbono = ElegirSocio();
+		    		idSocioABuscarAbono = ElegirSocio();
 		    		DetallesAbono informacionAbonoBuscado = sistemaAbono.obtenerInformacionAbono(idSocioABuscarAbono);
 		    		showAbono(informacionAbonoBuscado);
 		    	break;
@@ -60,7 +61,7 @@ public class AplicacionAbono {
 		    		}
 		    	break;
 		    	case 3:
-		    		String idSocioABuscarAbono = ElegirSocio();
+		    		String idAbono = ElegirSocio();
 		    		if (sistemaAbono.renovarAbono(idAbono)) {
 		    			System.out.println("Se ha renovado el abono con exito");
 		    		}else {
@@ -68,16 +69,18 @@ public class AplicacionAbono {
 		    		}
 		    	break;
 		    	case 4:
-		    		String idSocioABuscarAbono = ElegirSocio();
-		    		if (sistemaAbono.cancelarAbono(idAbono)) {
+		    		idSocioABuscarAbono = ElegirSocio();
+		    		///ESTO HABRIA QUE VER COMO HACERLO MEJOR
+		    		if (sistemaAbono.cancelarAbono(idSocioABuscarAbono) == null ) {
 		    			System.out.println("Se ha cancelador el abono con exito");
 		    		}else {
 		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
 		    		}
 		    	break;
 		    	case 5:
-		    		String idSocioABuscarAbono = ElegirSocio();
-		    		if (sistemaAbono.modificarLocalidadAbono(idAbono)) {
+		    		idSocioABuscarAbono = ElegirSocio();
+		    		String idLocalidadEscogida = ElegirLocalidad();
+		    		if (sistemaAbono.modificarLocalidadAbono(idLocalidadEscogida,idLocalidadEscogida)) {
 		    			System.out.println("Se ha modificado la localidad del abono con exito");
 		    		}else {
 		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
@@ -89,6 +92,16 @@ public class AplicacionAbono {
 	}
 	
 	
+	private DetallesAbono RegistrarAbono() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String ElegirLocalidad() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	private String ElegirSocio() {
 		System.out.println("Introduzca el ID del Socio");
 		String idSocio = null;
