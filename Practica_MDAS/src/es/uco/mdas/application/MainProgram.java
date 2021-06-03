@@ -45,17 +45,6 @@ public class MainProgram {
 		}
 	}
 
-/**	private static void PrintMenuAbonos()  {
-		 	System.out.println("Opciones Permitidas");
-		 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
-	        System.out.println("\t -> Introduzca 1 Si desea Obtener Informacion Abono ");
-	        System.out.println("\t -> Introduzca 2 Si desea Registrar Nuevo para un Socio");	
-		 	System.out.println("\t -> Introduzca 3 Si desea Renovar Abono de un Socio");
-		 	System.out.println("\t -> Introduzca 4 Si desea Cancelar Abono de un Socio");
-		 	System.out.println("\t -> Introduzca 5 Si desea Modificar Localidad de un Abono ");
-		 	
-	}
-	*/
 	
 	private static void PrintMenu() {
 		 System.out.println("Posibles Sistemas a Acceder");

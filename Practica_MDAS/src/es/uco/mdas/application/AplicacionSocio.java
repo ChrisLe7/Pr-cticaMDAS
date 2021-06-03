@@ -14,13 +14,15 @@ import java.util.TimerTask;
 import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
+import es.uco.mdas.system.abono.Abono;
+import es.uco.mdas.system.abono.impl.AbonoImpl;
 import es.uco.mdas.system.socio.Socio;
 import es.uco.mdas.system.socio.impl.SocioImpl;
 
 public class AplicacionSocio {
 	
 	Socio sistemaSocio = null;
-	
+	Abono sistemaAbono = null;
 	private void PrintMenuSocios() {
 		 System.out.println("Opciones Permitidas");
 		 System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
@@ -36,7 +38,8 @@ public class AplicacionSocio {
 		
 		Scanner opcionElegida ;
 		int opcionDeseada = 1;
-		sistemaSocio = new SocioImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		sistemaSocio = new SocioImpl (); 
+		sistemaAbono = new AbonoImpl();
 		while (opcionDeseada != 0) {
 			
 			PrintMenuSocios();
@@ -69,7 +72,8 @@ public class AplicacionSocio {
 		    	case 2:
 		    	
 		    		String idsocioElegido  = ElegirSocio();
-		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);		    		
+		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);		
+		    		sistemaAbono.cancelarAbono(idsocioElegido);
 		    		break;
 		    	default:
 		    		System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");

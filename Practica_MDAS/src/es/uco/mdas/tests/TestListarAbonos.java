@@ -18,8 +18,8 @@ public static void main(String[] args) {
 		
 		System.out.println("Se han recuperado " + abonos.size() + " abonos");
 		
-		for (DetallesAbono abono : abonos.values()) {
-			System.out.println(abono.toString());
+		for (String abono : abonos.keySet()) {
+			System.out.println(abonos.get(abono).toString());
 		}
 		
 		System.out.println("Exito");

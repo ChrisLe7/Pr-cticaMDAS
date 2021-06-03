@@ -2,10 +2,14 @@ package es.uco.mdas.system.abono.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.socio.impl.SocioMgtImpl;
+import es.uco.mdas.datos.LocalidadDAO;
+import es.uco.mdas.datos.LocalidadDAOImpFicheros;
 import es.uco.mdas.business.socio.SocioMgt;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
 import es.uco.mdas.business.instalaciondeportiva.impl.InstalacionDeportivaImpl;
@@ -65,13 +69,17 @@ public class AbonoImpl implements Abono {
 		DetallesLocalidad localidadOld= abonoMgt.getDetallesLocalidad(localidadOldId);
 		abonoMgt.liberarLocalidad(localidadOld);
 		
-		ArrayList <String> libres = simulacionLocalidades(); //cargo los disponibles
+		
 	
-		if (libres.contains(localidadNewId)) {
-			
-			libres.remove(localidadNewId); //con esto indico que lo quitaria de los disponibles
+		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
+		HashMap <String, DetallesLocalidad> listadoTodasLasLocalidades = localidadDAO.queryAll();
+		
+		
+		if (listadoTodasLasLocalidades.containsKey(localidadNewId)) {
+			DetallesLocalidad localidadNew = listadoTodasLasLocalidades.get(localidadNewId);
+			abonoMgt.asignarLocalidad(localidadNew, abono.getIdAbono()); //Actualizar El fichero de Localidades
 			abono.setIdLocalidad(localidadNewId);
-			estado = socioMgt.actualizarAbono(abono);
+			estado = socioMgt.actualizarAbono(abono); //Actualizar el listado de Socios
 		}
 			
 		return estado;
@@ -94,23 +102,8 @@ public class AbonoImpl implements Abono {
 	@Override
 	public boolean registrarAbono(DetallesAbono abono) {
 		
-		boolean estado = false;
-		
-		ArrayList <String> libres = simulacionLocalidades(); //cargo los disponibles
-						
-		if (libres.contains(abono.getIdLocalidad())) {
-			libres.remove(abono.getIdLocalidad()); //con esto indico que lo quitaria de los disponibles
-		}
-		
-		estado = socioMgt.registrarAbono(abono);		
-		
-		return estado;
+		return socioMgt.registrarAbono(abono);
 	}
 	
-	public ArrayList <String> simulacionLocalidades() { //simular localidades disponibles
-		
-		ArrayList <String> libres = new ArrayList <String>(Arrays.asList("2", "6", "7", "9", "15", "16"));
-				
-		return libres;
-	}
+
 }

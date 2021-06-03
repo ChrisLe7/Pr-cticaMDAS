@@ -38,6 +38,7 @@ public class DetallesAbono implements Serializable {
 		this.deporteAsignado = deporteAsignado;
 		this.precio = precio;
 		this.fechaCancelacion = fechaCancelacion;
+		toString();
 	}
 	
 	/**

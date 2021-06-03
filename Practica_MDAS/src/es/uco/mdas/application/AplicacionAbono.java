@@ -75,13 +75,16 @@ public class AplicacionAbono {
 		    	break;
 		    	case 2:
 		    		DetallesAbono nuevoAbono = RegistrarAbono();
+		    		System.out.println(nuevoAbono.getIdSocio());
+		    		System.out.println(nuevoAbono.getIdAbono());
+		    		
 		    		if (!sistemaAbono.registrarAbono(nuevoAbono)) {
 		    			System.out.println("No se ha podido registrar el nuevo socio, debido a que ya posee uno");
 		    		}else {
 		    			
 		    			DetallesLocalidad localidadAAsignar = new DetallesLocalidad(nuevoAbono.getIdLocalidad());
 		    			
-		    			if (sistemaLocalidad.asignarLocalidad(localidadAAsignar, idSocioABuscarAbono)) {
+		    			if (sistemaLocalidad.asignarLocalidad(localidadAAsignar, nuevoAbono.getIdAbono())) {
 		    				
 		    				System.out.println("Se ha registrado con exito el nuevo Abono");
 		    			}
@@ -163,6 +166,7 @@ public class AplicacionAbono {
 		abonoARegistrar.setTipoAbono(tipoAbono);
 		abonoARegistrar.setPrecio(tipoAbonoSeleccionado.getValue());
 		
+		System.out.println("Instroduzca el deporte deseado");
 		String deporteAsignado = scannerRegistrar.nextLine();
 		abonoARegistrar.setDeporteAsignado(deporteAsignado);
 		return abonoARegistrar;
@@ -184,7 +188,7 @@ public class AplicacionAbono {
          	System.out.println("Lo sentimos pero en este menu solamente se permiten introducir numeros");
          }
 		
-		while(TipoAbono != 1 || TipoAbono != 2 || TipoAbono != 3 ) {
+		while(TipoAbono != 1 && TipoAbono != 2 && TipoAbono != 3 ) {
 			
 			PrintMenuTipoAbonos();
 			
@@ -235,6 +239,8 @@ public class AplicacionAbono {
 			
 			System.out.println("Introduzca una id de asiento valida a elegir entre los siguientes: ");
 			System.out.println(idLocalidadesLibres);
+			
+			idAsiento = scannerRegistrar.next();
 		}
 		
 		

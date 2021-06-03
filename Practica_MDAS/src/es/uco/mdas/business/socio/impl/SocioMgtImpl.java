@@ -25,6 +25,7 @@ public class SocioMgtImpl implements SocioMgt {
 	
 	public boolean registrarAbono (DetallesAbono abono) {		
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
+		System.out.println(abono.toString());
 		return abonoDAO.insert(abono);
 	}
 	
