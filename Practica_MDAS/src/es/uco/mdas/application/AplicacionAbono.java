@@ -152,7 +152,7 @@ public class AplicacionAbono {
 			}
 			
 			}
-		idAbono = idSocio;
+		idAbono = idSocio + "a";
 		
 		DetallesAbono abonoARegistrar = new DetallesAbono(idSocio, idAbono);
 		
