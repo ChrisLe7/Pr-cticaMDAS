@@ -6,7 +6,7 @@ import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.datos.LocalidadDAO;
 import es.uco.mdas.datos.LocalidadDAOImpFicheros;
 
-public class TestLocalidades {
+public class TestCrearLocalidades {
 
 	public static void main(String[] args) {
 		

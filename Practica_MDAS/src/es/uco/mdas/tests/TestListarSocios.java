@@ -6,13 +6,13 @@ import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.datos.SocioDAO;
 import es.uco.mdas.datos.SocioDAOImpFicheros;
 
-public class TestSocios {
+public class TestListarSocios {
 
 	public static void main(String[] args) {
 		
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		
-		System.out.println("TestSocioDAO");
+		System.out.println("TestListarSocios");
 		
 		HashMap<String, DetallesSocio> socios = socioDAO.queryAll();
 		
