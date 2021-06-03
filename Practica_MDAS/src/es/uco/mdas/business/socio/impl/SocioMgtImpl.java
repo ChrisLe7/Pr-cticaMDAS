@@ -14,6 +14,7 @@ import es.uco.mdas.datos.AbonoDAO;
 import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.SocioDAO;
 import es.uco.mdas.datos.SocioDAOImpFicheros;
+import es.uco.mdas.system.abono.impl.AbonoImpl;
 
 public class SocioMgtImpl implements SocioMgt {
 
@@ -54,15 +55,15 @@ public class SocioMgtImpl implements SocioMgt {
 		Date today = new Date();
 		
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
-		
-		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
+		AbonoImpl abonoMGT = new AbonoImpl();
 
+		DetallesAbono abonoSocio = abonoMGT.obtenerInformacionAbono(idAbono);		
+		
 		if (abonoSocio != null && abonoSocio.getFechaCancelacion().after(today)) {
-			abonoSocio.setIdLocalidad("");
 			abonoSocio.setFechaCancelacion(new Date());
-			//abonoDAO.update(abonoSocio);
-			abonoDAO.delete(idAbono);
+			abonoDAO.update(abonoSocio);
 			estado = !estado;
+			
 		}
 		
 		return estado;
