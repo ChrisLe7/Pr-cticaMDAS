@@ -116,8 +116,24 @@ public class AplicacionAbono {
 		String idLocalidad = ElegirLocalidad();
 
 		String tipoAbono = ElegirTipoAbono();
+		
 		abonoARegistrar.setIdLocalidad(idLocalidad);
 		abonoARegistrar.setTipoAbono(tipoAbono);
+		
+		if(tipoAbono == "AbonoCompleto") {
+			
+			abonoARegistrar.setPrecio
+		}
+		
+		else if (tipoAbono == "AbonoLiga"){
+			
+			
+		}
+		
+		else if (tipoAbono == "AbonoCopa"){
+			
+			
+		}
 		
 		String deporteAsignado = scannerRegistrar.nextLine();
 		abonoARegistrar.setDeporteAsignado(deporteAsignado);
@@ -125,12 +141,81 @@ public class AplicacionAbono {
 	}
 
 	private String ElegirTipoAbono() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		int TipoAbono;
+		
+		System.out.println("Introduzca el tipo de abono a elegir: ");
+		System.out.println("\t -> Introduzca 1 para abono completo ");
+		System.out.println("\t -> Introduzca 2 para abono de liga");
+		System.out.println("\t -> Introduzca 3 para abono de copa");
+		
+		Scanner scannerRegistrar = new Scanner(System.in);
+		TipoAbono = Integer.parseInt(scannerRegistrar.next());
+		
+		while(TipoAbono != 1 || TipoAbono != 2 || TipoAbono != 3 ) {
+			
+			System.out.println("Introduzca un tipo valido: ");
+			System.out.println("\t -> Introduzca 1 para abono completo ");
+			System.out.println("\t -> Introduzca 2 para abono de liga");
+			System.out.println("\t -> Introduzca 3 para abono de copa");
+			
+			TipoAbono = Integer.parseInt(scannerRegistrar.next());
+		}
+		
+		if(TipoAbono == 1) {
+			
+			return "AbonoCompleto";
+		}
+		
+		else if (TipoAbono == 2){
+			
+			return "AbonoLiga";
+		}
+		
+		else if (TipoAbono == 3){
+			
+			return "AbonoCopa";
+		}
 	}
 
 	private String ElegirLocalidad() {
-		// TODO Auto-generated method stub
+		
+		int TipoAbono;
+		
+		System.out.println("Introduzca el ID del Socio");
+		System.out.println("\t -> Introduzca 1 ");
+		System.out.println("\t -> Introduzca 2 ");
+		System.out.println("\t -> Introduzca 3 ");
+		System.out.println("\t -> Introduzca 4 ");
+		
+		Scanner scannerRegistrar = new Scanner(System.in);
+		TipoAbono = Integer.parseInt(scannerRegistrar.nextLine());
+		
+		if(TipoAbono == 1) {
+			
+			return 
+		}
+		
+		else if (TipoAbono == 2){
+			
+			return
+		}
+		
+		else if (TipoAbono == 3){
+			
+			return
+		}
+		
+		else if (TipoAbono == 4){
+			
+			return
+		}
+		
+		else {
+			
+			return null;
+		}		
+		
 		return null;
 	}
 
