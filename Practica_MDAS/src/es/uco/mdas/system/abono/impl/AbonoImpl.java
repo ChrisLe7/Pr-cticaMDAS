@@ -1,7 +1,5 @@
 package es.uco.mdas.system.abono.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import es.uco.mdas.system.abono.Abono;
@@ -47,10 +45,11 @@ public class AbonoImpl implements Abono {
 				
 		DetallesLocalidad localidad = new DetallesLocalidad("", 0, 0, 0, "", "");
 			
+		DetallesAbono abono = socioMgt.obtenerInformacionAbono(idAbono);
 		estado = socioMgt.cancelarAbono(idAbono);
-			
+		
 		if(estado) {
-			
+			localidad.setIdLocalidad(abono.getIdLocalidad());
 			return localidad;
 		}
 						

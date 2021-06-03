@@ -58,10 +58,11 @@ public class SocioMgtImpl implements SocioMgt {
 		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
 		if (abonoSocio != null && abonoSocio.getFechaCancelacion().after(today)) {
+			abonoSocio.setIdLocalidad("");
 			abonoSocio.setFechaCancelacion(new Date());
-			abonoDAO.update(abonoSocio);
+			//abonoDAO.update(abonoSocio);
+			abonoDAO.delete(idAbono);
 			estado = !estado;
-			
 		}
 		
 		return estado;

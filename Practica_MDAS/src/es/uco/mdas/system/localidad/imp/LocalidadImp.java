@@ -42,7 +42,12 @@ public class LocalidadImp implements Localidad{
 	@Override
 	public boolean liberarLocalidad(DetallesLocalidad localidad) {
 		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
+		
+		System.out.println(localidad.toString());
+		
 		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
+		
+		System.out.println(registroLocalidad.toString());
 		
 		if (!registroLocalidad.getIdSocio().equals("")) {
 			registroLocalidad.setIdSocio("");

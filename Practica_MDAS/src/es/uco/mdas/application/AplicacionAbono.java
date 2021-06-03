@@ -1,6 +1,7 @@
 package es.uco.mdas.application;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -169,6 +170,14 @@ public class AplicacionAbono {
 		System.out.println("Instroduzca el deporte deseado");
 		String deporteAsignado = scannerRegistrar.nextLine();
 		abonoARegistrar.setDeporteAsignado(deporteAsignado);
+		
+		Calendar calendario = Calendar.getInstance();
+		calendario.set(Calendar.DAY_OF_MONTH, 1);
+		calendario.set(Calendar.MONTH, 5);
+		calendario.set(Calendar.YEAR, calendario.get(Calendar.YEAR) + 1);
+		
+		abonoARegistrar.setFechaCancelacion(calendario.getTime());
+		
 		return abonoARegistrar;
 	}
 

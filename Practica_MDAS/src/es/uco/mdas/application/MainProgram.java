@@ -36,7 +36,8 @@ public class MainProgram {
 		    		aplicacionAbono.start();
 		    	break;
 		    	case 0: 
-		    		System.out.println("Hasta la próximas");
+		    		aplicacionSocio.PararTemporizador();
+		    		System.out.println("Hasta la próxima");
 		    	break;
 		    		default:
 		    			System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");

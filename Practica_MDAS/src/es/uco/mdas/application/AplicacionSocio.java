@@ -23,6 +23,9 @@ public class AplicacionSocio {
 	
 	Socio sistemaSocio = null;
 	Abono sistemaAbono = null;
+	
+	Timer temporizador = null;
+	
 	private void PrintMenuSocios() {
 		 System.out.println("Opciones Permitidas");
 		 System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
@@ -100,7 +103,7 @@ public class AplicacionSocio {
 		
 		apellidosCliente = apellidosCliente + ", " + scannerCliente.nextLine();
 		
-		System.out.println("\t Introduzca la Diccion");
+		System.out.println("\t Introduzca la Direccion");
 
 		direccionCliente = scannerCliente.nextLine();
 		do {
@@ -110,7 +113,7 @@ public class AplicacionSocio {
 		}while(!checkTelefono(telefonoContacto));
 		
 		do {
-            System.out.println("\t Introduzca la fecha del contacto ");
+            System.out.println("\t Introduzca la fecha del socio (dd/mm/yyyy)");
             fechaTexto = scannerCliente.nextLine();
 
             try {
@@ -151,7 +154,7 @@ public class AplicacionSocio {
 		hoy.set(Calendar.MINUTE, 0);
 		hoy.set(Calendar.SECOND, 0);
 
-		Timer temporizador = new Timer();
+		temporizador = new Timer();
 		TimerTask tarea = new TimerTask() {
 			public void run() {
 				// Tarea para comprobar el tiempo de vinculacion de los socios
@@ -161,6 +164,12 @@ public class AplicacionSocio {
 		
 		// Se ejecuta cada dia a las 2 am la tarea especificada
 		temporizador.schedule(tarea, hoy.getTime(), 86400000);
+	}
+	
+	public void PararTemporizador() {
+		if (temporizador == null) return;
+		
+		temporizador.cancel();
 	}
 	
 }
