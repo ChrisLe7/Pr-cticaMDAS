@@ -31,6 +31,11 @@ public class DetallesLocalidad implements Serializable {
 		this.idSocio = idSocio;
 	}
 
+	public DetallesLocalidad(String idLocalidad) {
+		
+		this.idLocalidad = idLocalidad;
+	}
+
 	/**
 	 * Devuelve la id de la localidad
 	 * 

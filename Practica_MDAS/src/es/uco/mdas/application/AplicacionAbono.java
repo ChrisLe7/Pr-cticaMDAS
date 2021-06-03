@@ -1,5 +1,6 @@
 package es.uco.mdas.application;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,6 +10,8 @@ import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.system.abono.impl.AbonoImpl;
 import es.uco.mdas.system.localidad.Localidad;
 import es.uco.mdas.system.localidad.imp.LocalidadImp;
+import es.uco.mdas.system.socio.Socio;
+import es.uco.mdas.system.socio.impl.SocioImpl;
 
 
 
@@ -16,6 +19,8 @@ public class AplicacionAbono {
 	
 	private Abono sistemaAbono = null;
 	private Localidad sistemaLocalidad = null;
+	private Socio sistemaSocio = null;
+	
 	private static void PrintMenuAbonos()  {
 	 	System.out.println("Opciones Permitidas");
 	 	System.out.println("\t -> Introduzca 0 Si desea Finalizar el Programa");
@@ -34,8 +39,9 @@ public class AplicacionAbono {
 		
 		Scanner opcionElegida ;
 		int opcionDeseada = 1;
-		sistemaAbono = new AbonoImpl (); //No entiendo porque habeis hecho que este componente tengamos que pasarle una instancia del MGT
+		sistemaAbono = new AbonoImpl (); 
 		sistemaLocalidad = new LocalidadImp ();
+		sistemaSocio = new SocioImpl ();
 		String idSocioABuscarAbono = null;
 		while (opcionDeseada != 0) {
 			
@@ -47,7 +53,7 @@ public class AplicacionAbono {
 	            }
 	            catch (InputMismatchException e) 
 	            {
-	            	opcionDeseada = 0;
+	            	opcionDeseada = -1;
 	            	System.out.println("Lo sentimos pero en este menu solamente se permiten introducir numeros");
 	            }
 			 
@@ -65,7 +71,18 @@ public class AplicacionAbono {
 		    		if (!sistemaAbono.registrarAbono(nuevoAbono)) {
 		    			System.out.println("No se ha podido registrar el nuevo socio, debido a que ya posee uno");
 		    		}else {
-		    			System.out.println("Se ha registrado con exito el nuevo Abono");
+		    			
+		    			DetallesLocalidad localidadAAsignar = new DetallesLocalidad(nuevoAbono.getIdLocalidad());
+		    			
+		    			if (sistemaLocalidad.asignarLocalidad(localidadAAsignar, idSocioABuscarAbono)) {
+		    				
+		    				System.out.println("Se ha registrado con exito el nuevo Abono");
+		    			}
+		    			
+		    			else{
+		    				
+		    				System.out.println("Error al registrar el nuevo Abono debido a que la localidad asignada no esta disponible");
+		    			}
 		    		}
 		    	break;
 		    	case 3:
@@ -93,13 +110,16 @@ public class AplicacionAbono {
 		    	case 5:
 		    		idSocioABuscarAbono = ElegirSocio();
 		    		String idLocalidadEscogida = ElegirLocalidad();
-		    		if (sistemaAbono.modificarLocalidadAbono(idLocalidadEscogida,idLocalidadEscogida)) {
+		    		if (sistemaAbono.modificarLocalidadAbono(idSocioABuscarAbono,idLocalidadEscogida)) {
 		    			System.out.println("Se ha modificado la localidad del abono con exito");
 		    		}else {
 		    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
 		    		}
 		    	break;
+		    	
+		    	default:
 		    		
+		    		System.out.println("Para más funcionalidades ponganse en contacto con los administradores. :)");
 			}
 		}
 	}
@@ -111,6 +131,14 @@ public class AplicacionAbono {
 		System.out.println("Introduzca el ID del Socio");
 		Scanner scannerRegistrar = new Scanner(System.in);
 		idSocio = scannerRegistrar.nextLine();
+		
+		DetallesAbono informacionAbonoBuscado = sistemaSocio.;
+		
+		if (informacionAbono) {
+			
+			
+		}
+		
 		DetallesAbono abonoARegistrar = new DetallesAbono(idSocio, idAbono);
 		
 		String idLocalidad = ElegirLocalidad();
@@ -122,17 +150,17 @@ public class AplicacionAbono {
 		
 		if(tipoAbono == "AbonoCompleto") {
 			
-			abonoARegistrar.setPrecio
+			abonoARegistrar.setPrecio(200);
 		}
 		
 		else if (tipoAbono == "AbonoLiga"){
 			
-			
+			abonoARegistrar.setPrecio(150);
 		}
 		
 		else if (tipoAbono == "AbonoCopa"){
 			
-			
+			abonoARegistrar.setPrecio(100);
 		}
 		
 		String deporteAsignado = scannerRegistrar.nextLine();
@@ -142,15 +170,13 @@ public class AplicacionAbono {
 
 	private String ElegirTipoAbono() {
 		
-		int TipoAbono;
-		
 		System.out.println("Introduzca el tipo de abono a elegir: ");
 		System.out.println("\t -> Introduzca 1 para abono completo ");
 		System.out.println("\t -> Introduzca 2 para abono de liga");
 		System.out.println("\t -> Introduzca 3 para abono de copa");
 		
 		Scanner scannerRegistrar = new Scanner(System.in);
-		TipoAbono = Integer.parseInt(scannerRegistrar.next());
+		int TipoAbono = Integer.parseInt(scannerRegistrar.next());
 		
 		while(TipoAbono != 1 || TipoAbono != 2 || TipoAbono != 3 ) {
 			
@@ -172,7 +198,7 @@ public class AplicacionAbono {
 			return "AbonoLiga";
 		}
 		
-		else if (TipoAbono == 3){
+		else {
 			
 			return "AbonoCopa";
 		}
@@ -180,43 +206,30 @@ public class AplicacionAbono {
 
 	private String ElegirLocalidad() {
 		
-		int TipoAbono;
+		ArrayList <DetallesLocalidad> localidadesLibres = sistemaLocalidad.obtenerLocalidadesLibres();
 		
-		System.out.println("Introduzca el ID del Socio");
-		System.out.println("\t -> Introduzca 1 ");
-		System.out.println("\t -> Introduzca 2 ");
-		System.out.println("\t -> Introduzca 3 ");
-		System.out.println("\t -> Introduzca 4 ");
+		ArrayList <String> idLocalidadesLibres = new ArrayList <String>();
+		
+		for(DetallesLocalidad localidad : localidadesLibres) {
+			
+			idLocalidadesLibres.add(localidad.getIdLocalidad());
+		}
+		
+		System.out.println("Introduzca la id del asiento a elegir entre los siguientes: ");
+		System.out.println(idLocalidadesLibres);
 		
 		Scanner scannerRegistrar = new Scanner(System.in);
-		TipoAbono = Integer.parseInt(scannerRegistrar.nextLine());
+		String idAsiento = scannerRegistrar.next();
 		
-		if(TipoAbono == 1) {
+		while(!idLocalidadesLibres.contains(idAsiento)) {
 			
-			return 
+			System.out.println("Introduzca una id de asiento valida a elegir entre los siguientes: ");
+			System.out.println(idLocalidadesLibres);
 		}
 		
-		else if (TipoAbono == 2){
-			
-			return
-		}
 		
-		else if (TipoAbono == 3){
-			
-			return
-		}
 		
-		else if (TipoAbono == 4){
-			
-			return
-		}
-		
-		else {
-			
-			return null;
-		}		
-		
-		return null;
+		return idAsiento;
 	}
 
 	private String ElegirSocio() {
@@ -224,8 +237,7 @@ public class AplicacionAbono {
 		String idSocio = null;
 		Scanner scannerEliminar = new Scanner(System.in);
 		idSocio = scannerEliminar.nextLine();
-		
-		scannerEliminar.close();
+
 		return idSocio;
 	}
 	
