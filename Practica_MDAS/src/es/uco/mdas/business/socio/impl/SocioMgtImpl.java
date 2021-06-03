@@ -115,4 +115,10 @@ public class SocioMgtImpl implements SocioMgt {
 			
 	}
 	
+	public DetallesSocio getSocio(String idSocio) {
+		
+		SocioDAO socioDAO = new SocioDAOImpFicheros();
+		return socioDAO.queryById(idSocio);
+	}
+	
 }

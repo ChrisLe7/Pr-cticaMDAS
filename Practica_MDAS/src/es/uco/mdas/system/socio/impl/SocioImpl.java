@@ -69,4 +69,9 @@ public class SocioImpl implements Socio {
 		return Categoria.Infantil;
 	}
 
+	@Override
+	public DetallesSocio obtenerInformacionSocio(String idSocio) {
+		return socioMgt.getSocio(idSocio);
+	}
+
 }

@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.socio.DetallesAbono;
+import es.uco.mdas.business.socio.DetallesSocio;
+import es.uco.mdas.business.socio.TipoAbono;
 import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.system.abono.impl.AbonoImpl;
 import es.uco.mdas.system.localidad.Localidad;
@@ -64,7 +66,12 @@ public class AplicacionAbono {
 		    	case 1:
 		    		idSocioABuscarAbono = ElegirSocio();
 		    		DetallesAbono informacionAbonoBuscado = sistemaAbono.obtenerInformacionAbono(idSocioABuscarAbono);
-		    		showAbono(informacionAbonoBuscado);
+		    		if (informacionAbonoBuscado != null) {
+			    		showAbono(informacionAbonoBuscado);
+		    		}
+		    		else {
+		    			System.out.println("El Socio al que busca no tiene abono");
+		    		}
 		    	break;
 		    	case 2:
 		    		DetallesAbono nuevoAbono = RegistrarAbono();
@@ -127,17 +134,21 @@ public class AplicacionAbono {
 	
 	private DetallesAbono RegistrarAbono() {
 		String idSocio = null;
-		String idAbono = ""; //Hay que hacer alguna función para generar las IDS.
-		System.out.println("Introduzca el ID del Socio");
+		String idAbono = "";
+		DetallesSocio informacionSocioAAbonar = null;
 		Scanner scannerRegistrar = new Scanner(System.in);
-		idSocio = scannerRegistrar.nextLine();
-		
-		DetallesAbono informacionAbonoBuscado = sistemaSocio.;
-		
-		if (informacionAbono) {
+		while (informacionSocioAAbonar == null) {
+			System.out.println("Introduzca el ID del Socio");
 			
+			idSocio = scannerRegistrar.nextLine();
 			
-		}
+			informacionSocioAAbonar = sistemaSocio.obtenerInformacionSocio(idSocio);
+			if (informacionSocioAAbonar == null) {
+				System.out.println("El id del Socio que ha introducido no existe");
+			}
+			
+			}
+		idAbono = idSocio;
 		
 		DetallesAbono abonoARegistrar = new DetallesAbono(idSocio, idAbono);
 		
@@ -146,22 +157,11 @@ public class AplicacionAbono {
 		String tipoAbono = ElegirTipoAbono();
 		
 		abonoARegistrar.setIdLocalidad(idLocalidad);
+		
+		
+		TipoAbono tipoAbonoSeleccionado = TipoAbono.valueOf(tipoAbono);
 		abonoARegistrar.setTipoAbono(tipoAbono);
-		
-		if(tipoAbono == "AbonoCompleto") {
-			
-			abonoARegistrar.setPrecio(200);
-		}
-		
-		else if (tipoAbono == "AbonoLiga"){
-			
-			abonoARegistrar.setPrecio(150);
-		}
-		
-		else if (tipoAbono == "AbonoCopa"){
-			
-			abonoARegistrar.setPrecio(100);
-		}
+		abonoARegistrar.setPrecio(tipoAbonoSeleccionado.getValue());
 		
 		String deporteAsignado = scannerRegistrar.nextLine();
 		abonoARegistrar.setDeporteAsignado(deporteAsignado);
@@ -170,22 +170,32 @@ public class AplicacionAbono {
 
 	private String ElegirTipoAbono() {
 		
-		System.out.println("Introduzca el tipo de abono a elegir: ");
-		System.out.println("\t -> Introduzca 1 para abono completo ");
-		System.out.println("\t -> Introduzca 2 para abono de liga");
-		System.out.println("\t -> Introduzca 3 para abono de copa");
-		
+		int TipoAbono = 0;
 		Scanner scannerRegistrar = new Scanner(System.in);
-		int TipoAbono = Integer.parseInt(scannerRegistrar.next());
+		
+			PrintMenuTipoAbonos();
+		 try {
+			 
+			  TipoAbono = Integer.parseInt(scannerRegistrar.next());
+         }
+         catch (InputMismatchException e) 
+         {
+        	 TipoAbono = -1;
+         	System.out.println("Lo sentimos pero en este menu solamente se permiten introducir numeros");
+         }
 		
 		while(TipoAbono != 1 || TipoAbono != 2 || TipoAbono != 3 ) {
 			
-			System.out.println("Introduzca un tipo valido: ");
-			System.out.println("\t -> Introduzca 1 para abono completo ");
-			System.out.println("\t -> Introduzca 2 para abono de liga");
-			System.out.println("\t -> Introduzca 3 para abono de copa");
+			PrintMenuTipoAbonos();
 			
-			TipoAbono = Integer.parseInt(scannerRegistrar.next());
+			try {
+				TipoAbono = Integer.parseInt(scannerRegistrar.next());
+            }
+            catch (InputMismatchException e) 
+            {
+            	TipoAbono = -1;
+            	System.out.println("Lo sentimos pero en este menu solamente se permiten introducir numeros");
+            }
 		}
 		
 		if(TipoAbono == 1) {
@@ -245,6 +255,12 @@ public class AplicacionAbono {
 		System.out.println(abono.toString());
 	}
 	
+	private void PrintMenuTipoAbonos() {
+		System.out.println("Introduzca el tipo de abono a elegir: ");
+		System.out.println("\t -> Introduzca 1 para abono completo ");
+		System.out.println("\t -> Introduzca 2 para abono de liga");
+		System.out.println("\t -> Introduzca 3 para abono de copa");
+	}
 	
 	
 	

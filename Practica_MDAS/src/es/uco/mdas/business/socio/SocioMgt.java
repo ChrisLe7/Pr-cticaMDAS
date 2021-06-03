@@ -24,4 +24,5 @@ public interface SocioMgt {
 	
 	public boolean updateSocio (DetallesSocio socio);	
 
+	public DetallesSocio getSocio(String idSocio) ;
 }

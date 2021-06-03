@@ -43,4 +43,6 @@ public interface Socio {
 	 */
 	public Categoria comprobarTiempoVinculacion(DetallesSocio socio);
 	
+	public DetallesSocio obtenerInformacionSocio(String idSocio);
+	
 }
