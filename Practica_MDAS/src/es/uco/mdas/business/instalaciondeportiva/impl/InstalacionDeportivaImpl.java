@@ -128,8 +128,19 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	}
 
 	@Override
-	public void asignarEspacioComercial(String idEspacioComercial, String idEmpresa) {
+	public boolean asignarEspacioComercial(String idEspacioComercial, String idEmpresa) {
 		// TODO Auto-generated method stub
+		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
+		
+		DetallesEspacioComercial espacioComercialAAsignar = espacioComercialDAO.queryById(idEspacioComercial);
+		
+		if (espacioComercialAAsignar != null) {
+			if (espacioComercialAAsignar.getArrendado().equals("")) {
+				espacioComercialAAsignar.setArrendado(idEmpresa);
+				return true;
+			}
+		}
+		return false;
 		
 	}
 
