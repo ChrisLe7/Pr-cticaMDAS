@@ -7,11 +7,11 @@ import java.util.Date;
 public class DetallesCliente implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	protected String nombreSocio;
-	protected String apellidosSocio;
-	protected String direccion;
-	protected String telefonoContacto;
-	protected Date edad;
+	private String nombreSocio;
+	private String apellidosSocio;
+	private String direccion;
+	private String telefonoContacto;
+	private Date edad;
 	
 	/**
 	 * Constructor completo de un cliente
@@ -100,15 +100,15 @@ public class DetallesCliente implements Serializable{
 
 	/**
 	 * Devuelve la fecha de Nacimiento del Socio
-	 * @return Telefono contacto del cliente
+	 * @return Fecha de Nacimiento del Socio
 	 */
 	public Date getFechaNacimiento() {
 		return edad;
 	}
 
 	/**
-	 * Asigna el telefono de contacto al socio.
-	 * @param telefonoContacto Telefono de contacto del socio a asignar.
+	 * Asigna la fecha de nacimiento al socio.
+	 * @param edad Fecha de nacimiento del socio a asignar.
 	 */
 	public void setFechaNacimiento(Date edad) {
 		this.edad = edad;

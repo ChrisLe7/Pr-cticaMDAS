@@ -18,7 +18,7 @@ public interface SocioMgt {
 	
 	public boolean eliminarDatosCliente(String idSocio);
 	
-	public boolean asignarCategoria (DetallesSocio socio, Categoria categoria);
+	public boolean asignarCategoria (DetallesSocio socio, String categoria);
 
 	public HashMap<String, DetallesSocio> getSocios();
 	

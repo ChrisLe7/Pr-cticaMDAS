@@ -5,10 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
-import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
+import es.uco.mdas.business.socio.DetallesSocioInfantil;
+import es.uco.mdas.business.socio.DetallesSocioAdulto;
+import es.uco.mdas.business.socio.DetallesSocioOro;
 import es.uco.mdas.business.socio.SocioMgt;
 import es.uco.mdas.business.socio.data.AbonoDAO;
 import es.uco.mdas.business.socio.data.SocioDAO;
@@ -76,7 +78,7 @@ public class SocioMgtImpl implements SocioMgt {
 	public DetallesSocio registrarDatosCliente (DetallesCliente cliente) {
 		Random generador = new Random();
 		String idSocio = "" + generador.nextInt(10000);
-		DetallesSocio socio = new DetallesSocio(idSocio, cliente);
+		DetallesSocio socio = crearSocio(idSocio, cliente);
 		if (socioDAO.insert(socio)) {
 			return socio;
 		}
@@ -87,13 +89,13 @@ public class SocioMgtImpl implements SocioMgt {
 		return socioDAO.delete(idSocio);
 	}
 	
-	public boolean asignarCategoria (DetallesSocio socio, Categoria categoria) {
+	public boolean asignarCategoria (DetallesSocio socio, String categoria) {
 		socio.setCategoria(categoria);
 		return this.updateSocio(socio);
 		
 	}
 	
-	public HashMap<String, DetallesSocio> getSocios () {
+	public HashMap<String, DetallesSocio> getSocios() {
 		HashMap<String, DetallesSocio> listadoSocios = socioDAO.queryAll();
 		return listadoSocios;
 	}
@@ -104,6 +106,23 @@ public class SocioMgtImpl implements SocioMgt {
 	
 	public DetallesSocio getSocio(String idSocio) {
 		return socioDAO.queryById(idSocio);
+	}
+	
+	private DetallesSocio crearSocio(String idSocio, DetallesCliente cliente) {
+		int aniosSocioOro = 65; // edad minima requerida para ser socio de oro
+        int aniosSocioAdulto = 18; // edad minima requerida para ser socio adulto
+        
+        if (cliente.getEdad() >= aniosSocioOro) {
+        	return new DetallesSocioOro(idSocio, cliente);
+        }
+        else { 
+	        if (cliente.getEdad() >= aniosSocioAdulto) {
+	        	return new DetallesSocioAdulto(idSocio, cliente);
+	        }	        
+	        else {
+	            return new DetallesSocioInfantil(idSocio, cliente);
+	        }
+        }
 	}
 	
 }
