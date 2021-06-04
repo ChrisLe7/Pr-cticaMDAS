@@ -34,6 +34,7 @@ public class Programa {
 	public static void main(String[] argv) {
 		System.out.println("Buenas esta iniciando el Gestor de Socios y Abonados");
 		int optionSistema = 1;
+		boolean iniciarTemp = true;
 		while (optionSistema != 0) {
 			
 			PrintMenu();
@@ -52,7 +53,10 @@ public class Programa {
 		    	case 1:
 		    		
 		    		startSistemaSocios();
-		    		IniciarTemporizador();
+		    		if (iniciarTemp) {
+		    			IniciarTemporizador();
+		    			iniciarTemp = !iniciarTemp;
+		    		}
 		    	break;
 		    	case 2:
 		    		
