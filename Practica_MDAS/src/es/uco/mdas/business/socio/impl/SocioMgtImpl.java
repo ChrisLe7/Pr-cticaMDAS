@@ -26,7 +26,6 @@ public class SocioMgtImpl implements SocioMgt {
 	
 	public boolean registrarAbono (DetallesAbono abono) {		
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
-		System.out.println(abono.toString());
 		return abonoDAO.insert(abono);
 	}
 	
@@ -37,7 +36,7 @@ public class SocioMgtImpl implements SocioMgt {
 		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
 		if (abonoSocio != null ) {
-			//Actualiar fecha cancelación abonoSocio.setFecha (FechaACTUAL + 1 año) 
+			
 			Date fechaNuevaCancelacion = abonoSocio.getFechaCancelacion();
 			Calendar calendario = Calendar.getInstance();
 			calendario.setTime(fechaNuevaCancelacion);
@@ -99,8 +98,6 @@ public class SocioMgtImpl implements SocioMgt {
 	}
 	
 	public HashMap<String, DetallesSocio> getSocios () {
-		
-		// Crear una clase que devuelve el listado de socios ya sean leidos de una BD o de un fichero
 		
 		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		

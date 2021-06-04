@@ -64,7 +64,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public boolean liberarAbono(String idAbono) {
-		// TODO Auto-generated method stub
+		
 		boolean estado = false;
 		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
@@ -86,7 +86,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public boolean registrarAbono(DetallesAbono abono) {
-		// TODO Auto-generated method stub
+		
 		boolean estado = false;
 	
 		String idLocalidad = abono.getIdLocalidad();
@@ -129,7 +129,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public boolean asignarEspacioComercial(String idEspacioComercial, String idEmpresa) {
-		// TODO Auto-generated method stub
+		
 		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
 		
 		DetallesEspacioComercial espacioComercialAAsignar = espacioComercialDAO.queryById(idEspacioComercial);
@@ -161,7 +161,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		return contratoARenovar;
 	}
 
-	@Override //PODRIA DEVOLVER UN BOOLEANO
+	@Override 
 	public void cancelarContrato(String idContrato) {
 		ContratoDAO contratoDAO = new ContratoDAOImpFicheros();
 		
@@ -189,7 +189,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public ArrayList<DetallesDespacho> getDespachosLibresEstadio() {
-		// TODO Auto-generated method stub
+		
 		DespachoDAO despachoDAO = new DespachoDAOImpFicheros();
 		
 		HashMap<String, DetallesDespacho> listadoCompletoDespachos = despachoDAO.queryAll();
@@ -208,9 +208,9 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		
 	}
 
-	@Override //No se que debe de hacer esta funcion
+	@Override 
 	public void asignarDespachoEstadio(DetallesEstadio estadio, DetallesDespacho despacho, String idMiembro) {
-		// TODO Auto-generated method stub
+		
 		despacho.setIdMiembro(idMiembro);
 		despacho.setLocalizacion(estadio.getIdEstadio());
 		
@@ -235,7 +235,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public DetallesEspacioComercial getEspacioComercial(String idEspacioComercial) {
-		// TODO Auto-generated method stub
+		
 		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
 		DetallesEspacioComercial infoEspacioComercialDeseado = espacioComercialDAO.queryById(idEspacioComercial);
 		return infoEspacioComercialDeseado;

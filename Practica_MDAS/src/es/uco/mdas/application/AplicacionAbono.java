@@ -76,8 +76,6 @@ public class AplicacionAbono {
 		    	break;
 		    	case 2:
 		    		DetallesAbono nuevoAbono = RegistrarAbono();
-		    		System.out.println(nuevoAbono.getIdSocio());
-		    		System.out.println(nuevoAbono.getIdAbono());
 		    		
 		    		if (!sistemaAbono.registrarAbono(nuevoAbono)) {
 		    			System.out.println("No se ha podido registrar el nuevo socio, debido a que ya posee uno");

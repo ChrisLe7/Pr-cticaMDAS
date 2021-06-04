@@ -159,7 +159,7 @@ public class AplicacionSocio {
 	
 	public void IniciarTemporizador() {
 		Calendar hoy = Calendar.getInstance();
-		// Se ejecuta a las 2 am
+		
 		hoy.set(Calendar.HOUR_OF_DAY, 2);
 		hoy.set(Calendar.MINUTE, 0);
 		hoy.set(Calendar.SECOND, 0);
@@ -167,12 +167,12 @@ public class AplicacionSocio {
 		temporizador = new Timer();
 		TimerTask tarea = new TimerTask() {
 			public void run() {
-				// Tarea para comprobar el tiempo de vinculacion de los socios
+				
 				sistemaSocio.comprobarTiempoVinculacion();
 			}
 		};
 		
-		// Se ejecuta cada dia a las 2 am la tarea especificada
+		
 		temporizador.schedule(tarea, hoy.getTime(), 86400000);
 	}
 	

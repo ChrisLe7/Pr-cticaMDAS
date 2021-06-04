@@ -31,10 +31,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -49,10 +49,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			fichero = new FileInputStream (nombreFichero);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -68,12 +68,12 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				}
 				
 			} catch (EOFException e) {
-				// Significa que ha terminado de leer el fichero
+				
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -81,7 +81,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -102,10 +102,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -121,10 +121,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -143,12 +143,12 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				}
 				
 			} catch (EOFException e ) {
-				// Significa que ha terminado de leer el fichero
+				
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -156,7 +156,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			
@@ -206,10 +206,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -230,12 +230,12 @@ public class SocioDAOImpFicheros implements SocioDAO {
 						
 				}
 			} catch (EOFException e) {
-				// Significa que ha terminado de leer el fichero
+				
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		
@@ -245,7 +245,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
@@ -352,10 +352,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -376,12 +376,12 @@ public class SocioDAOImpFicheros implements SocioDAO {
 					}
 				}
 			} catch (EOFException e) {
-				// Significa que ha terminado de leer el fichero
+				
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		
@@ -391,7 +391,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 

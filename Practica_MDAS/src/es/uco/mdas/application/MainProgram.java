@@ -27,12 +27,12 @@ public class MainProgram {
 		    
 		    switch (optionSistema) {
 		    	case 1:
-		    		// Sistema socios
+		    		
 		    		aplicacionSocio.start();
 		    		aplicacionSocio.IniciarTemporizador();
 		    	break;
 		    	case 2:
-		    		// Sistema abonos
+		    		
 		    		aplicacionAbono.start();
 		    	break;
 		    	case 0: 

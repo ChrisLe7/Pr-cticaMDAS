@@ -62,7 +62,6 @@ public class AbonoImpl implements Abono {
 		boolean estado = false;
 			
 		DetallesAbono abono = obtenerInformacionAbono(idAbono);
-		///Liberar localidad antigua y reasignar la nueva al abonado
 		
 		String localidadOldId = abono.getIdLocalidad();
 		DetallesLocalidad localidadOld= abonoMgt.getDetallesLocalidad(localidadOldId);
@@ -76,9 +75,9 @@ public class AbonoImpl implements Abono {
 		
 		if (listadoTodasLasLocalidades.containsKey(localidadNewId)) {
 			DetallesLocalidad localidadNew = listadoTodasLasLocalidades.get(localidadNewId);
-			abonoMgt.asignarLocalidad(localidadNew, abono.getIdAbono()); //Actualizar El fichero de Localidades
+			abonoMgt.asignarLocalidad(localidadNew, abono.getIdAbono()); 
 			abono.setIdLocalidad(localidadNewId);
-			estado = socioMgt.actualizarAbono(abono); //Actualizar el listado de Socios
+			estado = socioMgt.actualizarAbono(abono);
 		}
 			
 		return estado;
