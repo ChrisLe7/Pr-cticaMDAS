@@ -30,6 +30,39 @@ import es.uco.mdas.datos.LocalidadDAOImpFicheros;
 
 public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho, GestionarEspacioComercial{
 
+	private AbonoDAO abonoDAO;
+	private ContratoDAO contratoDAO;
+	private DespachoDAO despachoDAO;
+	private EspacioComercialDAO espacioComercialDAO;
+	private LocalidadDAO localidadDAO;
+	
+	
+	
+	public InstalacionDeportivaImpl(AbonoDAO abonoDAO, ContratoDAO contratoDAO, DespachoDAO despachoDAO,
+			EspacioComercialDAO espacioComercialDAO, LocalidadDAO localidadDAO) {
+		super();
+		this.abonoDAO = abonoDAO;
+		this.contratoDAO = contratoDAO;
+		this.despachoDAO = despachoDAO;
+		this.espacioComercialDAO = espacioComercialDAO;
+		this.localidadDAO = localidadDAO;
+	}
+
+	public InstalacionDeportivaImpl(AbonoDAO abonoDAO) {
+		this(abonoDAO,null,null, null, null);
+	}
+	
+	
+	
+	public InstalacionDeportivaImpl(AbonoDAO abonoDAO, LocalidadDAO localidadDAO) {
+		this(abonoDAO,null,null, null, localidadDAO);
+	}
+	
+	public InstalacionDeportivaImpl(LocalidadDAO localidadDAO) {
+		this(null,null,null, null, localidadDAO);
+	}
+	//Según el resto de componentes del sistema completo deberíamos de realizar las diferentes combinaciones necesarias.
+	
 	@Override
 	public ArrayList<DetallesLocalidad> getLocalidadesDisponibles() {
 		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();

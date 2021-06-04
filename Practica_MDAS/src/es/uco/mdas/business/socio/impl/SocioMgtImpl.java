@@ -17,21 +17,25 @@ import es.uco.mdas.datos.SocioDAOImpFicheros;
 import es.uco.mdas.system.abono.impl.AbonoImpl;
 
 public class SocioMgtImpl implements SocioMgt {
-
+	
+	private AbonoDAO abonoDAO;
+	private SocioDAO socioDAO;
+	public SocioMgtImpl(AbonoDAO abonoDAO, SocioDAO socioDAO) {
+		this.abonoDAO = abonoDAO;
+		this.socioDAO = socioDAO;		
+	}
+	
 	public DetallesAbono obtenerInformacionAbono(String idSocio) {
-		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		DetallesAbono abonoSocio = abonoDAO.queryById(idSocio);
 		return abonoSocio;
 	}
 	
 	public boolean registrarAbono (DetallesAbono abono) {		
-		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		return abonoDAO.insert(abono);
 	}
 	
 	public boolean renovarAbono(String idAbono ) {
 		boolean estado = false;
-		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
 		DetallesAbono abonoSocio = abonoDAO.queryById(idAbono);
 
@@ -51,8 +55,6 @@ public class SocioMgtImpl implements SocioMgt {
 	
 	public boolean cancelarAbono(String idAbono) {
 		boolean estado = false;
-		
-		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		AbonoImpl abonoMGT = new AbonoImpl();
 
 		DetallesAbono abonoSocio = abonoMGT.obtenerInformacionAbono(idAbono);		
@@ -67,8 +69,6 @@ public class SocioMgtImpl implements SocioMgt {
 	}
 	
 	public boolean actualizarAbono(DetallesAbono nuevoAbono) {
-
-		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		return abonoDAO.update(nuevoAbono);
 	}
 	
@@ -76,8 +76,6 @@ public class SocioMgtImpl implements SocioMgt {
 		Random generador = new Random();
 		String idSocio = "" + generador.nextInt(10000);
 		DetallesSocio socio = new DetallesSocio(idSocio, cliente);
-		
-		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		if (socioDAO.insert(socio)) {
 			return socio;
 		}
@@ -85,37 +83,25 @@ public class SocioMgtImpl implements SocioMgt {
 	}
 	
 	public boolean eliminarDatosCliente (String idSocio ) {
-		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		return socioDAO.delete(idSocio);
 	}
 	
 	public boolean asignarCategoria (DetallesSocio socio, Categoria categoria) {
-		
 		socio.setCategoria(categoria);
-		
 		return this.updateSocio(socio);
 		
 	}
 	
 	public HashMap<String, DetallesSocio> getSocios () {
-		
-		SocioDAO socioDAO = new SocioDAOImpFicheros();
-		
 		HashMap<String, DetallesSocio> listadoSocios = socioDAO.queryAll();
-		
 		return listadoSocios;
 	}
 	
 	public boolean updateSocio (DetallesSocio socio) {
-		SocioDAO socioDAO = new SocioDAOImpFicheros();
-		
-		return socioDAO.update(socio);
-			
+		return socioDAO.update(socio);	
 	}
 	
 	public DetallesSocio getSocio(String idSocio) {
-		
-		SocioDAO socioDAO = new SocioDAOImpFicheros();
 		return socioDAO.queryById(idSocio);
 	}
 	
