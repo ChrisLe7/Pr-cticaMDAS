@@ -85,7 +85,7 @@ public class AplicacionAbono {
 		    			
 		    			DetallesLocalidad localidadAAsignar = new DetallesLocalidad(nuevoAbono.getIdLocalidad());
 		    			
-		    			if (sistemaLocalidad.asignarLocalidad(localidadAAsignar, nuevoAbono.getIdAbono())) {
+		    			if (sistemaLocalidad.asignarLocalidad(localidadAAsignar, nuevoAbono.getIdSocio())) {
 		    				
 		    				System.out.println("Se ha registrado con exito el nuevo Abono");
 		    			}

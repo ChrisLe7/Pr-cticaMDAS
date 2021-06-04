@@ -65,10 +65,8 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			try {
 				while(true) {
 					abono = (DetallesAbono) contenidoFichero.readObject();
-					String clave = abono.getIdAbono();
-					System.out.println(abono.toString());
-					abono.setIdSocio(clave);
-					
+					String clave = abono.getIdSocio();
+									
 					listadoAbonos.put(clave, abono);
 				}
 				
@@ -270,7 +268,6 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 		FileReader filePropiedades;
 		Boolean estado = true;
 		File fich = null;
-		System.out.println(abono.toString());
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -291,9 +288,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			}
 			
 			if (contenidoFichero != null) {
-				System.out.println(abono.toString());
 				contenidoFichero.writeObject(abono);
-				System.out.println(abono.toString());
 				contenidoFichero.close();
 				filePropiedades.close();
 			}
