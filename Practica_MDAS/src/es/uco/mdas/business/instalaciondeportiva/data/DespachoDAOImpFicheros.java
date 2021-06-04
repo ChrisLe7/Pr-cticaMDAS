@@ -1,4 +1,4 @@
-package es.uco.mdas.datos;
+package es.uco.mdas.business.instalaciondeportiva.data;
 
 import java.io.EOFException;
 import java.io.File;
@@ -12,20 +12,21 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
+import es.uco.mdas.business.instalaciondeportiva.DetallesDespacho;
 
-public class LocalidadDAOImpFicheros implements LocalidadDAO{
+public class DespachoDAOImpFicheros implements DespachoDAO{
 
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombreLocalidades";
+	private static final String NOMBREFICHERO = "ficheroNombreDespachos";
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 
 	@Override
-	public HashMap<String, DetallesLocalidad> queryAll() {
+	public HashMap<String, DetallesDespacho> queryAll() {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
 		File fich = null;
+		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -40,12 +41,12 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesLocalidad> listadoLocalidades = new HashMap<String, DetallesLocalidad> ();
+		HashMap <String, DetallesDespacho> listadoDespachos = new HashMap<String, DetallesDespacho> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fich = new File (nombreFichero);
+			fich = new File(nombreFichero);
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
@@ -56,14 +57,14 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesLocalidad localidad = null;
+			DetallesDespacho despacho = null;
 			try {
 
 				while(true) {
 
-					localidad = (DetallesLocalidad) contenidoFichero.readObject();
-					String clave = localidad.getIdLocalidad();
-					listadoLocalidades.put(clave, localidad);
+					despacho = (DetallesDespacho) contenidoFichero.readObject();
+					String clave = despacho.getIdDespacho();
+					listadoDespachos.put(clave, despacho);
 				}
 				
 			} catch (EOFException e) {
@@ -83,15 +84,15 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 			
 		}
 		
-		return listadoLocalidades;
+		return listadoDespachos;
 	}
 
 	@Override
-	public DetallesLocalidad queryById(String idItem) {
+	public DetallesDespacho queryById(String idItem) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
-		
+		File fich = null;
 		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
@@ -99,7 +100,8 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,30 +109,30 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesLocalidad detallesLocalidad = null;
+		DetallesDespacho detallesDespacho = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return null;
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesLocalidad localidad = null;
+			DetallesDespacho despacho = null;
 			try {
 
 				while(true) {
 
-					localidad = (DetallesLocalidad) contenidoFichero.readObject();
+					despacho = (DetallesDespacho) contenidoFichero.readObject();
 					
-					if (localidad.getIdLocalidad().equals(idItem)) {
-						detallesLocalidad = localidad;
+					if (despacho.getIdDespacho().equals(idItem)) {
+						detallesDespacho = despacho;
 						break;
 					}
 				}
@@ -152,11 +154,11 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 			
 		}
 		
-		return detallesLocalidad;
+		return detallesDespacho;
 	}
 
 	@Override
-	public boolean update(DetallesLocalidad item) {
+	public boolean update(DetallesDespacho item) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -171,7 +173,8 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -196,22 +199,21 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return estado;
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesLocalidad registroFichero = null;
+			DetallesDespacho registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesLocalidad) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesDespacho) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getIdLocalidad().equals(item.getIdLocalidad())) {
+					if (registroFichero.getIdDespacho().equals(item.getIdDespacho())) {
 						registroFichero = item;
 						estado = !estado;
 					}
@@ -253,7 +255,7 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 	}
 
 	@Override
-	public boolean insert(DetallesLocalidad item) {
+	public boolean insert(DetallesDespacho item) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -342,19 +344,20 @@ public class LocalidadDAOImpFicheros implements LocalidadDAO{
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return estado;
 		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesLocalidad registroFichero = null;
+			DetallesDespacho registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesLocalidad) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesDespacho) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getIdLocalidad().equals(idItem)) {
+					if (registroFichero.getIdDespacho().equals(idItem)) {
 						estado = !estado;
 					}
 					else {

@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesEntrada;
-import es.uco.mdas.datos.EntradaDAO;
-import es.uco.mdas.datos.EntradaDAOImpFicheros;
+import es.uco.mdas.business.instalaciondeportiva.data.EntradaDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.EntradaDAOImpFicheros;
 
 public class TestEntradaDAO {
 	public static void main(String[] args) throws ParseException {

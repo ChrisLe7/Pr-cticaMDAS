@@ -16,12 +16,12 @@ import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
 import es.uco.mdas.business.instalaciondeportiva.GestionarDespacho;
 import es.uco.mdas.business.instalaciondeportiva.GestionarEspacioComercial;
 import es.uco.mdas.business.instalaciondeportiva.RealizacionContrato;
+import es.uco.mdas.business.instalaciondeportiva.data.ContratoDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.DespachoDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.EspacioComercialDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.LocalidadDAO;
 import es.uco.mdas.business.socio.DetallesAbono;
-import es.uco.mdas.datos.AbonoDAO;
-import es.uco.mdas.datos.ContratoDAO;
-import es.uco.mdas.datos.DespachoDAO;
-import es.uco.mdas.datos.EspacioComercialDAO;
-import es.uco.mdas.datos.LocalidadDAO;
+import es.uco.mdas.business.socio.data.AbonoDAO;
 
 
 public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho, GestionarEspacioComercial{

@@ -6,12 +6,12 @@ import es.uco.mdas.system.abono.Abono;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.socio.impl.SocioMgtImpl;
-import es.uco.mdas.datos.AbonoDAOImpFicheros;
-import es.uco.mdas.datos.LocalidadDAO;
-import es.uco.mdas.datos.LocalidadDAOImpFicheros;
-import es.uco.mdas.datos.SocioDAOImpFicheros;
 import es.uco.mdas.business.socio.SocioMgt;
+import es.uco.mdas.business.socio.data.AbonoDAOImpFicheros;
+import es.uco.mdas.business.socio.data.SocioDAOImpFicheros;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
+import es.uco.mdas.business.instalaciondeportiva.data.LocalidadDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.LocalidadDAOImpFicheros;
 import es.uco.mdas.business.instalaciondeportiva.impl.InstalacionDeportivaImpl;
 
 public class AbonoImpl implements Abono {

@@ -1,4 +1,4 @@
-package es.uco.mdas.datos;
+package es.uco.mdas.business.instalaciondeportiva.data;
 
 import java.io.EOFException;
 import java.io.File;
@@ -12,19 +12,20 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.socio.DetallesSocio;
+import es.uco.mdas.business.instalaciondeportiva.DetallesEstadio;
 
-public class SocioDAOImpFicheros implements SocioDAO {
-	
+public class EstadioDAOImpFicheros implements EstadioDAO{
+
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombre";
+	private static final String NOMBREFICHERO = "ficheroNombreEstadios";
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
-	
-	public HashMap <String, DetallesSocio> queryAll() {
-		
+
+	@Override
+	public HashMap<String, DetallesEstadio> queryAll() {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
+		File fich = null;
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -39,29 +40,29 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesSocio> listadoSocios = new HashMap<String, DetallesSocio> ();
+		HashMap <String, DetallesEstadio> listadoEstadios = new HashMap<String, DetallesEstadio> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fichero = new FileInputStream (nombreFichero);
+			fich = new File(nombreFichero);
+			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return null;
+		System.out.println("El fichero de " + nombreFichero + " no existe");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesSocio socio = null;
+			DetallesEstadio estadio = null;
 			try {
 
 				while(true) {
 
-					socio = (DetallesSocio) contenidoFichero.readObject();
-					String clave = socio.getIdSocio();
-					listadoSocios.put(clave, socio);
+					estadio = (DetallesEstadio) contenidoFichero.readObject();
+					String clave = estadio.getIdEstadio();
+					listadoEstadios.put(clave, estadio);
 				}
 				
 			} catch (EOFException e) {
@@ -76,16 +77,16 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 			
 		}
 		
-		return listadoSocios;
+		return listadoEstadios;
 	}
-	
-	public DetallesSocio queryById(String idSocio) {
+
+	@Override
+	public DetallesEstadio queryById(String idItem) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -97,17 +98,15 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			
 			e.printStackTrace();
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesSocio detallesSocio = null;
+		DetallesEstadio detallesEstadio = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -119,20 +118,19 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return null;
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesSocio socio = null;
+			DetallesEstadio estadio = null;
 			try {
 
 				while(true) {
 
-					socio = (DetallesSocio) contenidoFichero.readObject();
+					estadio = (DetallesEstadio) contenidoFichero.readObject();
 					
-					if (socio.getIdSocio().equals(idSocio)) {
-						detallesSocio = socio;
+					if (estadio.getIdEstadio().equals(idItem)) {
+						detallesEstadio = estadio;
 						break;
 					}
 				}
@@ -140,10 +138,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			} catch (EOFException e ) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				
 				e.printStackTrace();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 			
@@ -151,17 +147,16 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 			
 		}
 		
-		return detallesSocio;
+		return detallesEstadio;
 	}
-	
-	public boolean update(DetallesSocio socioModificado) {
-		
+
+	@Override
+	public boolean update(DetallesEstadio item) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -204,21 +199,20 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return estado;
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesSocio registroFichero = null;
+			DetallesEstadio registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesEstadio) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
-						registroFichero = socioModificado;
+					if (registroFichero.getIdEstadio().equals(item.getIdEstadio())) {
+						registroFichero = item;
 						estado = !estado;
 					}
 					contenidoFicheroDestino.writeObject(registroFichero);
@@ -227,10 +221,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				
 				e.printStackTrace();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 		
@@ -240,7 +232,6 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 
@@ -260,8 +251,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		
 		return estado;
 	}
-	
-	public boolean insert(DetallesSocio socio) {
+
+	@Override
+	public boolean insert(DetallesEstadio item) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -290,7 +282,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			}
 			
 			if (contenidoFichero != null) {
-				contenidoFichero.writeObject(socio);
+				contenidoFichero.writeObject(item);
 				contenidoFichero.close();
 				filePropiedades.close();
 			}
@@ -305,9 +297,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		
 		return estado;
 	}
-	
-	
-	public boolean delete(String idSocio) {
+
+	@Override
+	public boolean delete(String idItem) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -350,20 +342,19 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return estado;
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesSocio registroFichero = null;
+			DetallesEstadio registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesEstadio) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getIdSocio().equals(idSocio)) {
+					if (registroFichero.getIdEstadio().equals(idItem)) {
 						estado = !estado;
 					}
 					else {
@@ -373,10 +364,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				
 				e.printStackTrace();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 		
@@ -386,7 +375,6 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 
@@ -402,5 +390,5 @@ public class SocioDAOImpFicheros implements SocioDAO {
 		
 		return estado;
 	}
-	
+
 }

@@ -3,8 +3,8 @@ package es.uco.mdas.tests;
 import java.util.HashMap;
 
 import es.uco.mdas.business.socio.DetallesAbono;
-import es.uco.mdas.datos.AbonoDAO;
-import es.uco.mdas.datos.AbonoDAOImpFicheros;
+import es.uco.mdas.business.socio.data.AbonoDAO;
+import es.uco.mdas.business.socio.data.AbonoDAOImpFicheros;
 
 public class TestListarAbonos {
 

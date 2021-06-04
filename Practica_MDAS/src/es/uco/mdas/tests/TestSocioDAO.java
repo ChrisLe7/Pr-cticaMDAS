@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
-import es.uco.mdas.datos.SocioDAO;
-import es.uco.mdas.datos.SocioDAOImpFicheros;
+import es.uco.mdas.business.socio.data.SocioDAO;
+import es.uco.mdas.business.socio.data.SocioDAOImpFicheros;
 
 public class TestSocioDAO {
 

@@ -1,4 +1,4 @@
-package es.uco.mdas.datos;
+package es.uco.mdas.business.socio.data;
 
 import es.uco.mdas.business.socio.DetallesSocio;
 

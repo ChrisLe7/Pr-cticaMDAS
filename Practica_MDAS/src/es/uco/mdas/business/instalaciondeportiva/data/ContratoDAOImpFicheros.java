@@ -1,4 +1,4 @@
-package es.uco.mdas.datos;
+package es.uco.mdas.business.instalaciondeportiva.data;
 
 import java.io.EOFException;
 import java.io.File;
@@ -12,21 +12,20 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.instalaciondeportiva.DetallesDespacho;
+import es.uco.mdas.business.instalaciondeportiva.DetallesContrato;
 
-public class DespachoDAOImpFicheros implements DespachoDAO{
+public class ContratoDAOImpFicheros implements ContratoDAO {
 
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombreDespachos";
+	private static final String NOMBREFICHERO = "ficheroNombreContratos";
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 
 	@Override
-	public HashMap<String, DetallesDespacho> queryAll() {
+	public HashMap<String, DetallesContrato> queryAll() {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
 		File fich = null;
-		
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -41,30 +40,29 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesDespacho> listadoDespachos = new HashMap<String, DetallesDespacho> ();
+		HashMap <String, DetallesContrato> listadoContratos = new HashMap<String, DetallesContrato> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fich = new File(nombreFichero);
+			fich = new File (nombreFichero);
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return null;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesDespacho despacho = null;
+			DetallesContrato contrato = null;
 			try {
 
 				while(true) {
 
-					despacho = (DetallesDespacho) contenidoFichero.readObject();
-					String clave = despacho.getIdDespacho();
-					listadoDespachos.put(clave, despacho);
+					contrato = (DetallesContrato) contenidoFichero.readObject();
+					String clave = contrato.getIdContrato();
+					listadoContratos.put(clave, contrato);
 				}
 				
 			} catch (EOFException e) {
@@ -84,11 +82,11 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			
 		}
 		
-		return listadoDespachos;
+		return listadoContratos;
 	}
 
 	@Override
-	public DetallesDespacho queryById(String idItem) {
+	public DetallesContrato queryById(String idItem) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -100,8 +98,7 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return null;
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,7 +106,7 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesDespacho detallesDespacho = null;
+		DetallesContrato detallesContrato = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -118,21 +115,21 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesDespacho despacho = null;
+			DetallesContrato contrato = null;
 			try {
 
 				while(true) {
 
-					despacho = (DetallesDespacho) contenidoFichero.readObject();
+					contrato = (DetallesContrato) contenidoFichero.readObject();
 					
-					if (despacho.getIdDespacho().equals(idItem)) {
-						detallesDespacho = despacho;
+					if (contrato.getIdContrato().equals(idItem)) {
+						detallesContrato = contrato;
 						break;
 					}
 				}
@@ -154,11 +151,11 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			
 		}
 		
-		return detallesDespacho;
+		return detallesContrato;
 	}
 
 	@Override
-	public boolean update(DetallesDespacho item) {
+	public boolean update(DetallesContrato item) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -173,8 +170,7 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return estado;
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -199,21 +195,21 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesDespacho registroFichero = null;
+			DetallesContrato registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesDespacho) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesContrato) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getIdDespacho().equals(item.getIdDespacho())) {
+					if (registroFichero.getIdContrato().equals(item.getIdContrato())) {
 						registroFichero = item;
 						estado = !estado;
 					}
@@ -255,7 +251,7 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 	}
 
 	@Override
-	public boolean insert(DetallesDespacho item) {
+	public boolean insert(DetallesContrato item) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -341,23 +337,21 @@ public class DespachoDAOImpFicheros implements DespachoDAO{
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			System.out.println("El fichero de " + nombreFichero + " no existe");
-			return estado;
+			System.out.println("El fichero de " + nombreFichero + " no existe");		
 		} catch (IOException e) {
-
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesDespacho registroFichero = null;
+			DetallesContrato registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesDespacho) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesContrato) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getIdDespacho().equals(idItem)) {
+					if (registroFichero.getIdContrato().equals(idItem)) {
 						estado = !estado;
 					}
 					else {

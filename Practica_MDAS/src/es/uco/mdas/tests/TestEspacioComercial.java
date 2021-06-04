@@ -4,8 +4,8 @@ import java.text.ParseException;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesEspacioComercial;
 import es.uco.mdas.business.instalaciondeportiva.TipoEspacio;
-import es.uco.mdas.datos.EspacioComercialDAO;
-import es.uco.mdas.datos.EspacioComercialDAOImpFicheros;
+import es.uco.mdas.business.instalaciondeportiva.data.EspacioComercialDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.EspacioComercialDAOImpFicheros;
 
 
 public class TestEspacioComercial {

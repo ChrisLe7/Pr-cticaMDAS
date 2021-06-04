@@ -1,4 +1,4 @@
-package es.uco.mdas.datos;
+package es.uco.mdas.business.instalaciondeportiva.data;
 
 import java.io.EOFException;
 import java.io.File;
@@ -12,16 +12,16 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.instalaciondeportiva.DetallesEntrada;
+import es.uco.mdas.business.instalaciondeportiva.DetallesPresupuesto;
 
-public class EntradaDAOImpFicheros implements EntradaDAO {
+public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombreEntradas";
+	private static final String NOMBREFICHERO = "ficheroNombrePresupuestos";
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
-
+	
 	@Override
-	public HashMap<String, DetallesEntrada> queryAll() {
+	public HashMap<String, DetallesPresupuesto> queryAll() {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -40,7 +40,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesEntrada> listadoEntradas = new HashMap<String, DetallesEntrada> ();
+		HashMap <String, DetallesPresupuesto> listadoPresupuestos = new HashMap<String, DetallesPresupuesto> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -56,14 +56,14 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesEntrada entrada = null;
+			DetallesPresupuesto presupuesto = null;
 			try {
 
 				while(true) {
 
-					entrada = (DetallesEntrada) contenidoFichero.readObject();
-					String clave = entrada.getIdEntrada();
-					listadoEntradas.put(clave, entrada);
+					presupuesto = (DetallesPresupuesto) contenidoFichero.readObject();
+					String clave = presupuesto.getIdPresupuesto();
+					listadoPresupuestos.put(clave, presupuesto);
 				}
 				
 			} catch (EOFException e) {
@@ -83,11 +83,11 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			
 		}
 		
-		return listadoEntradas;
+		return listadoPresupuestos;
 	}
 
 	@Override
-	public DetallesEntrada queryById(String idItem) {
+	public DetallesPresupuesto queryById(String idItem) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -107,7 +107,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesEntrada detallesEntrada = null;
+		DetallesPresupuesto detallesPresupuesto = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -123,15 +123,15 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesEntrada entrada = null;
+			DetallesPresupuesto presupuesto = null;
 			try {
 
 				while(true) {
 
-					entrada = (DetallesEntrada) contenidoFichero.readObject();
+					presupuesto = (DetallesPresupuesto) contenidoFichero.readObject();
 					
-					if (entrada.getIdEntrada().equals(idItem)) {
-						detallesEntrada = entrada;
+					if (presupuesto.getIdPresupuesto().equals(idItem)) {
+						detallesPresupuesto = presupuesto;
 						break;
 					}
 				}
@@ -141,7 +141,6 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 			
@@ -154,11 +153,11 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			
 		}
 		
-		return detallesEntrada;
+		return detallesPresupuesto;
 	}
 
 	@Override
-	public boolean update(DetallesEntrada item) {
+	public boolean update(DetallesPresupuesto item) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -205,15 +204,15 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesEntrada registroFichero = null;
+			DetallesPresupuesto registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesEntrada) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesPresupuesto) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getIdEntrada().equals(item.getIdEntrada())) {
+					if (registroFichero.getIdPresupuesto().equals(item.getIdPresupuesto())) {
 						registroFichero = item;
 						estado = !estado;
 					}
@@ -255,7 +254,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 	}
 
 	@Override
-	public boolean insert(DetallesEntrada item) {
+	public boolean insert(DetallesPresupuesto item) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -290,7 +289,7 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			}
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
 			estado = !estado;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -348,15 +347,15 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesEntrada registroFichero = null;
+			DetallesPresupuesto registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesEntrada) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesPresupuesto) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getIdEntrada().equals(idItem)) {
+					if (registroFichero.getIdPresupuesto().equals(idItem)) {
 						estado = !estado;
 					}
 					else {
@@ -392,5 +391,4 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 		
 		return estado;
 	}
-
 }

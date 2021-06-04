@@ -1,4 +1,4 @@
-package es.uco.mdas.datos;
+package es.uco.mdas.business.socio.data;
 
 import java.io.EOFException;
 import java.io.File;
@@ -12,20 +12,19 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Properties;
 
-import es.uco.mdas.business.instalaciondeportiva.DetallesPresupuesto;
+import es.uco.mdas.business.socio.DetallesSocio;
 
-public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
-
+public class SocioDAOImpFicheros implements SocioDAO {
+	
 	private static final String FICHEROPROPIEDADES = "gestor.properties";
-	private static final String NOMBREFICHERO = "ficheroNombrePresupuestos";
+	private static final String NOMBREFICHERO = "ficheroNombre";
 	private static final String NOMBREFICHEROAUXILIAR = "auxiliar.bin";
 	
-	@Override
-	public HashMap<String, DetallesPresupuesto> queryAll() {
+	public HashMap <String, DetallesSocio> queryAll() {
+		
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
-		File fich = null;
 		try {
 			filePropiedades = new FileReader(FICHEROPROPIEDADES);
 			properties.load(filePropiedades);
@@ -40,13 +39,12 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 		if (nombreFichero == null) {
 			return null;
 		}
-		HashMap <String, DetallesPresupuesto> listadoPresupuestos = new HashMap<String, DetallesPresupuesto> ();
+		HashMap <String, DetallesSocio> listadoSocios = new HashMap<String, DetallesSocio> ();
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
 		try {
-			fich = new File(nombreFichero);
-			fichero = new FileInputStream (fich);
+			fichero = new FileInputStream (nombreFichero);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
@@ -56,14 +54,14 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesPresupuesto presupuesto = null;
+			DetallesSocio socio = null;
 			try {
 
 				while(true) {
 
-					presupuesto = (DetallesPresupuesto) contenidoFichero.readObject();
-					String clave = presupuesto.getIdPresupuesto();
-					listadoPresupuestos.put(clave, presupuesto);
+					socio = (DetallesSocio) contenidoFichero.readObject();
+					String clave = socio.getIdSocio();
+					listadoSocios.put(clave, socio);
 				}
 				
 			} catch (EOFException e) {
@@ -78,16 +76,16 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 			
 		}
 		
-		return listadoPresupuestos;
+		return listadoSocios;
 	}
-
-	@Override
-	public DetallesPresupuesto queryById(String idItem) {
+	
+	public DetallesSocio queryById(String idSocio) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -99,15 +97,17 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
+			
 			e.printStackTrace();
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 		
 		if (nombreFichero == null) {
 			return null;
 		}
-		DetallesPresupuesto detallesPresupuesto = null;
+		DetallesSocio detallesSocio = null;
 		
 		FileInputStream fichero = null;
 		ObjectInputStream contenidoFichero = null;
@@ -119,19 +119,20 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return null;
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 		
 		if (contenidoFichero != null) {
-			DetallesPresupuesto presupuesto = null;
+			DetallesSocio socio = null;
 			try {
 
 				while(true) {
 
-					presupuesto = (DetallesPresupuesto) contenidoFichero.readObject();
+					socio = (DetallesSocio) contenidoFichero.readObject();
 					
-					if (presupuesto.getIdPresupuesto().equals(idItem)) {
-						detallesPresupuesto = presupuesto;
+					if (socio.getIdSocio().equals(idSocio)) {
+						detallesSocio = socio;
 						break;
 					}
 				}
@@ -139,8 +140,10 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e ) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
+				
 				e.printStackTrace();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 			
@@ -148,16 +151,17 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 			
 		}
 		
-		return detallesPresupuesto;
+		return detallesSocio;
 	}
-
-	@Override
-	public boolean update(DetallesPresupuesto item) {
+	
+	public boolean update(DetallesSocio socioModificado) {
+		
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -200,20 +204,21 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return estado;
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesPresupuesto registroFichero = null;
+			DetallesSocio registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesPresupuesto) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
 
-					if (registroFichero.getIdPresupuesto().equals(item.getIdPresupuesto())) {
-						registroFichero = item;
+					if (registroFichero.getIdSocio().equals(socioModificado.getIdSocio())) {
+						registroFichero = socioModificado;
 						estado = !estado;
 					}
 					contenidoFicheroDestino.writeObject(registroFichero);
@@ -222,8 +227,10 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
+				
 				e.printStackTrace();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 		
@@ -233,6 +240,7 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 
@@ -252,9 +260,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 		
 		return estado;
 	}
-
-	@Override
-	public boolean insert(DetallesPresupuesto item) {
+	
+	public boolean insert(DetallesSocio socio) {
 		Properties properties = new Properties();
 		String nombreFichero = null;
 		FileReader filePropiedades;
@@ -283,7 +290,7 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			}
 			
 			if (contenidoFichero != null) {
-				contenidoFichero.writeObject(item);
+				contenidoFichero.writeObject(socio);
 				contenidoFichero.close();
 				filePropiedades.close();
 			}
@@ -298,9 +305,9 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 		
 		return estado;
 	}
-
-	@Override
-	public boolean delete(String idItem) {
+	
+	
+	public boolean delete(String idSocio) {
 		Boolean estado = false;
 		Properties properties = new Properties();
 		String nombreFichero = null;
@@ -343,19 +350,20 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			System.out.println("El fichero de " + nombreFichero + " no existe");
 			return estado;
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 		
 		if (contenidoFicheroOrigen != null && contenidoFicheroDestino != null) {
-			DetallesPresupuesto registroFichero = null;
+			DetallesSocio registroFichero = null;
 			
 			try {
 
 				while(true) {
 
-					registroFichero = (DetallesPresupuesto) contenidoFicheroOrigen.readObject();
+					registroFichero = (DetallesSocio) contenidoFicheroOrigen.readObject();
 					
-					if (registroFichero.getIdPresupuesto().equals(idItem)) {
+					if (registroFichero.getIdSocio().equals(idSocio)) {
 						estado = !estado;
 					}
 					else {
@@ -365,8 +373,10 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
+				
 				e.printStackTrace();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 		
@@ -376,6 +386,7 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
+				
 				e.printStackTrace();
 			}
 
@@ -391,4 +402,5 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 		
 		return estado;
 	}
+	
 }
