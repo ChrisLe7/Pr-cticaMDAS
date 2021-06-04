@@ -131,8 +131,18 @@ public class MainPrincipal {
 		    		String idsocioElegido  = ElegirSocio();
 		    		if (sistemaSocio.eliminarDatosCliente(idsocioElegido)) {
 		    			
-		    			sistemaAbono.cancelarAbono(idsocioElegido);
-		    			
+		    			DetallesLocalidad localidadALiberar = sistemaAbono.cancelarAbono(idsocioElegido);
+			    		if (localidadALiberar != null) {
+			    			if (sistemaLocalidad.liberarLocalidad(localidadALiberar)) {
+				    			System.out.println("Se ha cancelador el abono con exito y liberada su localidad");		    				
+			    			}else {
+			    				System.out.println("Ha ocurrido un error al liberar la localidad");
+			    			}
+			    			
+			    		}else {
+			    			System.out.println("Lo sentimos pero no existe ningún abono para ese socio");
+			    		}
+			    		
 		    			System.out.println("El socio elegido se ha borrado con exito.");
 		    		}
 		    		

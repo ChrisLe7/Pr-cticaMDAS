@@ -357,7 +357,7 @@ public class AbonoDAOImpFicheros implements AbonoDAO{
 			try {
 				while (true) {
 					registroFichero = (DetallesAbono) contenidoFicheroOrigen.readObject();
-					if (registroFichero.getIdAbono().equals(idAbono)) {
+					if (registroFichero.getIdSocio().equals(idAbono)) {
 						estado = !estado;
 					}
 					else {
