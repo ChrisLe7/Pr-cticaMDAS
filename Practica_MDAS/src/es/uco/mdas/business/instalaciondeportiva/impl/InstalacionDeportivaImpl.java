@@ -18,15 +18,11 @@ import es.uco.mdas.business.instalaciondeportiva.GestionarEspacioComercial;
 import es.uco.mdas.business.instalaciondeportiva.RealizacionContrato;
 import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.datos.AbonoDAO;
-import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.ContratoDAO;
-import es.uco.mdas.datos.ContratoDAOImpFicheros;
 import es.uco.mdas.datos.DespachoDAO;
-import es.uco.mdas.datos.DespachoDAOImpFicheros;
 import es.uco.mdas.datos.EspacioComercialDAO;
-import es.uco.mdas.datos.EspacioComercialDAOImpFicheros;
 import es.uco.mdas.datos.LocalidadDAO;
-import es.uco.mdas.datos.LocalidadDAOImpFicheros;
+
 
 public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionContrato, GestionarDespacho, GestionarEspacioComercial{
 
@@ -65,9 +61,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	
 	@Override
 	public ArrayList<DetallesLocalidad> getLocalidadesDisponibles() {
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
-		
-
 		HashMap<String, DetallesLocalidad> listadoLocalidades = localidadDAO.queryAll();
 		
 		ArrayList<DetallesLocalidad> localidadesLibres = new ArrayList<>();
@@ -84,7 +77,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	@Override
 	public boolean asignarLocalidad(DetallesLocalidad localidad, String idSocio) {
 		
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
 		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
 		
 		if (registroLocalidad.getIdSocio().equals("")) {
@@ -98,14 +90,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public boolean liberarLocalidad(DetallesLocalidad localidad) {
-		
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
-		
-		System.out.println(localidad.toString());
-		
 		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
-		
-		System.out.println(registroLocalidad.toString());
 		
 		if (!registroLocalidad.getIdSocio().equals("")) {
 			registroLocalidad.setIdSocio("");
@@ -121,14 +106,11 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	public boolean liberarAbono(String idAbono) {
 		
 		boolean estado = false;
-		AbonoDAO abonoDAO = new AbonoDAOImpFicheros();
 		
 		DetallesAbono informacionAbono = abonoDAO.queryById(idAbono);
 		
 		String idLocalidad = informacionAbono.getIdLocalidad();
-		
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
-		
+				
 		DetallesLocalidad informacionLocalidad = localidadDAO.queryById(idLocalidad);
 		
 		if (informacionLocalidad != null) {
@@ -146,8 +128,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	
 		String idLocalidad = abono.getIdLocalidad();
 		
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
-		
 		DetallesLocalidad informacionLocalidad = localidadDAO.queryById(idLocalidad);
 		
 		if (informacionLocalidad.getIdSocio() == "" ) {
@@ -160,7 +140,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	
 	@Override
 	public DetallesLocalidad getDetallesLocalidad(String idLocalidad) {
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
+
 		DetallesLocalidad infoLocalidad = localidadDAO.queryById(idLocalidad);
 		return infoLocalidad;
 	}
@@ -184,9 +164,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public boolean asignarEspacioComercial(String idEspacioComercial, String idEmpresa) {
-		
-		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
-		
+				
 		DetallesEspacioComercial espacioComercialAAsignar = espacioComercialDAO.queryById(idEspacioComercial);
 		
 		if (espacioComercialAAsignar != null) {
@@ -201,7 +179,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public DetallesContrato renovarContrato(String idContrato) {
-		ContratoDAO contratoDAO = new ContratoDAOImpFicheros();
 		
 		DetallesContrato contratoARenovar = contratoDAO.queryById(idContrato);
 		
@@ -218,7 +195,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override 
 	public void cancelarContrato(String idContrato) {
-		ContratoDAO contratoDAO = new ContratoDAOImpFicheros();
 		
 		DetallesContrato contratoACancelar = contratoDAO.queryById(idContrato);
 		
@@ -235,7 +211,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	@Override
 	public void liberarEspacioComercial(String idEspacioComercial) {
 		
-		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
 		DetallesEspacioComercial espacioComercialLiberar = espacioComercialDAO.queryById(idEspacioComercial);
 		espacioComercialLiberar.setArrendado("");
 		espacioComercialDAO.update(espacioComercialLiberar);
@@ -244,9 +219,7 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 
 	@Override
 	public ArrayList<DetallesDespacho> getDespachosLibresEstadio() {
-		
-		DespachoDAO despachoDAO = new DespachoDAOImpFicheros();
-		
+				
 		HashMap<String, DetallesDespacho> listadoCompletoDespachos = despachoDAO.queryAll();
 		
 		ArrayList<DetallesDespacho> despachosDisponibles = new ArrayList<> ();
@@ -269,8 +242,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		despacho.setIdMiembro(idMiembro);
 		despacho.setLocalizacion(estadio.getIdEstadio());
 		
-		DespachoDAO despachoDAO = new DespachoDAOImpFicheros();
-		
 		if (!despachoDAO.update(despacho)) {
 			despachoDAO.insert(despacho);
 		} 
@@ -279,7 +250,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	@Override
 	public ArrayList<DetallesEspacioComercial> obtenerListadoEspacios() {
 		
-		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
 		HashMap<String, DetallesEspacioComercial> listadoespacioComerciales = espacioComercialDAO.queryAll();
 		Collection<DetallesEspacioComercial> espaciosComerciales = listadoespacioComerciales.values();
 		
@@ -291,7 +261,6 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 	@Override
 	public DetallesEspacioComercial getEspacioComercial(String idEspacioComercial) {
 		
-		EspacioComercialDAO espacioComercialDAO = new EspacioComercialDAOImpFicheros();
 		DetallesEspacioComercial infoEspacioComercialDeseado = espacioComercialDAO.queryById(idEspacioComercial);
 		return infoEspacioComercialDeseado;
 	}

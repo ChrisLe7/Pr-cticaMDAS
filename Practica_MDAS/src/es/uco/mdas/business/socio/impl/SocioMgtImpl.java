@@ -11,10 +11,7 @@ import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.business.socio.SocioMgt;
 import es.uco.mdas.datos.AbonoDAO;
-import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.SocioDAO;
-import es.uco.mdas.datos.SocioDAOImpFicheros;
-import es.uco.mdas.system.abono.impl.AbonoImpl;
 
 public class SocioMgtImpl implements SocioMgt {
 	
@@ -61,9 +58,7 @@ public class SocioMgtImpl implements SocioMgt {
 	
 	public boolean cancelarAbono(String idAbono) {
 		boolean estado = false;
-		AbonoImpl abonoMGT = new AbonoImpl();
-
-		DetallesAbono abonoSocio = abonoMGT.obtenerInformacionAbono(idAbono);		
+		DetallesAbono abonoSocio = obtenerInformacionAbono(idAbono);		
 		
 		if (abonoSocio != null ) {
 			abonoDAO.delete(idAbono);
