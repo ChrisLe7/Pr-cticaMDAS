@@ -69,30 +69,52 @@ public class InstalacionDeportivaImpl implements GestionarAbono, RealizacionCont
 		
 
 		HashMap<String, DetallesLocalidad> listadoLocalidades = localidadDAO.queryAll();
-		Collection<DetallesLocalidad> localidades = listadoLocalidades.values();
 		
-		ArrayList<DetallesLocalidad> localidadesDisponibles = new ArrayList<> (localidades);
+		ArrayList<DetallesLocalidad> localidadesLibres = new ArrayList<>();
+		for (String idLocalidad : listadoLocalidades.keySet()) {
+			DetallesLocalidad registroLocalidad = listadoLocalidades.get(idLocalidad);
+			if (registroLocalidad.getIdSocio().equals("")) {
+				localidadesLibres.add(registroLocalidad);
+			}
+		}
 		
-		return localidadesDisponibles;
+		return localidadesLibres;
 	}
 
 	@Override
-	public void asignarLocalidad(DetallesLocalidad localidad, String idSocio) {
-		localidad.setIdSocio(idSocio);
+	public boolean asignarLocalidad(DetallesLocalidad localidad, String idSocio) {
+		
 		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
+		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
 		
-		localidadDAO.update(localidad);
+		if (registroLocalidad.getIdSocio().equals("")) {
+			registroLocalidad.setIdSocio(idSocio);
+			localidadDAO.update(registroLocalidad);
+			return true;
+		}
 		
-		
+		return false;
 	}
 
 	@Override
-	public void liberarLocalidad(DetallesLocalidad localidad) {
-		localidad.setIdSocio("");
+	public boolean liberarLocalidad(DetallesLocalidad localidad) {
+		
 		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
 		
-		localidadDAO.update(localidad);
+		System.out.println(localidad.toString());
 		
+		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
+		
+		System.out.println(registroLocalidad.toString());
+		
+		if (!registroLocalidad.getIdSocio().equals("")) {
+			registroLocalidad.setIdSocio("");
+			
+		
+			return localidadDAO.update(registroLocalidad);
+		}
+		
+		return false;
 	}
 
 	@Override

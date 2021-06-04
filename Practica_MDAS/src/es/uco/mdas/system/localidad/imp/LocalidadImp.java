@@ -4,58 +4,45 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
+import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
+import es.uco.mdas.business.instalaciondeportiva.impl.InstalacionDeportivaImpl;
+import es.uco.mdas.business.socio.SocioMgt;
+import es.uco.mdas.business.socio.impl.SocioMgtImpl;
+import es.uco.mdas.datos.AbonoDAOImpFicheros;
 import es.uco.mdas.datos.LocalidadDAO;
 import es.uco.mdas.datos.LocalidadDAOImpFicheros;
+import es.uco.mdas.datos.SocioDAOImpFicheros;
+import es.uco.mdas.system.abono.impl.AbonoImpl;
 import es.uco.mdas.system.localidad.Localidad;
 
 public class LocalidadImp implements Localidad{
 
+	private GestionarAbono localidadMgt;
+	
+	public LocalidadImp() {
+		
+		this.localidadMgt = new InstalacionDeportivaImpl(new LocalidadDAOImpFicheros());
+	}
+	
+	
 	@Override
 	public ArrayList<DetallesLocalidad> obtenerLocalidadesLibres() {
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
-		HashMap <String, DetallesLocalidad> listadoTodasLasLocalidades = localidadDAO.queryAll();
-		ArrayList<DetallesLocalidad> localidadesLibres = new ArrayList<>();
-		for (String idLocalidad : listadoTodasLasLocalidades.keySet()) {
-			DetallesLocalidad registroLocalidad = listadoTodasLasLocalidades.get(idLocalidad);
-			if (registroLocalidad.getIdSocio().equals("")) {
-				localidadesLibres.add(registroLocalidad);
-			}
-		}
-	
+			
+		ArrayList<DetallesLocalidad> localidadesLibres = localidadMgt.getLocalidadesDisponibles();
+		
 		return localidadesLibres;
 	}
 
 	@Override
 	public boolean asignarLocalidad(DetallesLocalidad localidad, String idSocio) {
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
-		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
 		
-		if (registroLocalidad.getIdSocio().equals("")) {
-			registroLocalidad.setIdSocio(idSocio);
-			localidadDAO.update(registroLocalidad);
-			return true;
-		}
-		
-		return false;
+		return localidadMgt.asignarLocalidad(localidad, idSocio);
 	}
 
 	@Override
 	public boolean liberarLocalidad(DetallesLocalidad localidad) {
-		LocalidadDAO localidadDAO = new LocalidadDAOImpFicheros();
 		
-		System.out.println(localidad.toString());
-		
-		DetallesLocalidad registroLocalidad = localidadDAO.queryById(localidad.getIdLocalidad());
-		
-		System.out.println(registroLocalidad.toString());
-		
-		if (!registroLocalidad.getIdSocio().equals("")) {
-			registroLocalidad.setIdSocio("");
-			localidadDAO.update(registroLocalidad);
-			return true;
-		}
-		
-		return false;
+		return localidadMgt.liberarLocalidad(localidad);
 	}
 
 }

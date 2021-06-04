@@ -31,6 +31,12 @@ public class SocioMgtImpl implements SocioMgt {
 	}
 	
 	public boolean registrarAbono (DetallesAbono abono) {		
+		
+		if (abonoDAO.queryById(abono.getIdSocio()) != null) {
+			
+			return false;
+		}
+		
 		return abonoDAO.insert(abono);
 	}
 	
