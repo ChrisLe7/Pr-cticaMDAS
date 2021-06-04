@@ -23,17 +23,17 @@ import es.uco.mdas.system.localidad.imp.LocalidadImp;
 import es.uco.mdas.system.socio.Socio;
 import es.uco.mdas.system.socio.impl.SocioImpl;
 
-public class MainPrincipal {
+public class Programa {
 	/*Declaración de Variables*/
 	private static Socio sistemaSocio = null;
 	private static Abono sistemaAbono = null;
 	private static Localidad sistemaLocalidad = null;
 	private static Timer temporizador = null;
-	
+	private static Scanner opcionElegida;
+	private static Scanner scannerSistema;
 	public static void main(String[] argv) {
 		System.out.println("Buenas esta iniciando el Gestor de Socios y Abonados");
 		int optionSistema = 1;
-		Scanner opcionElegida;
 		while (optionSistema != 0) {
 			
 			PrintMenu();
@@ -61,6 +61,8 @@ public class MainPrincipal {
 		    	case 0: 
 		    		PararTemporizador();
 		    		System.out.println("Hasta la próxima");
+		    		opcionElegida.close();
+		    		scannerSistema.close();
 		    	break;
 		    		default:
 		    			System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");
@@ -93,7 +95,6 @@ public class MainPrincipal {
 		System.out.println("Sistema Socios");
 		System.out.println("---------------------------");
 		
-		Scanner opcionElegida ;
 		int opcionDeseada = 1;
 		sistemaSocio = new SocioImpl (); 
 		sistemaAbono = new AbonoImpl();
@@ -165,30 +166,30 @@ public class MainPrincipal {
 		Date edad = null;
 		String fechaTexto = "";
 		boolean checkFecha = false;
-		Scanner scannerCliente = new Scanner(System.in);
+		scannerSistema = new Scanner(System.in);
 		
 		System.out.println("\t Introduzca el Nombre");
 		
-		nombreCliente = scannerCliente.nextLine();
+		nombreCliente = scannerSistema.nextLine();
 		System.out.println("\t Introduzca el Primer Apellido");
 		
-		apellidosCliente = scannerCliente.nextLine();
+		apellidosCliente = scannerSistema.nextLine();
 		System.out.println("\t Introduzca el Segundo Apellido");
 		
-		apellidosCliente = apellidosCliente + ", " + scannerCliente.nextLine();
+		apellidosCliente = apellidosCliente + ", " + scannerSistema.nextLine();
 		
 		System.out.println("\t Introduzca la Direccion");
 
-		direccionCliente = scannerCliente.nextLine();
+		direccionCliente = scannerSistema.nextLine();
 		do {
 			System.out.println("\t Introduzca el Telefono");
 			
-			telefonoContacto = scannerCliente.nextLine();
+			telefonoContacto = scannerSistema.nextLine();
 		}while(!checkTelefono(telefonoContacto));
 		
 		do {
             System.out.println("\t Introduzca la fecha del socio (dd/mm/yyyy)");
-            fechaTexto = scannerCliente.nextLine();
+            fechaTexto = scannerSistema.nextLine();
 
             try {
             	edad = new SimpleDateFormat("dd/MM/yyyy").parse(fechaTexto);
@@ -215,8 +216,8 @@ public class MainPrincipal {
 	private static String ElegirSocio() {
 		System.out.println("Introduzca el ID del Socio");
 		String idSocio = null;
-		Scanner scannerEliminar = new Scanner(System.in);
-		idSocio = scannerEliminar.nextLine();
+		scannerSistema = new Scanner(System.in);
+		idSocio = scannerSistema.nextLine();
 		
 		return idSocio;
 	}
@@ -268,7 +269,6 @@ public class MainPrincipal {
 		System.out.println("Sistema Abonos");
 		System.out.println("---------------------------");
 		
-		Scanner opcionElegida ;
 		int opcionDeseada = 1;
 		sistemaAbono = new AbonoImpl (); 
 		sistemaLocalidad = new LocalidadImp ();
@@ -366,11 +366,11 @@ public class MainPrincipal {
 		String idSocio = null;
 		String idAbono = "";
 		DetallesSocio informacionSocioAAbonar = null;
-		Scanner scannerRegistrar = new Scanner(System.in);
+		scannerSistema = new Scanner(System.in);
 		while (informacionSocioAAbonar == null) {
 			System.out.println("Introduzca el ID del Socio");
 			
-			idSocio = scannerRegistrar.nextLine();
+			idSocio = scannerSistema.nextLine();
 			
 			informacionSocioAAbonar = sistemaSocio.obtenerInformacionSocio(idSocio);
 			if (informacionSocioAAbonar == null) {
@@ -394,7 +394,7 @@ public class MainPrincipal {
 		abonoARegistrar.setPrecio(tipoAbonoSeleccionado.getValue());
 		
 		System.out.println("Instroduzca el deporte deseado");
-		String deporteAsignado = scannerRegistrar.nextLine();
+		String deporteAsignado = scannerSistema.nextLine();
 		abonoARegistrar.setDeporteAsignado(deporteAsignado);
 		
 		Calendar calendario = Calendar.getInstance();
@@ -410,12 +410,12 @@ public class MainPrincipal {
 	private static String ElegirTipoAbono() {
 		
 		int TipoAbono = 0;
-		Scanner scannerRegistrar = new Scanner(System.in);
+		scannerSistema = new Scanner(System.in);
 		
 			PrintMenuTipoAbonos();
 		 try {
 			 
-			  TipoAbono = Integer.parseInt(scannerRegistrar.next());
+			  TipoAbono = Integer.parseInt(scannerSistema.next());
          }
          catch (InputMismatchException e) 
          {
@@ -428,7 +428,7 @@ public class MainPrincipal {
 			PrintMenuTipoAbonos();
 			
 			try {
-				TipoAbono = Integer.parseInt(scannerRegistrar.next());
+				TipoAbono = Integer.parseInt(scannerSistema.next());
             }
             catch (InputMismatchException e) 
             {
@@ -467,15 +467,15 @@ public class MainPrincipal {
 		System.out.println("Introduzca la id del asiento a elegir entre los siguientes: ");
 		System.out.println(idLocalidadesLibres);
 		
-		Scanner scannerRegistrar = new Scanner(System.in);
-		String idAsiento = scannerRegistrar.next();
+		scannerSistema = new Scanner(System.in);
+		String idAsiento = scannerSistema.next();
 		
 		while(!idLocalidadesLibres.contains(idAsiento)) {
 			
 			System.out.println("Introduzca una id de asiento valida a elegir entre los siguientes: ");
 			System.out.println(idLocalidadesLibres);
 			
-			idAsiento = scannerRegistrar.next();
+			idAsiento = scannerSistema.next();
 		}
 		
 		
