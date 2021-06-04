@@ -31,10 +31,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			
 			e.printStackTrace();
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
@@ -49,10 +47,9 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			fichero = new FileInputStream (nombreFichero);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
@@ -68,12 +65,10 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				}
 				
 			} catch (EOFException e) {
-				
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				
 				e.printStackTrace();
 			} catch (IOException e) {
-				
 				e.printStackTrace();
 			}
 			
@@ -121,8 +116,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -143,7 +138,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 				}
 				
 			} catch (EOFException e ) {
-				
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();
@@ -206,8 +201,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -230,7 +225,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 						
 				}
 			} catch (EOFException e) {
-				
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();
@@ -301,7 +296,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			}
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
 			estado = !estado;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -352,8 +347,8 @@ public class SocioDAOImpFicheros implements SocioDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -376,7 +371,7 @@ public class SocioDAOImpFicheros implements SocioDAO {
 					}
 				}
 			} catch (EOFException e) {
-				
+				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();

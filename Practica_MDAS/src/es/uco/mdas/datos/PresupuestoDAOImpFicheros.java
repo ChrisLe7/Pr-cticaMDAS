@@ -32,10 +32,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -51,10 +49,9 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -72,10 +69,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -83,7 +78,6 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -105,10 +99,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -124,10 +116,9 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -148,10 +139,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e ) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -159,7 +148,6 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -209,10 +197,9 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -235,10 +222,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
@@ -248,7 +233,6 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -305,7 +289,7 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			}
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
 			estado = !estado;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -356,10 +340,9 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -382,10 +365,8 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
@@ -395,7 +376,6 @@ public class PresupuestoDAOImpFicheros implements PresupuestoDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

@@ -32,10 +32,8 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -51,10 +49,9 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -72,10 +69,8 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -83,7 +78,6 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -105,10 +99,8 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			nombreFichero = properties.getProperty(NOMBREFICHERO);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -124,10 +116,9 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			fichero = new FileInputStream (fich);
 			contenidoFichero= new ObjectInputStream (fichero);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -148,10 +139,9 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			} catch (EOFException e ) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			
@@ -159,7 +149,6 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 				contenidoFichero.close();
 				fichero.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -209,10 +198,9 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -235,10 +223,8 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
@@ -248,7 +234,6 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -356,10 +341,9 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			contenidoFicheroDestino= new ObjectOutputStream (ficheroDestino);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("El fichero de " + nombreFichero + " no existe");
+			return estado;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -382,10 +366,8 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 			} catch (EOFException e) {
 				// Significa que ha terminado de leer el fichero
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
@@ -395,7 +377,6 @@ public class EntradaDAOImpFicheros implements EntradaDAO {
 				contenidoFicheroDestino.close();
 				ficheroDestino.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
