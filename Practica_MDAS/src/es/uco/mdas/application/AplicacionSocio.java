@@ -75,8 +75,18 @@ public class AplicacionSocio {
 		    	case 2:
 		    	
 		    		String idsocioElegido  = ElegirSocio();
-		    		sistemaSocio.eliminarDatosCliente(idsocioElegido);		
-		    		sistemaAbono.cancelarAbono(idsocioElegido);
+		    		if (sistemaSocio.eliminarDatosCliente(idsocioElegido)) {
+		    			
+		    			sistemaAbono.cancelarAbono(idsocioElegido);
+		    			
+		    			System.out.println("El socio elegido se ha borrado con exito.");
+		    		}
+		    		
+		    		else {
+		    			
+		    			System.out.println("El socio elegido no existe.");
+		    		}
+		    		
 		    		break;
 		    	default:
 		    		System.out.println("Lo sentimos la opcion deseada no esta todavía desarrollada.");
