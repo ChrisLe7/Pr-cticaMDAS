@@ -4,8 +4,8 @@ import java.text.ParseException;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesDespacho;
 import es.uco.mdas.business.instalaciondeportiva.TipoDespacho;
-import es.uco.mdas.datos.DespachoDAO;
-import es.uco.mdas.datos.DespachoDAOImpFicheros;
+import es.uco.mdas.business.instalaciondeportiva.data.DespachoDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.DespachoDAOImpFicheros;
 
 public class TestDespachoDAO {
 	public static void main(String[] args) throws ParseException {

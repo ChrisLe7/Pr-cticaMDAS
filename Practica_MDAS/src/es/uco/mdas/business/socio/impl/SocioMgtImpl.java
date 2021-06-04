@@ -10,8 +10,8 @@ import es.uco.mdas.business.socio.DetallesAbono;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.business.socio.SocioMgt;
-import es.uco.mdas.datos.AbonoDAO;
-import es.uco.mdas.datos.SocioDAO;
+import es.uco.mdas.business.socio.data.AbonoDAO;
+import es.uco.mdas.business.socio.data.SocioDAO;
 
 public class SocioMgtImpl implements SocioMgt {
 	

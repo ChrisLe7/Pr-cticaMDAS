@@ -3,8 +3,8 @@ package es.uco.mdas.tests;
 import java.util.HashMap;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
-import es.uco.mdas.datos.LocalidadDAO;
-import es.uco.mdas.datos.LocalidadDAOImpFicheros;
+import es.uco.mdas.business.instalaciondeportiva.data.LocalidadDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.LocalidadDAOImpFicheros;
 
 public class TestListarLocalidades {
 

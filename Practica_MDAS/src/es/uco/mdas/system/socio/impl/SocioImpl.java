@@ -6,9 +6,9 @@ import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.business.socio.SocioMgt;
+import es.uco.mdas.business.socio.data.AbonoDAOImpFicheros;
+import es.uco.mdas.business.socio.data.SocioDAOImpFicheros;
 import es.uco.mdas.business.socio.impl.SocioMgtImpl;
-import es.uco.mdas.datos.AbonoDAOImpFicheros;
-import es.uco.mdas.datos.SocioDAOImpFicheros;
 import es.uco.mdas.system.socio.Socio;
 
 public class SocioImpl implements Socio {

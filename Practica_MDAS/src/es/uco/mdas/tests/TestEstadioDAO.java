@@ -3,8 +3,8 @@ package es.uco.mdas.tests;
 import java.text.ParseException;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesEstadio;
-import es.uco.mdas.datos.EstadioDAO;
-import es.uco.mdas.datos.EstadioDAOImpFicheros;
+import es.uco.mdas.business.instalaciondeportiva.data.EstadioDAO;
+import es.uco.mdas.business.instalaciondeportiva.data.EstadioDAOImpFicheros;
 
 public class TestEstadioDAO {
 	public static void main(String[] args) throws ParseException {

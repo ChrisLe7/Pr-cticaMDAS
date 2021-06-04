@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import es.uco.mdas.business.instalaciondeportiva.DetallesLocalidad;
 import es.uco.mdas.business.instalaciondeportiva.GestionarAbono;
+import es.uco.mdas.business.instalaciondeportiva.data.LocalidadDAOImpFicheros;
 import es.uco.mdas.business.instalaciondeportiva.impl.InstalacionDeportivaImpl;
-import es.uco.mdas.datos.LocalidadDAOImpFicheros;
 import es.uco.mdas.system.localidad.Localidad;
 
 public class LocalidadImp implements Localidad{
