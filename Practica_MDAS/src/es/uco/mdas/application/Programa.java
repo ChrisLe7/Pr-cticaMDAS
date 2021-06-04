@@ -395,7 +395,9 @@ public class Programa {
 		
 		TipoAbono tipoAbonoSeleccionado = TipoAbono.valueOf(tipoAbono);
 		abonoARegistrar.setTipoAbono(tipoAbono);
-		abonoARegistrar.setPrecio(tipoAbonoSeleccionado.getValue());
+		Float precioAbono = tipoAbonoSeleccionado.getValue();
+		precioAbono = precioAbono - precioAbono * informacionSocioAAbonar.getDescuento()/100;
+		abonoARegistrar.setPrecio(precioAbono);
 		
 		System.out.println("Instroduzca el deporte deseado");
 		String deporteAsignado = scannerSistema.nextLine();
