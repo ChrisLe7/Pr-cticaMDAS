@@ -175,13 +175,10 @@ public class Programa {
 		System.out.println("\t Introduzca el Nombre");
 		
 		nombreCliente = scannerSistema.nextLine();
-		System.out.println("\t Introduzca el Primer Apellido");
+		System.out.println("\t Introduzca los Apellidos");
 		
 		apellidosCliente = scannerSistema.nextLine();
-		System.out.println("\t Introduzca el Segundo Apellido");
-		
-		apellidosCliente = apellidosCliente + ", " + scannerSistema.nextLine();
-		
+
 		System.out.println("\t Introduzca la Direccion");
 
 		direccionCliente = scannerSistema.nextLine();
@@ -421,7 +418,7 @@ public class Programa {
 			PrintMenuTipoAbonos();
 		 try {
 			 
-			  TipoAbono = Integer.parseInt(scannerSistema.next());
+			  TipoAbono = Integer.parseInt(scannerSistema.nextLine());
          }
          catch (InputMismatchException e) 
          {
@@ -434,7 +431,7 @@ public class Programa {
 			PrintMenuTipoAbonos();
 			
 			try {
-				TipoAbono = Integer.parseInt(scannerSistema.next());
+				TipoAbono = Integer.parseInt(scannerSistema.nextLine());
             }
             catch (InputMismatchException e) 
             {
@@ -474,14 +471,14 @@ public class Programa {
 		System.out.println(idLocalidadesLibres);
 		
 		scannerSistema = new Scanner(System.in);
-		String idAsiento = scannerSistema.next();
+		String idAsiento = scannerSistema.nextLine();
 		
 		while(!idLocalidadesLibres.contains(idAsiento)) {
 			
 			System.out.println("Introduzca una id de asiento valida a elegir entre los siguientes: ");
 			System.out.println(idLocalidadesLibres);
 			
-			idAsiento = scannerSistema.next();
+			idAsiento = scannerSistema.nextLine();
 		}
 		
 		
