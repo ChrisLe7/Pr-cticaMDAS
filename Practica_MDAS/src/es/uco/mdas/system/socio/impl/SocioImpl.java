@@ -2,7 +2,6 @@ package es.uco.mdas.system.socio.impl;
 
 import java.util.HashMap;
 
-import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 import es.uco.mdas.business.socio.SocioMgt;
@@ -30,7 +29,7 @@ public class SocioImpl implements Socio {
 	}
 
 	@Override
-	public void asignarCategoria(DetallesSocio socio, Categoria categoria) {
+	public void asignarCategoria(DetallesSocio socio, String categoria) {
 		socioMgt.asignarCategoria(socio, categoria);
 		
 	}
@@ -41,7 +40,7 @@ public class SocioImpl implements Socio {
 		
 		for (String idSocio : socios.keySet()) {
 			DetallesSocio socio = socios.get(idSocio);
-			Categoria nuevaCategoria = comprobarTiempoVinculacion(socio);
+			String nuevaCategoria = comprobarTiempoVinculacion(socio);
 			
 			if (nuevaCategoria != socio.getCategoria()) {
 				asignarCategoria(socio, nuevaCategoria);
@@ -50,24 +49,24 @@ public class SocioImpl implements Socio {
 	}
 
 	@Override
-	public Categoria comprobarTiempoVinculacion(DetallesSocio socio) {
+	public String comprobarTiempoVinculacion(DetallesSocio socio) {
 		int aniosSocioOro = 65; // edad minima requerida para ser socio de oro
 		int aniosSocioPlata = 25; // anios consecutivos asociado para ser socio de plata
 		int aniosSocioAdulto = 18; // edad minima requerida para ser socio adulto
 				
 		if (socio.getEdad() >= aniosSocioOro) {
-			return Categoria.Oro;
+			return "Oro";
 		}
 				
 		if (socio.getAntiguedad() >= aniosSocioPlata) {
-			return Categoria.Plata;
+			return "Plata";
 		}
 		
 		if (socio.getEdad() >= aniosSocioAdulto) {
-			return Categoria.Adulto;
+			return "Adulto";
 		}
 		
-		return Categoria.Infantil;
+		return "Infantil";
 	}
 
 	@Override

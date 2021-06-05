@@ -1,6 +1,5 @@
 package es.uco.mdas.system.socio;
 
-import es.uco.mdas.business.socio.Categoria;
 import es.uco.mdas.business.socio.DetallesCliente;
 import es.uco.mdas.business.socio.DetallesSocio;
 
@@ -28,7 +27,7 @@ public interface Socio {
 	 * @param socio Socio cuya categoria se a modificar
 	 * @param categoria Categoria nueva a asignar
 	 */
-	public void asignarCategoria(DetallesSocio socio, Categoria categoria);
+	public void asignarCategoria(DetallesSocio socio, String categoria);
 	
 	/**
 	 * Comprueba el tiempo de vinculacion de los socios
@@ -41,8 +40,14 @@ public interface Socio {
 	 * @param socio Socio cuyo tiempo de vinculacion se va a comprobar
 	 * @return Categoria asociada al tiempo de vinculacion
 	 */
-	public Categoria comprobarTiempoVinculacion(DetallesSocio socio);
+	public String comprobarTiempoVinculacion(DetallesSocio socio);
 	
+	/**
+	 * Devuelve la informacion del socio
+	 * 
+	 * @param idSocio Id del socio a mostrar
+	 * @return Socio a mostrar
+	 */
 	public DetallesSocio obtenerInformacionSocio(String idSocio);
 	
 }
